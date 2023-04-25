@@ -11,6 +11,11 @@ export class DonorService {
   constructor(private http: HttpClient) {}
 
   baseUrl = 'http://localhost:8080/eDonor/donor';
+
+  validateDonorLogin(postData:any){
+    return this.http.post(this.baseUrl+"/login", postData);
+  }
+
   addDonor(donor: Donor) {
     console.log(donor);
     console.log(this.baseUrl);

@@ -6,16 +6,21 @@ import { AdminComponent } from "./admin.component/admin.component";
 import { StaffComponent } from "./staff.component/staff.component";
 import { NavbarComponent } from "./navbar.component/navbar.component";
 import { LandingPageComponent } from "./landing-page.component/landing-page.component";
+import { DonorMainPageComponent } from "./donor.mainPage.component/donor.mainPage.component";
 import { SHARED_ZORRO_MODULES } from "../../shared/shared-zorro.module";
 import {NzImageModule} from "ng-zorro-antd/image";
 
-const COMPONENTS = [AdminComponent, StaffComponent, NavbarComponent, LandingPageComponent ];
+const COMPONENTS = [AdminComponent, StaffComponent, NavbarComponent,
+                                                LandingPageComponent, DonorMainPageComponent];
 
 @NgModule({
   imports: [
     SharedModule,
     DashboardRoutingModule,
     SHARED_ZORRO_MODULES,
+  ],
+  exports: [
+    NavbarComponent
   ],
   declarations: [...COMPONENTS]
 })

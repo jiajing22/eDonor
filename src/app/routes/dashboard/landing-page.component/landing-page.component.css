@@ -5,3 +5,17 @@
 p {
   margin: 0;
 }
+
+.card-component{
+  text-align: center;
+  width: 100%;
+  background: #ECECEC;
+  padding:30px;
+}
+
+.ant-card-head-title {
+  display: inline-block;
+  flex: 1;
+  padding: 16px 0;
+  white-space: break-spaces;
+}
