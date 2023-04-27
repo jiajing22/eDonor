@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'landing', component: LandingPageComponent},
   { path: 'navbar', component: NavbarComponent},
   { path: 'login', component: UserLoginComponent},
-  { path: 'donorMenu', component: DonorMainPageComponent},
+  { path: 'donorMenu', component: DonorMainPageComponent, data: { title: 'eDonor' } },
 ];
 
 @NgModule({

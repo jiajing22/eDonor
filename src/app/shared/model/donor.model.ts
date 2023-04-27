@@ -1,6 +1,6 @@
 export class Donor {
   constructor(
-    public documentId: string,
+    // public documentId: string,
     public donorId: string,
     public donorType: string,
     public bloodType: string,
@@ -8,6 +8,7 @@ export class Donor {
     public userId: string,
     public fullName: string,
     public gender: string,
-    public userType: string
+    public userLastLoginDate: Date
+    // public userType: string
   ) {}
 }

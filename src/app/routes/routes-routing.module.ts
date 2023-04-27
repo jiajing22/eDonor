@@ -18,6 +18,7 @@ import { UserRegisterComponent } from './passport/register/register.component';
 import {WelcomeComponent} from "../pages/welcome/welcome.component";
 import {LayoutBlankComponent} from "../layout/blank/blank.component";
 import {DonorMainPageComponent} from "./dashboard/donor.mainPage.component/donor.mainPage.component";
+import {StaffComponent} from "./dashboard/staff.component/staff.component";
 
 const routes: Routes = [
   {
@@ -46,7 +47,8 @@ const routes: Routes = [
   },
   // 单页不包裹Layout
   { path: 'passport/callback/:type', component: CallbackComponent },
-  { path: 'donorMenu', component:DonorMainPageComponent},
+  { path: 'donorMenu', component:DonorMainPageComponent },
+  { path: 'staffMenu', component: StaffComponent },
   { path: '**', redirectTo: 'exception/404' },
 ];
 

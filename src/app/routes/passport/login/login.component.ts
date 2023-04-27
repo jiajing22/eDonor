@@ -10,7 +10,7 @@ import { environment } from '@env/environment';
 import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
 import {catchError, finalize, throwError} from 'rxjs';
 import {DonorService} from "../../../shared/services/donor.service";
-import {Donor} from "../../../shared/model/donor.model";
+import {StaffService} from "../../../shared/services/staff.service";
 
 @Component({
   selector: 'passport-login',
@@ -32,7 +32,8 @@ export class UserLoginComponent implements OnDestroy {
     private startupSrv: StartupService,
     private http: _HttpClient,
     private cdr: ChangeDetectorRef,
-    private donorService: DonorService
+    private donorService: DonorService,
+    private staffService: StaffService
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required]],
@@ -106,11 +107,11 @@ export class UserLoginComponent implements OnDestroy {
 
     this.loading = true;
     this.cdr.detectChanges();
-    this.tokenService.set({
-      token: '123456789',
-      id: 10000,
-      time: +new Date(),
-    });
+    // this.tokenService.set({
+    //   token: '123456789',
+    //   id: 10000,
+    //   time: +new Date(),
+    // });
 
     if (this.userType === 0) {
       let postData = {
@@ -123,23 +124,46 @@ export class UserLoginComponent implements OnDestroy {
         .pipe(
           catchError(err => {
             console.log(err);
-            alert(err.error.message);
-            // window.location.reload();
+            alert(err.error);
+            window.location.reload();
             return throwError(err);
           })
         )
         .subscribe((res:any) => {
-          localStorage.setItem('userId', res.userId);
-          localStorage.setItem('userType', this.userType.toString());
-          localStorage.setItem('status', 'login');
+          sessionStorage.setItem('userId', res.userId);
+          sessionStorage.setItem('userType', this.userType.toString());
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
-            console.log(url);
             if (url.includes('/passport')) {
               url = '/';
             }
             // this.router.navigateByUrl(url);
             this.router.navigate(['../donorMenu']);
+          });
+        })
+    } else if (this.userType === 1) {
+      let postData = {
+        userId: this.userName.value,
+        password: this.password.value
+      };
+      this.staffService.validateStaffLogin(postData)
+        .pipe(
+          catchError(err => {
+            console.log(err.error);
+            alert(err.error);
+            window.location.reload();
+            return throwError(err);
+          })
+        )
+        .subscribe((res:any) => {
+          sessionStorage.setItem('userId', res.userId);
+          sessionStorage.setItem('userType', this.userType.toString());
+          this.startupSrv.load().subscribe(() => {
+            let url = this.tokenService.referrer!.url || '/';
+            if (url.includes('/passport')) {
+              url = '/';
+            }
+            this.router.navigate(['../staffMenu']);
           });
         })
     }

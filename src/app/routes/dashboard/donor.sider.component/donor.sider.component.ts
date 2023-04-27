@@ -1,14 +1,20 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit, Output, TemplateRef} from '@angular/core';
 import {SettingsService, User} from '@delon/theme';
 import {ActivatedRoute, Router} from "@angular/router";
 import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 
 @Component({
-  selector: 'navbar-layout-basic',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  selector: 'donor-sidebar',
+  templateUrl: './donor.sider.component.html',
+  styles: [
+    `
+    .sider-menu {
+        height: 100%;
+        border-right: 0;
+      }`
+  ],
 })
-export class NavbarComponent implements OnInit{
+export class DonorSiderComponent implements OnInit{
 
   constructor(
     private settings: SettingsService,
@@ -21,13 +27,13 @@ export class NavbarComponent implements OnInit{
   loggedIn: boolean = false;
 
   ngOnInit(): void {
-    this.loggedIn = sessionStorage.getItem('userType') != null;
+    this.loggedIn = localStorage.getItem('userType') != null;
   }
 
   logout(): void{
-    sessionStorage.removeItem('userType');
-    sessionStorage.removeItem('userId');
-    sessionStorage.removeItem('status');
+    localStorage.removeItem('userType');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('status');
     this.router.navigateByUrl('/dashboard/landing');
   }
 }
