@@ -1,4 +1,3 @@
-<navbar-layout-basic></navbar-layout-basic>
 <div class="login">
   <h2>Login</h2>
   <form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
@@ -9,8 +8,8 @@
           <nz-form-label >Login As</nz-form-label>
           <nz-form-control >
             <nz-radio-group [(ngModel)]="userType" [ngModelOptions]="{standalone:true}">
-              <label nz-radio-button [nzValue]="0" checked>User</label>
-              <label nz-radio-button [nzValue]="1">Moderator</label>
+              <label nz-radio-button [nzValue]="0" checked>Donor</label>
+              <label nz-radio-button [nzValue]="1">Staff</label>
               <label nz-radio-button [nzValue]="2">Admin</label>
             </nz-radio-group>
           </nz-form-control>
@@ -42,5 +41,5 @@
       </button>
     </nz-form-item>
   </form>
-  <p>Don't have an account? <a routerLink="./register">Register Here</a> </p>
+  <p>Don't have an account? <a routerLink="/passport/register">Register Here</a> </p>
 </div>

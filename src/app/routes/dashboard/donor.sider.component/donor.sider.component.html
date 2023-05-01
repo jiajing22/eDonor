@@ -1,30 +1,33 @@
-<nz-layout>
-  <nz-sider nzWidth="200px" nzTheme="light">
-    <ul nz-menu nzMode="inline" class="sider-menu">
-      <li nz-submenu nzOpen nzIcon="user" nzTitle="subnav 1">
+<nz-layout class="layout">
+  <nz-sider>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
         <ul>
-          <li nz-menu-item nzSelected>option1</li>
-          <li nz-menu-item>option2</li>
-          <li nz-menu-item>option3</li>
-          <li nz-menu-item>option4</li>
+          <li nz-menu-item>Profile</li>
+          <li nz-menu-item>Edit Profile</li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="subnav 2" nzIcon="laptop">
-        <ul>
-          <li nz-menu-item>option5</li>
-          <li nz-menu-item>option6</li>
-          <li nz-menu-item>option7</li>
-          <li nz-menu-item>option8</li>
-        </ul>
+
+      <li nz-menu-item>
+        <span nz-icon nzType="history"></span>
+        <span>Blood Donation History</span>
       </li>
-      <li nz-submenu nzTitle="subnav 3" nzIcon="notification">
-        <ul>
-          <li nz-menu-item>option9</li>
-          <li nz-menu-item>option10</li>
-          <li nz-menu-item>option11</li>
-          <li nz-menu-item>option12</li>
-        </ul>
+      <li nz-menu-item>
+        <span nz-icon nzType="calendar"></span>
+        <span>Appointment</span>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="form"></span>
+        <span>Registration Form</span>
       </li>
     </ul>
   </nz-sider>
+  <nz-layout class="right-layout">
+    <nz-content>
+      <div class="inner-content">
+
+      </div>
+    </nz-content>
+    <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+  </nz-layout>
 </nz-layout>

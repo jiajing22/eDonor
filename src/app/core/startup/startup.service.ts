@@ -32,7 +32,7 @@ export class StartupService {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
 
-  
+
     private viaHttp(): Observable<void> {
       const defaultLang = this.i18n.defaultLang;
       return zip(this.i18n.loadLangData(defaultLang), this.httpClient.get('assets/tmp/app-data.json')).pipe(
@@ -59,9 +59,9 @@ export class StartupService {
         })
       );
     }
-  
 
-  
+
+
   private viaMockI18n(): Observable<void> {
     const defaultLang = this.i18n.defaultLang;
     return this.i18n.loadLangData(defaultLang).pipe(
@@ -72,7 +72,7 @@ export class StartupService {
         })
       );
   }
-  
+
   private viaMock(): Observable<void> {
     // const tokenData = this.tokenService.get();
     // if (!tokenData.token) {
@@ -81,7 +81,7 @@ export class StartupService {
     // }
     // mock
     const app: any = {
-      name: `ng-alain`,
+      name: `eDonor`,
       description: `Ng-zorro admin panel front-end framework`
     };
     const user: any = {
@@ -93,7 +93,7 @@ export class StartupService {
     // Application information: including site name, description, year
     this.settingService.setApp(app);
     // User information: including name, avatar, email address
-    this.settingService.setUser(user);
+    // this.settingService.setUser(user);
     // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
     this.aclService.setFull(true);
     // Menu data, https://ng-alain.com/theme/menu

@@ -18,7 +18,7 @@ import { UserRegisterComponent } from './passport/register/register.component';
 import {WelcomeComponent} from "../pages/welcome/welcome.component";
 import {LayoutBlankComponent} from "../layout/blank/blank.component";
 import {DonorMainPageComponent} from "./dashboard/donor.mainPage.component/donor.mainPage.component";
-import {StaffComponent} from "./dashboard/staff.component/staff.component";
+import {StaffMainPageComponent} from "./dashboard/staff.component/staff.mainpage/staff.mainpage.component";
 
 const routes: Routes = [
   {
@@ -29,7 +29,7 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-        data: { title: '仪表盘' } },
+        data: { title: 'Login' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
       // 业务子模块
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
@@ -39,8 +39,8 @@ const routes: Routes = [
     path: 'passport',
     component: LayoutBlankComponent,
     children: [
-      { path: 'login', component: UserLoginComponent, data: { title: '登录' } },
-      { path: 'register', component: UserRegisterComponent, data: { title: '注册' } },
+      { path: 'login', component: UserLoginComponent, data: { title: 'Login' } },
+      { path: 'register', component: UserRegisterComponent, data: { title: 'Register' } },
       { path: 'register-result', component: UserRegisterResultComponent, data: { title: '注册结果' } },
       { path: 'lock', component: UserLockComponent, data: { title: '锁屏' } },
     ]
@@ -48,7 +48,19 @@ const routes: Routes = [
   // 单页不包裹Layout
   { path: 'passport/callback/:type', component: CallbackComponent },
   { path: 'donorMenu', component:DonorMainPageComponent },
-  { path: 'staffMenu', component: StaffComponent },
+  { path: 'staff',
+    component: StaffMainPageComponent,
+    children: [
+      { path: '', redirectTo: 'main', pathMatch: 'full' },
+      {
+        path: 'main',
+        loadChildren: () => import('./dashboard/staff.component/staff-routing.module').then(m => m.StaffRoutingModule),
+        data: { title: 'Staff Menu' } },
+      { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
+      // 业务子模块
+      // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
+    ]},
+
   { path: '**', redirectTo: 'exception/404' },
 ];
 

@@ -4,7 +4,7 @@
     <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
       <li nz-menu-item nzSelected>Home</li>
       <li nz-menu-item>About Blood Donation</li>
-      <li nz-menu-item>Campaign/Activity</li>
+      <li nz-menu-item><a routerLink="../campaign">Campaign/Activity</a></li>
       <li nz-menu-item>Blood Donation Centre</li>
       <li nz-menu-item class="signIn" *ngIf="!loggedIn"><a routerLink="../login">Sign In</a></li>
       <li nz-menu-item class="signIn" *ngIf="loggedIn" (click)="logout()">Logout</li>

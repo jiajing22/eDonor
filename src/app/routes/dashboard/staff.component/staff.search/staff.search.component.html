@@ -1,0 +1,55 @@
+<nz-layout class="layout">
+  <nz-sider>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
+        <ul>
+          <li nz-menu-item>Profile</li>
+          <li nz-menu-item>Edit Profile</li>
+        </ul>
+      </li>
+
+      <li nz-menu-item>
+        <span nz-icon nzType="search"></span>
+        <span>Search Donor</span>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="form"></span>
+        <span>Insert New Record</span>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="upload"></span>
+        <span>Upload New Post</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout class="right-layout">
+    <nz-content>
+      <div class="inner-content">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" nz-input placeholder="Search Donor" name="id" [(ngModel)]="id"/>
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" nzSearch (click)="search()"><span nz-icon nzType="search"></span></button>
+        </ng-template>
+
+        <nz-table [nzData]="donorInfo">
+          <thead>
+          <tr>
+            <th>Donor IC</th>
+            <th>Name</th>
+            <th>Blood Type</th>
+            <th>Donation Times</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let result of donorInfo">
+            <td>{{ result.userId }}</td>
+            <td>{{ result.fullName }}</td>
+            <td>{{ result.bloodType }}</td>
+          </tbody>
+        </nz-table>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

@@ -6,13 +6,7 @@ import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 @Component({
   selector: 'donor-sidebar',
   templateUrl: './donor.sider.component.html',
-  styles: [
-    `
-    .sider-menu {
-        height: 100%;
-        border-right: 0;
-      }`
-  ],
+  // styleUrls: [''],
 })
 export class DonorSiderComponent implements OnInit{
 

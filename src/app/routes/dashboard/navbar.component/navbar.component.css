@@ -36,9 +36,10 @@ nz-content {
   min-height: 280px;
 }
 
-/*nz-layout {*/
-/*  margin-bottom: 16px;*/
-/*}*/
+nz-layout {
+  /*position: fixed;*/
+  width: 100%;
+}
 
 .signIn{
   margin-left: auto;
