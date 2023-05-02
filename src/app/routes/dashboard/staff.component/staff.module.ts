@@ -7,9 +7,14 @@ import { StaffSearchComponent } from "./staff.search/staff.search.component";
 import { StaffMainPageComponent } from "./staff.mainpage/staff.mainpage.component";
 import { DashboardModule } from "../dashboard.module";
 import { LayoutModule } from "../../../layout/layout.module";
+import { StaffAddRecordComponent } from "./staff.addRecord.component/staff.addRecord.component";
+import { StaffViewAccComponent } from "./staff.viewAcc.component/staff.viewAcc.component";
+import { StaffNewPostComponent } from "./staff.newPost.component/staff.newPost.component";
 import {NavbarComponent} from "../navbar.component/navbar.component";
 
-const COMPONENTS = [StaffMainPageComponent, StaffSearchComponent];
+const COMPONENTS =
+    [StaffMainPageComponent, StaffSearchComponent, StaffAddRecordComponent, StaffViewAccComponent,
+    StaffNewPostComponent];
 
 @NgModule({
   imports: [

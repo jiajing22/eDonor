@@ -49,7 +49,7 @@ const routes: Routes = [
   { path: 'passport/callback/:type', component: CallbackComponent },
   { path: 'donorMenu', component:DonorMainPageComponent },
   { path: 'staff',
-    component: StaffMainPageComponent,
+    component: LayoutBlankComponent,
     children: [
       { path: '', redirectTo: 'main', pathMatch: 'full' },
       {

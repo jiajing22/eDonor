@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {DonorService} from "../../../../shared/services/donor.service";
 import {Donor} from "../../../../shared/model/donor.model";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-staff-mainpage-component',
@@ -14,7 +15,7 @@ export class StaffMainPageComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    private donorService: DonorService
+    private donorService: DonorService,
   ) {}
   donor: Donor[] = [];
 
@@ -31,4 +32,5 @@ export class StaffMainPageComponent implements OnInit {
       this.donor = res;
     });
   }
+
 }

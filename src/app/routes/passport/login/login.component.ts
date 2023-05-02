@@ -11,6 +11,7 @@ import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
 import {catchError, finalize, throwError} from 'rxjs';
 import {DonorService} from "../../../shared/services/donor.service";
 import {StaffService} from "../../../shared/services/staff.service";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'passport-login',
@@ -33,7 +34,8 @@ export class UserLoginComponent implements OnDestroy {
     private http: _HttpClient,
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
-    private staffService: StaffService
+    private staffService: StaffService,
+    private message: NzMessageService
   ) {
     this.form = fb.group({
       userName: [null, [Validators.required]],
@@ -123,9 +125,10 @@ export class UserLoginComponent implements OnDestroy {
       this.donorService.validateDonorLogin(postData)
         .pipe(
           catchError(err => {
-            console.log(err);
-            alert(err.error);
-            window.location.reload();
+            this.message.error(err.error);
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             return throwError(err);
           })
         )
@@ -149,9 +152,10 @@ export class UserLoginComponent implements OnDestroy {
       this.staffService.validateStaffLogin(postData)
         .pipe(
           catchError(err => {
-            console.log(err.error);
-            alert(err.error);
-            window.location.reload();
+            this.message.error(err.error);
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             return throwError(err);
           })
         )
