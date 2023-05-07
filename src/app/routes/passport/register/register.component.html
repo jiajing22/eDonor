@@ -1,10 +1,63 @@
-<h3>{{ 'app.register.register' | i18n }}</h3>
+<h2>Donor Registration Form</h2>
 <form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
   <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
   <nz-form-item>
+    <nz-form-control nzErrorTip="Please enter your IC Number">
+      <nz-input-group nzSize="large">
+        <input nz-input formControlName="ic" placeholder="Idendity Card No. (IC No. without '-')*"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please enter your Full Name">
+      <nz-input-group nzSize="large">
+        <input nz-input formControlName="fullName" placeholder="Full Name as on IC*"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!--  Select option-->
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please choose your Gender">
+      <h3>Gender<span style="color: red"> *</span></h3>
+      <nz-radio-group formControlName="gender">
+        <label nz-radio nzValue="male">Male</label>
+        <label nz-radio nzValue="female">Female</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please choose your Blood Group">
+      <h3>Blood Group<span style="color: red"> *</span></h3>
+      <nz-radio-group formControlName="bloodType">
+        <label nz-radio nzValue="A">A</label>
+        <label nz-radio nzValue="B">B</label>
+        <label nz-radio nzValue="AB">AB</label>
+        <label nz-radio nzValue="O">O</label>
+        <label nz-radio nzValue="null">I don't know</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="addressErrorTip">
+      <nz-input-group nzSize="large">
+        <input nz-input formControlName="address" placeholder="Address*"/>
+      </nz-input-group>
+      <ng-template #addressErrorTip let-i>
+        <ng-container *ngIf="i.errors?.required">{{ 'validation.email.required' | i18n }}</ng-container>
+        <ng-container *ngIf="i.errors?.pattern">Contain Invalid Character(s)-$%&*</ng-container>
+        <ng-container *ngIf="i.errors?.maxLength">Exceed Maximum Length</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
     <nz-form-control [nzErrorTip]="mailErrorTip">
-      <nz-input-group nzSize="large" nzAddonBeforeIcon="user">
-        <input nz-input formControlName="mail" placeholder="Email" />
+      <nz-input-group nzSize="large">
+        <input nz-input formControlName="mail" placeholder="Email*"/>
       </nz-input-group>
       <ng-template #mailErrorTip let-i>
         <ng-container *ngIf="i.errors?.required">{{ 'validation.email.required' | i18n }}</ng-container>
@@ -12,11 +65,24 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+
+<!--  <nz-form-item>-->
+<!--    <nz-input-group [nzSuffix]="suffixTemplate">-->
+<!--      <input-->
+<!--        [type]="passwordVisible ? 'text' : 'password'"-->
+<!--        nz-input-->
+<!--        placeholder="Password*"-->
+<!--        [(ngModel)]="password"-->
+<!--      />-->
+<!--    </nz-input-group>-->
+<!--    -->
+<!--  </nz-form-item>-->
+
   <nz-form-item>
     <nz-form-control [nzErrorTip]="'validation.password.required' | i18n">
       <nz-input-group
         nzSize="large"
-        nzAddonBeforeIcon="lock"
+        [nzSuffix]="suffixTemplate"
         nz-popover
         nzPopoverPlacement="right"
         nzPopoverTrigger="focus"
@@ -25,7 +91,7 @@
         [nzPopoverOverlayStyle]="{ 'width.px': 240 }"
         [nzPopoverContent]="pwdCdkTpl"
       >
-        <input nz-input type="password" formControlName="password" placeholder="Password" />
+        <input [type]="passwordVisible ? 'text' : 'password'" nz-input type="password" formControlName="password" placeholder="Password*"/>
       </nz-input-group>
       <ng-template #pwdCdkTpl>
         <div style="padding: 4px 0">
@@ -45,12 +111,22 @@
           <p class="mt-sm">{{ 'validation.password.strength.msg' | i18n }}</p>
         </div>
       </ng-template>
+
+      <ng-template #suffixTemplate>
+      <span
+        nz-icon
+        [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+        (click)="passwordVisible = !passwordVisible"
+      ></span>
+      </ng-template>
+
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
     <nz-form-control [nzErrorTip]="confirmErrorTip">
       <nz-input-group nzSize="large" nzAddonBeforeIcon="lock">
-        <input nz-input type="password" formControlName="confirm" placeholder="Confirm Password" />
+        <input nz-input type="password" formControlName="confirm" placeholder="Confirm Password*"/>
       </nz-input-group>
       <ng-template #confirmErrorTip let-i>
         <ng-container *ngIf="i.errors?.required">{{ 'validation.confirm-password.required' | i18n }}</ng-container>
@@ -58,16 +134,11 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
     <nz-form-control [nzErrorTip]="mobileErrorTip">
-      <nz-input-group nzSize="large" [nzAddOnBefore]="addOnBeforeTemplate">
-        <ng-template #addOnBeforeTemplate>
-          <nz-select formControlName="mobilePrefix" style="width: 100px">
-            <nz-option [nzLabel]="'+86'" [nzValue]="'+86'"></nz-option>
-            <nz-option [nzLabel]="'+87'" [nzValue]="'+87'"></nz-option>
-          </nz-select>
-        </ng-template>
-        <input formControlName="mobile" nz-input placeholder="Phone number" />
+      <nz-input-group nzSize="large" nzAddOnBefore="+60">
+        <input formControlName="mobile" nz-input placeholder="Phone number*"/>
       </nz-input-group>
       <ng-template #mobileErrorTip let-i>
         <ng-container *ngIf="i.errors?.required">{{ 'validation.phone-number.required' | i18n }}</ng-container>
@@ -75,26 +146,27 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
-    <nz-form-control [nzErrorTip]="'validation.verification-code.required' | i18n">
-      <nz-row [nzGutter]="8">
-        <nz-col [nzSpan]="16">
-          <nz-input-group nzSize="large" nzAddonBeforeIcon="mail">
-            <input nz-input formControlName="captcha" placeholder="Captcha" />
-          </nz-input-group>
-        </nz-col>
-        <nz-col [nzSpan]="8">
-          <button type="button" nz-button nzSize="large" (click)="getCaptcha()" [disabled]="count > 0" nzBlock [nzLoading]="loading">
-            {{ count ? count + 's' : ('app.register.get-verification-code' | i18n) }}
-          </button>
-        </nz-col>
-      </nz-row>
-    </nz-form-control>
-  </nz-form-item>
+
+  <!--  <nz-form-item>-->
+  <!--    <nz-form-control [nzErrorTip]="'validation.verification-code.required' | i18n">-->
+  <!--      <nz-row [nzGutter]="8">-->
+  <!--        <nz-col [nzSpan]="16">-->
+  <!--          <nz-input-group nzSize="large" nzAddonBeforeIcon="mail">-->
+  <!--            <input nz-input formControlName="captcha" placeholder="Captcha" />-->
+  <!--          </nz-input-group>-->
+  <!--        </nz-col>-->
+  <!--        <nz-col [nzSpan]="8">-->
+  <!--          <button type="button" nz-button nzSize="large" (click)="getCaptcha()" [disabled]="count > 0" nzBlock [nzLoading]="loading">-->
+  <!--            {{ count ? count + 's' : ('app.register.get-verification-code' | i18n) }}-->
+  <!--          </button>-->
+  <!--        </nz-col>-->
+  <!--      </nz-row>-->
+  <!--    </nz-form-control>-->
+  <!--  </nz-form-item>-->
   <nz-form-item>
     <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading" class="submit">
       {{ 'app.register.register' | i18n }}
     </button>
-    <a class="login" routerLink="/passport/login">{{ 'app.register.sign-in' | i18n }}</a>
+    <br><a class="login" routerLink="/passport/login">{{ 'app.register.sign-in' | i18n }}</a>
   </nz-form-item>
 </form>

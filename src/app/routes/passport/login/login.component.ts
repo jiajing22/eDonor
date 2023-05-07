@@ -12,6 +12,7 @@ import {catchError, finalize, throwError} from 'rxjs';
 import {DonorService} from "../../../shared/services/donor.service";
 import {StaffService} from "../../../shared/services/staff.service";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {AdminService} from "../../../shared/services/admin.service";
 
 @Component({
   selector: 'passport-login',
@@ -35,6 +36,7 @@ export class UserLoginComponent implements OnDestroy {
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
     private staffService: StaffService,
+    private adminService: AdminService,
     private message: NzMessageService
   ) {
     this.form = fb.group({
@@ -168,6 +170,32 @@ export class UserLoginComponent implements OnDestroy {
               url = '/';
             }
             this.router.navigate(['../staff']);
+          });
+        })
+    } else {
+      let postData = {
+        userId: this.userName.value,
+        password: this.password.value
+      };
+      this.adminService.validateAdminLogin(postData)
+        .pipe(
+          catchError(err => {
+            this.message.error(err.error);
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+            return throwError(err);
+          })
+        )
+        .subscribe((res:any) => {
+          sessionStorage.setItem('userId', res.userId);
+          sessionStorage.setItem('userType', this.userType.toString());
+          this.startupSrv.load().subscribe(() => {
+            let url = this.tokenService.referrer!.url || '/';
+            if (url.includes('/passport')) {
+              url = '/';
+            }
+            this.router.navigate(['../admin']);
           });
         })
     }

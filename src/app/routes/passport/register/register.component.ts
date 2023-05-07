@@ -6,27 +6,49 @@ import { ALLOW_ANONYMOUS } from '@delon/auth';
 import { _HttpClient } from '@delon/theme';
 import { MatchControl } from '@delon/util/form';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { finalize } from 'rxjs';
+import {catchError, finalize, throwError} from 'rxjs';
+import {DonorService} from "../../../shared/services/donor.service";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'passport-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserRegisterComponent implements OnDestroy {
-  constructor(private fb: FormBuilder, private router: Router, private http: _HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private http: _HttpClient,
+    private cdr: ChangeDetectorRef,
+    private donorService: DonorService,
+    private message: NzMessageService
+  ) {}
 
   // #region fields
 
+  passwordVisible = false;
+  password?: string;
+
   form = this.fb.nonNullable.group(
     {
-      mail: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), UserRegisterComponent.checkPassword.bind(this)]],
-      confirm: ['', [Validators.required, Validators.minLength(6)]],
-      mobilePrefix: ['+86'],
-      mobile: ['', [Validators.required, Validators.pattern(/^1\d{10}$/)]],
-      captcha: ['', [Validators.required]]
+      ic: ['001222011130',Validators.required],
+      fullName: ['John Doe',Validators.required],
+      gender: ['male',Validators.required],
+      bloodType: ['A',Validators.required],
+      mail: ['johndoe@gmail.com', [Validators.required, Validators.email]],
+      password:
+        ['qweasd123',
+          [Validators.required,
+            Validators.minLength(6),
+            UserRegisterComponent.checkPassword.bind(this)]
+        ],
+      confirm: ['qweasd123', [Validators.required, Validators.minLength(6)]],
+      mobile: ['127356682', [Validators.required,Validators.pattern(/^[0-9]{9,10}$/)]],
+      address: ['test', [Validators.required, Validators.maxLength(100), Validators.pattern(/^[^$%&*]+$/)]]
+      // mobile: ['', [Validators.required]]
+      // captcha: ['', [Validators.required]]
     },
     {
       validators: MatchControl('password', 'confirm')
@@ -71,23 +93,23 @@ export class UserRegisterComponent implements OnDestroy {
     }
   }
 
-  getCaptcha(): void {
-    const { mobile } = this.form.controls;
-    if (mobile.invalid) {
-      mobile.markAsDirty({ onlySelf: true });
-      mobile.updateValueAndValidity({ onlySelf: true });
-      return;
-    }
-    this.count = 59;
-    this.cdr.detectChanges();
-    this.interval$ = setInterval(() => {
-      this.count -= 1;
-      this.cdr.detectChanges();
-      if (this.count <= 0) {
-        clearInterval(this.interval$);
-      }
-    }, 1000);
-  }
+  // getCaptcha(): void {
+  //   const { mobile } = this.form.controls;
+  //   if (mobile.invalid) {
+  //     mobile.markAsDirty({ onlySelf: true });
+  //     mobile.updateValueAndValidity({ onlySelf: true });
+  //     return;
+  //   }
+  //   this.count = 59;
+  //   this.cdr.detectChanges();
+  //   this.interval$ = setInterval(() => {
+  //     this.count -= 1;
+  //     this.cdr.detectChanges();
+  //     if (this.count <= 0) {
+  //       clearInterval(this.interval$);
+  //     }
+  //   }, 1000);
+  // }
 
   // #endregion
 
@@ -102,22 +124,51 @@ export class UserRegisterComponent implements OnDestroy {
       return;
     }
 
-    const data = this.form.value;
-    this.loading = true;
-    this.cdr.detectChanges();
-    this.http
-      .post('/register', data, null, {
-        context: new HttpContext().set(ALLOW_ANONYMOUS, true)
-      })
+    console.log(this.form.value);
+    let postData = {
+      userId: this.form.value.ic,
+      password: this.form.value.password,
+      fullName: this.form.value.fullName?.toUpperCase(),
+      gender: this.form.value.gender,
+      bloodType: this.form.value.bloodType,
+      phone: this.form.value.mobile,
+      email: this.form.value.mail
+    };
+
+    console.log(postData);
+
+    this.donorService.register(postData)
       .pipe(
-        finalize(() => {
-          this.loading = false;
-          this.cdr.detectChanges();
-        })
+        catchError(err => {
+        this.message.error(err.error);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 3000);
+        return throwError(err);
+      })
       )
-      .subscribe(() => {
-        this.router.navigate(['passport', 'register-result'], { queryParams: { email: data.mail } });
+      .subscribe((res:any) => {
+        console.log(res);
+        this.message.success("Registration Successful!");
       });
+    // this.router.navigate(['passport', 'register-result'], { queryParams: { email: this.form.value.mail } });
+
+    // const data = this.form.value;
+    // this.loading = true;
+    // this.cdr.detectChanges();
+    // this.http
+    //   .post('/register', data, null, {
+    //     context: new HttpContext().set(ALLOW_ANONYMOUS, true)
+    //   })
+    //   .pipe(
+    //     finalize(() => {
+    //       this.loading = false;
+    //       this.cdr.detectChanges();
+    //     })
+    //   )
+    //   .subscribe(() => {
+    //     this.router.navigate(['passport', 'register-result'], { queryParams: { email: data.mail } });
+    //   });
   }
 
   ngOnDestroy(): void {

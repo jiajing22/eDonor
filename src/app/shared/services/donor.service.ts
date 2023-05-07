@@ -25,4 +25,8 @@ export class DonorService {
     return this.http.get(this.baseUrl);
   }
 
+  register(postData:any){
+    return this.http.post(this.baseUrl, postData);
+  }
+
 }

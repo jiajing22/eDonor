@@ -60,7 +60,7 @@ const routes: Routes = [
       // 业务子模块
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
     ]},
-
+  { path: 'admin', component:AdminComponent, data: { title: 'Admin Menu' } },
   { path: '**', redirectTo: 'exception/404' },
 ];
 
