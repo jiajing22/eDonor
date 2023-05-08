@@ -39,7 +39,7 @@ export class UserLoginComponent implements OnDestroy {
     private adminService: AdminService,
     private message: NzMessageService
   ) {
-    this.form = fb.group({
+    this.form = fb.nonNullable.group({
       userName: [null, [Validators.required]],
       password: [null, [Validators.required]],
       remember: [true]
@@ -64,11 +64,30 @@ export class UserLoginComponent implements OnDestroy {
     return this.form.get('password')!;
   }
 
+  isIC(input: string): boolean {
+    const regex = /^\d{12}$/;
+    return regex.test(input);
+  }
+
+  isStaff(input: string): boolean{
+    const regex = /^\d{5}$/;
+    return (input.substring(0, 2).toUpperCase() === 'ST')
+      && (input.length === 7)
+      && (regex.test(input.substring(2,7)));
+  }
+
+  isAdmin(input: string): boolean{
+    const regex = /^\d{5}$/;
+    return (input.substring(0, 1).toUpperCase() === 'A')
+      && (input.length === 6)
+      && (regex.test(input.substring(1,6)));
+  }
+
   form: FormGroup;
   error = '';
   type = 0;
-  userType = 0;
   loading = false;
+  input ='';
 
   // #region get captcha
 
@@ -100,6 +119,7 @@ export class UserLoginComponent implements OnDestroy {
   // #endregion
 
   submit(): void {
+    this.input = this.userName.value;
     this.error = '';
       this.userName.markAsDirty();
       this.userName.updateValueAndValidity();
@@ -117,26 +137,27 @@ export class UserLoginComponent implements OnDestroy {
     //   time: +new Date(),
     // });
 
-    if (this.userType === 0) {
+    if (this.isIC(this.input)) {
       let postData = {
         userId: this.userName.value,
         password: this.password.value
       };
 
-      console.log(postData);
       this.donorService.validateDonorLogin(postData)
         .pipe(
           catchError(err => {
             this.message.error(err.error);
+            this.loading = false;
             setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              this.cdr.detectChanges();
+            }, 1000);
+
+            this.form.get('password')!.setValue(null);
             return throwError(err);
           })
         )
         .subscribe((res:any) => {
           sessionStorage.setItem('userId', res.userId);
-          sessionStorage.setItem('userType', this.userType.toString());
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
@@ -146,24 +167,26 @@ export class UserLoginComponent implements OnDestroy {
             this.router.navigate(['../donorMenu']);
           });
         })
-    } else if (this.userType === 1) {
+    } else if (this.isStaff(this.input)) {
       let postData = {
-        userId: this.userName.value,
+        userId: this.userName.value.toUpperCase(),
         password: this.password.value
       };
       this.staffService.validateStaffLogin(postData)
         .pipe(
           catchError(err => {
             this.message.error(err.error);
+            this.loading = false;
             setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              this.cdr.detectChanges();
+            }, 1000);
+
+            this.form.get('password')!.setValue(null);
             return throwError(err);
           })
         )
         .subscribe((res:any) => {
           sessionStorage.setItem('userId', res.userId);
-          sessionStorage.setItem('userType', this.userType.toString());
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
@@ -172,24 +195,25 @@ export class UserLoginComponent implements OnDestroy {
             this.router.navigate(['../staff']);
           });
         })
-    } else {
+    } else if(this.isAdmin(this.input)){
       let postData = {
-        userId: this.userName.value,
+        userId: this.userName.value.toUpperCase(),
         password: this.password.value
       };
       this.adminService.validateAdminLogin(postData)
         .pipe(
           catchError(err => {
             this.message.error(err.error);
+            this.loading = false;
             setTimeout(() => {
-              window.location.reload();
-            }, 3000);
+              this.cdr.detectChanges();
+            }, 1000);
+            this.form.get('password')!.setValue(null);
             return throwError(err);
           })
         )
         .subscribe((res:any) => {
           sessionStorage.setItem('userId', res.userId);
-          sessionStorage.setItem('userType', this.userType.toString());
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
@@ -198,6 +222,11 @@ export class UserLoginComponent implements OnDestroy {
             this.router.navigate(['../admin']);
           });
         })
+    } else {
+      this.loading = false;
+      this.cdr.detectChanges();
+      this.message.error("Invalid login, please make sure enter correct username and password");
+      this.form.get('password')!.setValue(null);
     }
 
     // this.loading = true;

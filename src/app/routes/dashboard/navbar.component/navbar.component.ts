@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit{
   loggedIn: boolean = false;
 
   ngOnInit(): void {
-    this.loggedIn = sessionStorage.getItem('userType') != null;
+    this.loggedIn = sessionStorage.getItem('userId') != null;
   }
 
   logout(): void{
