@@ -19,6 +19,8 @@ import {WelcomeComponent} from "../pages/welcome/welcome.component";
 import {LayoutBlankComponent} from "../layout/blank/blank.component";
 import {DonorMainPageComponent} from "./dashboard/donor.mainPage.component/donor.mainPage.component";
 import {StaffMainPageComponent} from "./dashboard/staff.component/staff.mainpage/staff.mainpage.component";
+import {UserRecoveryComponent} from "./passport/recovery/recovery.component";
+import {ChangePasswordComponent} from "./passport/change-password/change-password.component";
 
 const routes: Routes = [
   {
@@ -41,8 +43,10 @@ const routes: Routes = [
     children: [
       { path: 'login', component: UserLoginComponent, data: { title: 'Login' } },
       { path: 'register', component: UserRegisterComponent, data: { title: 'Register' } },
-      { path: 'register-result', component: UserRegisterResultComponent, data: { title: '注册结果' } },
-      { path: 'lock', component: UserLockComponent, data: { title: '锁屏' } },
+      { path: 'register-result', component: UserRegisterResultComponent, data: { title: 'Register Result' } },
+      { path: 'lock', component: UserLockComponent, data: { title: 'Lock' } },
+      { path: 'recovery', component: UserRecoveryComponent, data: { title: 'Forget Password' } },
+      { path: 'reset', component: ChangePasswordComponent, data: { title: 'Reset Password' } },
     ]
   },
   // 单页不包裹Layout

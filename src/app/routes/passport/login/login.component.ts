@@ -1,14 +1,13 @@
-import { HttpContext } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, Optional } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { StartupService } from '@core';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import { ALLOW_ANONYMOUS, DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService } from '@delon/auth';
+import { DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService } from '@delon/auth';
 import { SettingsService, _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
-import {catchError, finalize, throwError} from 'rxjs';
+import {catchError, throwError} from 'rxjs';
 import {DonorService} from "../../../shared/services/donor.service";
 import {StaffService} from "../../../shared/services/staff.service";
 import {NzMessageService} from "ng-zorro-antd/message";
@@ -40,9 +39,8 @@ export class UserLoginComponent implements OnDestroy {
     private message: NzMessageService
   ) {
     this.form = fb.nonNullable.group({
-      userName: [null, [Validators.required]],
+      userName: [null, [Validators.required, Validators.pattern(/^[^\p{P}]*$/u)]],
       password: [null, [Validators.required]],
-      remember: [true]
     });
   }
 

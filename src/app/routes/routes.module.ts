@@ -12,15 +12,19 @@ import { RouteRoutingModule } from './routes-routing.module';
 import {DashboardModule} from "./dashboard/dashboard.module";
 import {NzRadioModule} from "ng-zorro-antd/radio";
 import {StaffModule} from "./dashboard/staff.component/staff.module";
+import {UserRecoveryComponent} from "./passport/recovery/recovery.component";
+import {ChangePasswordComponent} from "./passport/change-password/change-password.component";
 
 const COMPONENTS: Array<Type<void>> = [
   // passport pages
   UserLoginComponent,
   UserRegisterComponent,
   UserRegisterResultComponent,
+  UserRecoveryComponent,
   // single pages
   CallbackComponent,
   UserLockComponent,
+  ChangePasswordComponent,
 ];
 
 @NgModule({

@@ -47,7 +47,7 @@
         <input nz-input formControlName="address" placeholder="Address*"/>
       </nz-input-group>
       <ng-template #addressErrorTip let-i>
-        <ng-container *ngIf="i.errors?.required">{{ 'validation.email.required' | i18n }}</ng-container>
+        <ng-container *ngIf="i.errors?.required">Please enter address</ng-container>
         <ng-container *ngIf="i.errors?.pattern">Contain Invalid Character(s)-$%&*</ng-container>
         <ng-container *ngIf="i.errors?.maxLength">Exceed Maximum Length</ng-container>
       </ng-template>
