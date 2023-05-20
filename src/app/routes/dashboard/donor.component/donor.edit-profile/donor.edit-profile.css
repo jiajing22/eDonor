@@ -1,0 +1,39 @@
+.inner{
+  padding:20px 32px;
+}
+
+.item{
+  font-weight: 300;
+}
+
+.layout{
+  min-height: 88vh;
+}
+
+nz-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+
+nz-form-label{
+  text-align: left;
+}
+/*TODO: enhance UI*/
+.login-form{
+  width: 80%;
+  margin: auto;
+}
+
+.edit-button {
+  padding-right: 80px;
+}
+
+.changeBtn {
+  border-radius: 32px;
+  margin-left: 24px;
+}
+
+.confirm-button {
+  padding-right: 10px;
+}

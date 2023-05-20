@@ -14,6 +14,7 @@ import {NzRadioModule} from "ng-zorro-antd/radio";
 import {StaffModule} from "./dashboard/staff.component/staff.module";
 import {UserRecoveryComponent} from "./passport/recovery/recovery.component";
 import {ChangePasswordComponent} from "./passport/change-password/change-password.component";
+import { DonorModule} from "./dashboard/donor.component/donor.module";
 
 const COMPONENTS: Array<Type<void>> = [
   // passport pages
@@ -28,7 +29,7 @@ const COMPONENTS: Array<Type<void>> = [
 ];
 
 @NgModule({
-  imports: [SharedModule, RouteRoutingModule, DashboardModule, NzRadioModule, StaffModule],
+  imports: [SharedModule, RouteRoutingModule, DashboardModule, NzRadioModule, StaffModule, DonorModule],
   declarations: COMPONENTS,
 })
 export class RoutesModule {}

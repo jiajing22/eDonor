@@ -11,6 +11,7 @@ export class DonorService {
   constructor(private http: HttpClient) {}
 
   baseUrl = 'http://localhost:8080/eDonor/donor';
+  basicUrl = 'http://localhost:8080/eDonor';
 
   validateDonorLogin(postData:any){
     return this.http.post(this.baseUrl+"/login", postData);
@@ -27,6 +28,18 @@ export class DonorService {
 
   register(postData:any){
     return this.http.post(this.baseUrl, postData);
+  }
+
+  getDonorInfo(id:string) {
+    return this.http.get(this.baseUrl + "/" + id);
+  }
+
+  updateInfo(postData: any){
+    return this.http.put(this.baseUrl,postData);
+  }
+
+  changePw(postData: any){
+    return this.http.post(this.basicUrl+"/update-password",postData)
   }
 
 }

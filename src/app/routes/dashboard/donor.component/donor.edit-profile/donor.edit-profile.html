@@ -1,0 +1,156 @@
+<navbar-layout-basic></navbar-layout-basic>
+<nz-layout class="layout">
+  <nz-sider class="item">
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
+        <ul>
+          <a routerLink="../donor-account">
+            <li nz-menu-item>Profile</li>
+          </a>
+          <li nz-menu-item nzSelected>Edit Profile</li>
+        </ul>
+      </li>
+
+      <li nz-menu-item>
+        <span nz-icon nzType="history"></span>
+        <span>Blood Donation History</span>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="calendar"></span>
+        <span>Appointment</span>
+      </li>
+      <li nz-menu-item>
+        <span nz-icon nzType="form"></span>
+        <span>Registration Form</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout class="right-layout">
+    <nz-content>
+      <h3>Edit Profile</h3><br/>
+      <form nz-form [formGroup]="editForm" *ngIf="!changePw" class="login-form" (ngSubmit)="submitForm()">
+        <nz-form-item [nzJustify]="'end'" class="edit-button">
+          <button *ngIf="!isEdit" nz-button nzType="primary" type="button" nzShape="circle" (click)="enableEdit()">
+            <i nz-icon nzType="edit"></i>
+          </button>
+          <button *ngIf="isEdit" nz-button nzType="primary" type="button" nzShape="circle" (click)="cancelEdit()">
+            <i nz-icon nzType="close"></i>
+          </button>
+
+          <button *ngIf="!changePw" nz-button nzType="primary" type="button" (click)="toggleForm()" class="changeBtn">
+            Change Password
+          </button>
+
+          <button *ngIf="changePw" nz-button nzType="primary" type="button" (click)="toggleUpdateForm()"
+                  class="changeBtn">
+            Edit Profile
+          </button>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="!changePw">
+          <nz-form-label [nzSpan]="5" nzFor="email">E-mail</nz-form-label>
+          <nz-form-control [nzSpan]="8" nzErrorTip="Please enter your New Email">
+            <input nz-input formControlName="email"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="!changePw">
+          <nz-form-label [nzSpan]="5" nzFor="phone">Phone Number</nz-form-label>
+          <nz-form-control [nzSpan]="8" nzErrorTip="Please enter your Phone Numbr">
+            <input nz-input formControlName="phone"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="!changePw">
+          <nz-form-label [nzSpan]="5" nzFor="address">Address</nz-form-label>
+          <nz-form-control [nzSpan]="12" nzErrorTip="Please enter your Full Name">
+            <nz-textarea-count [nzMaxCharacterCount]="100">
+              <textarea rows="4" nz-input formControlName="address"></textarea>
+            </nz-textarea-count>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item [nzJustify]="'center'" class="edit-button" *ngIf="!changePw">
+          <button [disabled]="!isEdit" nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading">
+            Update
+          </button>
+        </nz-form-item>
+      </form>
+
+      <form nz-form [formGroup]="passwordForm" *ngIf="changePw" class="login-form" (ngSubmit)="submitPassForm()">
+        <nz-form-item [nzJustify]="'end'" class="edit-button">
+          <button *ngIf="!changePw" nz-button nzType="primary" type="button" (click)="toggleForm()" class="changeBtn">
+            Change Password
+          </button>
+          <button *ngIf="changePw" nz-button nzType="primary" type="button" (click)="toggleUpdateForm()"
+                  class="changeBtn">
+            Edit Profile
+          </button>
+        </nz-form-item>
+
+        <nz-form-item [nzJustify]="'center'">
+          <nz-form-label [nzSpan]="5" nzFor="oldPass">Old Password</nz-form-label>
+          <nz-form-control [nzSpan]="8" nzErrorTip="Please enter the old password">
+            <nz-input-group [nzSuffix]="suffixTemplate">
+              <input [type]="passwordVisible ? 'text' : 'password'" nz-input type="password" formControlName="oldPass"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item [nzJustify]="'center'">
+          <nz-form-label [nzSpan]="5" nzFor="oldPass">New Password</nz-form-label>
+          <nz-form-control [nzSpan]="8" [nzErrorTip]="newpwErrorTip">
+            <nz-input-group [nzSuffix]="suffixTemplateNew">
+              <input [type]="newPasswordVisible ? 'text' : 'password'" nz-input type="password" formControlName="newPass"/>
+            </nz-input-group>
+            <ng-template #newpwErrorTip let-i>
+              <ng-container *ngIf="i.errors?.required">Please enter new password</ng-container>
+              <ng-container *ngIf="i.errors?.pattern">
+                Password should be 8-30 characters long and
+                contain a combination of uppercase, lowercase letters,
+                special character and numbers.
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item [nzJustify]="'center'">
+          <nz-form-label [nzSpan]="5" nzFor="confirmPass">Confirm Password</nz-form-label>
+          <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
+            <nz-input-group>
+              <input nz-input type="password" formControlName="confirmPass"/>
+            </nz-input-group>
+            <ng-template #confirmErrorTip let-i>
+              <ng-container
+                *ngIf="i.errors?.required">{{ 'validation.confirm-password.required' | i18n }}</ng-container>
+              <ng-container *ngIf="i.errors?.matchControl">The confirm password does not match</ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <ng-template #suffixTemplate>
+      <span
+        nz-icon
+        [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+        (click)="passwordVisible = !passwordVisible"
+      ></span>
+        </ng-template>
+
+        <ng-template #suffixTemplateNew>
+      <span
+        nz-icon
+        [nzType]="newPasswordVisible ? 'eye-invisible' : 'eye'"
+        (click)="newPasswordVisible = !newPasswordVisible"
+      ></span>
+        </ng-template>
+
+        <nz-form-item [nzJustify]="'center'">
+          <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading">
+            Confirm
+          </button>
+        </nz-form-item>
+      </form>
+
+    </nz-content>
+  </nz-layout>
+</nz-layout>

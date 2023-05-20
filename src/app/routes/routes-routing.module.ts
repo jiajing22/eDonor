@@ -17,7 +17,6 @@ import { UserRegisterResultComponent } from './passport/register-result/register
 import { UserRegisterComponent } from './passport/register/register.component';
 import {WelcomeComponent} from "../pages/welcome/welcome.component";
 import {LayoutBlankComponent} from "../layout/blank/blank.component";
-import {DonorMainPageComponent} from "./dashboard/donor.mainPage.component/donor.mainPage.component";
 import {StaffMainPageComponent} from "./dashboard/staff.component/staff.mainpage/staff.mainpage.component";
 import {UserRecoveryComponent} from "./passport/recovery/recovery.component";
 import {ChangePasswordComponent} from "./passport/change-password/change-password.component";
@@ -51,7 +50,20 @@ const routes: Routes = [
   },
   // 单页不包裹Layout
   { path: 'passport/callback/:type', component: CallbackComponent },
-  { path: 'donorMenu', component:DonorMainPageComponent },
+  { path: 'donorMenu',
+    component : LayoutBlankComponent,
+    children: [
+      { path: '', redirectTo: 'main', pathMatch: 'full' },
+      {
+        path: 'main',
+        loadChildren: () => import('./dashboard/donor.component/donor-routing.module').then(m => m.DonorRoutingModule),
+        data: { title: 'User Menu' } },
+      { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
+      // 业务子模块
+      // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
+    ]
+  },
+
   { path: 'staff',
     component: LayoutBlankComponent,
     children: [

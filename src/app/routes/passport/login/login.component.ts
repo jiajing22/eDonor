@@ -12,6 +12,7 @@ import {DonorService} from "../../../shared/services/donor.service";
 import {StaffService} from "../../../shared/services/staff.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {AdminService} from "../../../shared/services/admin.service";
+import * as CryptoJS from "crypto-js";
 
 @Component({
   selector: 'passport-login',
@@ -86,6 +87,7 @@ export class UserLoginComponent implements OnDestroy {
   type = 0;
   loading = false;
   input ='';
+  sKey= "x^XICt8[Lp'Gm<8";
 
   // #region get captcha
 
@@ -155,13 +157,13 @@ export class UserLoginComponent implements OnDestroy {
           })
         )
         .subscribe((res:any) => {
-          sessionStorage.setItem('userId', res.userId);
+          var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
+          sessionStorage.setItem('userId', encrypted);
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
               url = '/';
             }
-            // this.router.navigateByUrl(url);
             this.router.navigate(['../donorMenu']);
           });
         })

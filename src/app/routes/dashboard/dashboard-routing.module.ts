@@ -5,7 +5,6 @@ import { AdminComponent } from "./admin.component/admin.component";
 import {NavbarComponent} from "./navbar.component/navbar.component";
 import {LandingPageComponent} from "./landing-page.component/landing-page.component";
 import {UserLoginComponent} from "../passport/login/login.component";
-import {DonorMainPageComponent} from "./donor.mainPage.component/donor.mainPage.component";
 import {CampaignComponent} from "./campaign.component/campaign.component";
 
 const routes: Routes = [
@@ -14,7 +13,6 @@ const routes: Routes = [
   { path: 'landing', component: LandingPageComponent},
   { path: 'navbar', component: NavbarComponent },
   { path: 'login', component: UserLoginComponent },
-  { path: 'donorMenu', component: DonorMainPageComponent, data: { title: 'eDonor' } },
   { path: 'campaign', component: CampaignComponent },
 ];
 

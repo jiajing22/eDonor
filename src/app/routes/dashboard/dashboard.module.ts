@@ -6,14 +6,13 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { AdminComponent } from "./admin.component/admin.component";
 import { NavbarComponent } from "./navbar.component/navbar.component";
 import { LandingPageComponent } from "./landing-page.component/landing-page.component";
-import { DonorMainPageComponent } from "./donor.mainPage.component/donor.mainPage.component";
-import { DonorSiderComponent} from "./donor.sider.component/donor.sider.component";
+import { DonorSiderComponent} from "./donor.component/donor.sider.component/donor.sider.component";
 import { CampaignComponent } from "./campaign.component/campaign.component";
 
 import {LayoutModule} from "../../layout/layout.module";
 
 const COMPONENTS = [AdminComponent, NavbarComponent,LandingPageComponent,
-                                                 DonorMainPageComponent, DonorSiderComponent,
+                                                  DonorSiderComponent,
                                                  CampaignComponent];
 
 @NgModule({
@@ -24,7 +23,8 @@ const COMPONENTS = [AdminComponent, NavbarComponent,LandingPageComponent,
     LayoutModule,
   ],
   exports: [
-    NavbarComponent
+    NavbarComponent,
+    DonorSiderComponent
   ],
   declarations: [...COMPONENTS]
 })
