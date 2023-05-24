@@ -8,9 +8,10 @@ import { LayoutModule } from "../../../layout/layout.module";
 import { DonorMainpage } from "./donor.mainpage/donor.mainpage";
 import { DonorAccount } from "./donor.account/donor.account";
 import { DonorEditProfile } from "./donor.edit-profile/donor.edit-profile";
+import { DonorHistory } from "./donor.history/donor.history";
 
 const COMPONENTS =
-  [DonorMainpage, DonorAccount, DonorEditProfile ];
+  [DonorMainpage, DonorAccount, DonorEditProfile, DonorHistory ];
 
 @NgModule({
   imports: [

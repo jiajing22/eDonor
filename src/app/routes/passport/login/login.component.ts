@@ -77,9 +77,9 @@ export class UserLoginComponent implements OnDestroy {
 
   isAdmin(input: string): boolean{
     const regex = /^\d{5}$/;
-    return (input.substring(0, 1).toUpperCase() === 'A')
-      && (input.length === 6)
-      && (regex.test(input.substring(1,6)));
+    return (input.substring(0, 2).toUpperCase() === 'AD')
+      && (input.length === 7)
+      && (regex.test(input.substring(2,7)));
   }
 
   form: FormGroup;
@@ -186,7 +186,8 @@ export class UserLoginComponent implements OnDestroy {
           })
         )
         .subscribe((res:any) => {
-          sessionStorage.setItem('userId', res.userId);
+          var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
+          sessionStorage.setItem('userId', encrypted);
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
@@ -213,7 +214,8 @@ export class UserLoginComponent implements OnDestroy {
           })
         )
         .subscribe((res:any) => {
-          sessionStorage.setItem('userId', res.userId);
+          var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
+          sessionStorage.setItem('userId', encrypted);
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {

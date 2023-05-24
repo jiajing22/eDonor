@@ -12,8 +12,8 @@
       </li>
 
       <li nz-menu-item>
-        <span nz-icon nzType="history"></span>
-        <span>Blood Donation History</span>
+        <a routerLink="../donate-history"><span nz-icon nzType="history"></span>
+          <span>Blood Donation History</span></a>
       </li>
       <li nz-menu-item>
         <span nz-icon nzType="calendar"></span>
@@ -101,7 +101,8 @@
           <nz-form-label [nzSpan]="5" nzFor="oldPass">New Password</nz-form-label>
           <nz-form-control [nzSpan]="8" [nzErrorTip]="newpwErrorTip">
             <nz-input-group [nzSuffix]="suffixTemplateNew">
-              <input [type]="newPasswordVisible ? 'text' : 'password'" nz-input type="password" formControlName="newPass"/>
+              <input [type]="newPasswordVisible ? 'text' : 'password'" nz-input type="password"
+                     formControlName="newPass"/>
             </nz-input-group>
             <ng-template #newpwErrorTip let-i>
               <ng-container *ngIf="i.errors?.required">Please enter new password</ng-container>

@@ -23,6 +23,13 @@ import { NzLayoutModule } from "ng-zorro-antd/layout";
 import { NzImageModule } from "ng-zorro-antd/image";
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzBadgeModule } from "ng-zorro-antd/badge";
+import {NzRadioModule} from "ng-zorro-antd/radio";
+import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
+import {NzTimePickerModule} from "ng-zorro-antd/time-picker";
+import {NzDividerModule} from "ng-zorro-antd/divider";
+import {NzListModule} from "ng-zorro-antd/list";
+import {NzTypographyModule} from "ng-zorro-antd/typography";
+import {NzResultModule} from "ng-zorro-antd/result";
 
 export const SHARED_ZORRO_MODULES = [
   NzFormModule,
@@ -49,5 +56,12 @@ export const SHARED_ZORRO_MODULES = [
   NzLayoutModule,
   NzImageModule,
   NzDescriptionsModule,
-  NzBadgeModule
+  NzBadgeModule,
+  NzRadioModule,
+  NzDatePickerModule,
+  NzTimePickerModule,
+  NzDividerModule,
+  NzListModule,
+  NzTypographyModule,
+  NzResultModule,
 ];

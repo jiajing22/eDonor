@@ -1,0 +1,419 @@
+<navbar-layout-basic></navbar-layout-basic>
+
+<div class="header">
+  <h3>Blood Donor Record</h3><span style="padding-right:100px ;color: #2f54eb"> Staff: {{ decryptedId }} </span>
+
+</div>
+<nz-layout>
+  <nz-content>
+    <!--------------------------------------------- Page 1 ------------------------------------------------------------>
+    <!--  IC No.   -->
+    <div *ngIf="currentPage === 1">
+      <form nz-form [formGroup]="first" class="login-form" (ngSubmit)="secondPage()">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="ic">IC No.<span style="color: red"> *</span></nz-form-label>
+          <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
+            <input nz-input formControlName="ic" placeholder="(Without '-')"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--  Full Name   -->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="fullName">Full Name<span style="color: red"> *</span></nz-form-label>
+          <nz-form-control [nzSpan]="12" [nzErrorTip]="confirmErrorTip">
+            <input nz-input formControlName="fullName"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Serial No   -->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="bloodSerialNo">Blood Serial No.<span style="color: red"> *</span>
+          </nz-form-label>
+          <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
+            <input nz-input formControlName="bloodSerialNo"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--  Donor Type   -->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="donorType">Type of Donor<span style="color: red"> *</span></nz-form-label>
+          <nz-form-control [nzSpan]="6" [nzErrorTip]="confirmErrorTip">
+            <nz-select formControlName="donorType">
+              <nz-option nzValue="New Donor" nzLabel="New Donor"></nz-option>
+              <nz-option nzValue="Regular/Repeat Donor" nzLabel="Regular/Repeat Donor"></nz-option>
+              <nz-option nzValue="Lapsed Donor" nzLabel="Lapsed Donor"></nz-option>
+              <nz-option nzValue="Autologous Donor" nzLabel="Autologous Donor"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--  Status   -->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="status">Donor Eligibility Status<span style="color: red"> *</span>
+          </nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-radio-group formControlName="status">
+              <label nz-radio nzValue="Eligible">Eligible</label>
+              <label nz-radio nzValue="Not Eligible">Not Eligible</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="bloodCentre">Blood Centre<span style="color: red"> *</span></nz-form-label>
+          <nz-form-control [nzSpan]="12" [nzErrorTip]="confirmErrorTip">
+            <nz-select formControlName="bloodCentre">
+              <nz-option *ngFor="let option of bloodCentreOptions" [nzValue]="option.value"
+                         [nzLabel]="option.label"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--  Reg Date   -->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="regDate">Registration Date<span style="color: red"> *</span>
+          </nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-date-picker [nzDisabledDate]="disabledFutureDate" formControlName="regDate"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--  Last Date   -->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="lastDonateDate">Last Donation Date<span style="color: red"> *</span>
+          </nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-date-picker [nzDisabledDate]="disabledFutureDate" formControlName="lastDonateDate"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item [nzJustify]="'center'">
+          <button nz-button nzType="primary" nzSize="default" type="submit">
+            Next
+            <span nz-icon nzType="right"></span>
+          </button>
+        </nz-form-item>
+      </form>
+    </div>
+
+    <!----------------------------------------------------------- Page 2 ---------------------------------------------->
+    <div *ngIf="currentPage === 2">
+      <form nz-form [formGroup]="second" class="login-form" (ngSubmit)="lastPage()">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="weight">Body Weight<span style="color: red"> *</span></nz-form-label>
+          <nz-form-control [nzSpan]="4" [nzErrorTip]="confirmErrorTip">
+            <nz-input-number-group nzAddOnAfter="kg">
+              <nz-input-number formControlName="weight" [nzStep]="1"></nz-input-number>
+            </nz-input-number-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="bloodGroup">Blood Group<span style="color: red"> *</span></nz-form-label>
+          <nz-form-control [nzSpan]="6" [nzErrorTip]="confirmErrorTip">
+            <nz-select formControlName="bloodGroup">
+              <nz-option *ngFor="let option of selectOptions" [nzValue]="option.value"
+                         [nzLabel]="option.label"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--        Radio Button-->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="hbLevel">Hb Level<span style="color: red"> *</span></nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-radio-group formControlName="hbLevel">
+              <label nz-radio nzValue="maleMore">Male ≥ 13.5 g/dL</label>
+              <label nz-radio nzValue="maleLess">Male < 13.5 g/dL</label> <br/>
+              <label nz-radio nzValue="femaleMore">Female ≥ 12.5 g/dL</label>
+              <label nz-radio nzValue="femaleLess">Female < 12.5 g/dL</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--        Number only-->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="pAmount">Pre-donation Platelet Amount<span style="color: red"> *</span>
+          </nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-input-number-group nzAddOnAfter="x 10^9/L">
+              <nz-input-number formControlName="pAmount" [nzStep]="1"></nz-input-number>
+            </nz-input-number-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--        Number Only-->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="bloodPressure">Blood Pressure<span style="color: red"> *</span>
+          </nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-input-group nzAddOnAfter="mmHg">
+              <input type="text" nz-input formControlName="bloodPressure"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-divider></nz-divider>
+
+        <nz-form-item>
+          <i>The individual named on this form has been interviewed, examined and tested, and is found to be:</i>
+          <span style="color: red"> *</span>
+        </nz-form-item>
+
+        <!--        Option to choose either one-->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="doubleCheckE" [nzNoColon]="true"></nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-radio-group formControlName="doubleCheckE" (ngModelChange)="onRadioChange($event)">
+              <label nz-radio nzValue="yes">Eligible to Donate</label>
+              <label nz-radio nzValue="no">Not Eligible to Donate</label> <br/>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!------------------------------------        If YES        ------------------------------->
+        <div *ngIf="second.value.doubleCheckE === 'yes'">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="doubleCheckEOption" [nzNoColon]="true"></nz-form-label>
+            <nz-form-control [nzErrorTip]="confirmErrorTip">
+              <nz-radio-group formControlName="doubleCheckEOption" class="multiple">
+                <label nz-radio nzValue="WB">Whole Blood</label>
+                <label nz-radio nzValue="TB">Triple Bag</label>
+                <label nz-radio nzValue="DB">Double Bag</label>
+                <label nz-radio nzValue="SB">Single Bag</label>
+                <label nz-radio nzValue="FB">Filter Bag</label> <br/>
+                <label nz-radio nzValue="A">Apheresis</label>
+                <label nz-radio nzValue="PM">Plasma</label>
+                <label nz-radio nzValue="PT">Platelet</label>
+                <label nz-radio nzValue="M">Others(specify)</label>
+                <input type="text" nz-input *ngIf="second.value.doubleCheckEOption === 'M'"/>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="volume">Volume<span style="color: red"> *</span></nz-form-label>
+            <nz-form-control [nzSpan]="4" [nzErrorTip]="confirmErrorTip">
+              <nz-input-number-group nzAddOnAfter="ml">
+                <nz-input-number [nzMax]="1000" formControlName="volume" [nzStep]="1"></nz-input-number>
+              </nz-input-number-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="isCUE" [nzNoColon]="true"></nz-form-label>
+            <nz-form-control>
+              <label nz-checkbox formControlName="isCUE">Confidential Unit Exclusion(CUE)</label>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item *ngIf="(doubleCheckEOption.invalid || volume.invalid)">
+            <nz-form-control>
+              <div class="error-message"><span style="color: red">Please fill in all required fields*</span></div>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <!----------------------------------------------   If YES Ended  ---------------------------------------------->
+
+        <!--------------------------------------------  If NO Started ------------------------------------------------->
+        <div *ngIf="second.value.doubleCheckE === 'no'">
+          <!--          Reason-->
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="reason">Reason<span style="color: red"> *</span></nz-form-label>
+            <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
+              <input nz-input formControlName="reason"/>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label [nzSpan]="6" nzFor="deferralStatus">Deferral Status<span style="color: red"> *</span>
+            </nz-form-label>
+            <nz-form-control [nzErrorTip]="confirmErrorTip">
+              <nz-radio-group formControlName="deferralStatus">
+                <label nz-radio nzValue="P">Permanent</label>
+                <label nz-radio nzValue="T">Temporary</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item *ngIf="second.value.deferralStatus  === 'T'">
+            <nz-form-label [nzSpan]="6" nzFor="duration">Duration</nz-form-label>
+            <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
+              <input nz-input formControlName="duration"/>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item *ngIf="(reason.invalid || deferralStatus.invalid)">
+            <nz-form-control>
+              <div class="error-message">Please fill in all required fields.</div>
+            </nz-form-control>
+          </nz-form-item>
+
+        </div>
+        <!--------------------------------------------   If NO Ended  ------------------------------------------------->
+
+        <nz-form-item [nzJustify]="'center'">
+          <nz-button-group>
+            <button nz-button nzType="primary" type="button" (click)="previousPage()" class="page-btn">
+              <span nz-icon nzType="left"></span>
+              Back
+            </button>
+            <button nz-button nzType="primary" type="submit">
+              Next
+              <span nz-icon nzType="right"></span>
+            </button>
+          </nz-button-group>
+        </nz-form-item>
+      </form>
+    </div>
+
+    <!--------------------------------------------- Page 3 ------------------------------------------------------------>
+    <div *ngIf="currentPage === 3">
+      <i>During Blood Donation Process</i><br/><br/>
+      <form nz-form [formGroup]="third" class="login-form" (ngSubmit)="confirm()">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="venepuncture">Venepuncture Performed By</nz-form-label>
+          <nz-form-control [nzSpan]="8">
+            <input nz-input formControlName="venepuncture"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--        Radio Button-->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="isGiven">Anaesthetic Given?</nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-radio-group formControlName="isGiven">
+              <label nz-radio nzValue="yes">Yes</label>
+              <label nz-radio nzValue="no">No</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--       Time Picker-->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="timeStart">Time Donation Started<span style="color: red"> *</span>
+          </nz-form-label>
+          <nz-form-control [nzSpan]="4" [nzErrorTip]="confirmErrorTip">
+            <input nz-input formControlName="timeStart" placeholder="hh:mm"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--        Radio Button-->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="isTaken">Sample Taken?<span style="color: red"> *</span></nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-radio-group formControlName="isTaken">
+              <label nz-radio nzValue="yes">Yes</label>
+              <label nz-radio nzValue="no">No</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!--        Time Picker-->
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="timeEnd">Time Donation Ended<span style="color: red"> *</span>
+          </nz-form-label>
+          <nz-form-control [nzSpan]="4" [nzErrorTip]="confirmErrorTip">
+            <input nz-input formControlName="timeEnd" placeholder="hh:mm"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="remainingBarcodes">Remaining Barcodes</nz-form-label>
+          <nz-form-control [nzSpan]="6" [nzErrorTip]="confirmErrorTip">
+            <input nz-input formControlName="remainingBarcodes"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="6" nzFor="notes">Notes / Comment (if any)</nz-form-label>
+          <nz-form-control [nzSpan]="12">
+            <textarea rows="2" nz-input formControlName="notes"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item [nzJustify]="'center'">
+          <button nz-button nzType="primary" type="button" (click)="previousPage()" class="page-btn">
+            <span nz-icon nzType="left"></span>
+            Back
+          </button>
+
+          <button nz-button nzType="primary" nzSize="default" type="button" (click)="confirm()">
+            Confirm
+          </button>
+        </nz-form-item>
+      </form>
+    </div>
+
+    <!-------------------------------------------------    Overview--------------------------------------------------->
+    <div *ngIf="currentPage === 4">
+      <nz-list nzHeader="Confirmation" style="padding: 12px 68px">
+        <nz-list-item *ngFor="let item of getFormFields()">
+          <span nz-typography style="font-weight: bold">{{ item.label }}</span>
+          <span style="text-align: left">{{ item.value }}</span>
+        </nz-list-item>
+      </nz-list>
+
+      <nz-divider></nz-divider>
+
+      <div *ngIf="second.value.doubleCheckE === 'yes'">
+        <nz-list style="padding: 12px 68px">
+          <nz-list-item *ngFor="let item of getSubFormFields()">
+            <span nz-typography style="font-weight: bold">{{ item.label }}</span>
+            <span style="text-align: left">{{ item.value }}</span>
+          </nz-list-item>
+        </nz-list>
+      </div>
+
+      <div *ngIf="second.value.doubleCheckE === 'no'">
+        <nz-list style="padding: 12px 68px">
+          <nz-list-item *ngFor="let item of getSub2FormFields()">
+            <span nz-typography style="font-weight: bold">{{ item.label }}</span>
+            <span style="text-align: left">{{ item.value }}</span>
+          </nz-list-item>
+        </nz-list>
+      </div>
+
+      <nz-divider></nz-divider>
+      <nz-list nzHeader="Confirmation" style="padding: 12px 68px">
+        <nz-list-item *ngFor="let item of getContFormFields()">
+          <span nz-typography style="font-weight: bold">{{ item.label }}</span>
+          <span style="text-align: left">{{ item.value }}</span>
+        </nz-list-item>
+      </nz-list>
+
+      <div class="submit-div">
+        <nz-button-group>
+          <button nz-button nzType="primary" type="button" (click)="previousPage()" class="page-btn">
+            <span nz-icon nzType="left"></span>
+            Edit
+          </button>
+          <button nz-button nzType="primary" type="submit" (click)="submit()" [nzLoading]="loadingSubmit">
+            Submit
+          </button>
+        </nz-button-group>
+      </div>
+    </div>
+
+    <!-------------------------------------------------    Result  --------------------------------------------------->
+
+    <div *ngIf="currentPage === 5">
+      <nz-result
+        nzStatus="success"
+        nzTitle="Record Successfully Created!"
+      >
+        <div nz-result-extra>
+          <button nz-button nzType="primary" type="button" (click)="new()">Create New Record</button>
+          <a routerLink="../main-page"><button nz-button type="button">Back To Home</button></a>
+        </div>
+      </nz-result>
+    </div>
+
+    <ng-template #confirmErrorTip let-i>
+      <ng-container *ngIf="i.errors?.required">This fill is required</ng-container>
+      <ng-container *ngIf="i.errors?.pattern">Wrong format</ng-container>
+      <!--      <ng-container *ngIf="i.errors?.matchControl">The confirm password does not match</ng-container>-->
+    </ng-template>
+  </nz-content>
+
+</nz-layout>
+<nz-footer>eDonor - Empowering blood donation for a healthier world.</nz-footer>

@@ -20,6 +20,10 @@ export class StaffService {
     return this.http.get(`${this.baseUrl}/search-donor?id=${id}`);
   }
 
+  getStaffInfo(id:string) {
+    return this.http.get(this.baseUrl + "/" + id);
+  }
+
   // addDonor(donor: Donor) {
   //   console.log(donor);
   //   console.log(this.baseUrl);

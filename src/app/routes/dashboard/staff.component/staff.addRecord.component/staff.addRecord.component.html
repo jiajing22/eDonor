@@ -1,11 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<navbar-layout-basic></navbar-layout-basic>
+<nz-layout class="layout">
+  <nz-sider>
+    <ul nz-menu nzTheme="light" nzMode="inline">
+      <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
+        <ul>
+          <a routerLink="../staffAcc">
+            <li nz-menu-item>Profile</li>
+          </a>
+          <a routerLink="../staffAcc">
+            <li nz-menu-item>Edit Profile</li>
+          </a>
+        </ul>
+      </li>
 
-Nineteen Kitsch
-</body>
-</html>
+      <a routerLink="../staffSearch">
+        <li nz-menu-item>
+          <span nz-icon nzType="search"></span>
+          <span>Search Donor</span>
+        </li>
+      </a>
+
+      <li nz-menu-item nzSelected>
+        <span nz-icon nzType="form"></span>
+        <span>Insert New Record</span>
+      </li>
+
+      <a routerLink="../staffPost">
+        <li nz-menu-item>
+          <span nz-icon nzType="upload"></span>
+          <span>Upload New Post</span>
+        </li>
+      </a>
+
+    </ul>
+  </nz-sider>
+  <nz-layout class="right-layout">
+    <nz-content>
+      <h3>Insert New Record</h3><br/>
+      <form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submit()">
+
+        <nz-form-item [nzJustify]="'center'" class="form-item">
+          <nz-form-label [nzSpan]="4" nzFor="staffId">Staff ID</nz-form-label>
+          <nz-form-control nzErrorTip="Please enter your Staff ID">
+            <input nz-input formControlName="staffId"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item [nzJustify]="'center'" class="form-item">
+          <nz-form-label [nzSpan]="4" nzFor="password">Password</nz-form-label>
+          <nz-form-control nzErrorTip="Please enter your password">
+            <nz-input-group [nzSuffix]="suffixTemplate">
+              <input [type]="passwordVisible ? 'text' : 'password'" nz-input type="password" formControlName="password"/>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item [nzJustify]="'center'">
+          <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading">
+            Confirm
+          </button>
+        </nz-form-item>
+
+      </form>
+
+      <ng-template #suffixTemplate>
+      <span
+        nz-icon
+        [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+        (click)="passwordVisible = !passwordVisible"
+      ></span>
+      </ng-template>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

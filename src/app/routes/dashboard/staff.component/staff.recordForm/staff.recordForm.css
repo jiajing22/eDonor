@@ -1,0 +1,47 @@
+.login-form{
+  width: 80%;
+  margin: auto;
+}
+
+nz-layout{
+  margin: 0 108px 48px;
+  padding-top: 24px;
+}
+
+.page-btn{
+  margin-right: 40vh;
+}
+
+
+i{
+  padding-left: 128px;
+}
+
+.multiple{
+  line-height: 32px;
+}
+
+nz-footer{
+  background-color: #001529;
+  color: white;
+  text-align: center;
+}
+
+nz-form-label{
+  font-weight: bold;
+}
+
+.submit-div{
+  padding: 5vh;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.header{
+  padding: 24px 24px 12px 108px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}

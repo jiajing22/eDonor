@@ -24,7 +24,6 @@ export class DonorAccount implements OnInit {
 
   sKey = "x^XICt8[Lp'Gm<8";
   donor: any;
-  // example: string =" ";
   decryptedId: string = "";
 
   ngOnInit(): void {

@@ -1,0 +1,12 @@
+.inner{
+  padding:20px 32px;
+}
+
+.item{
+  font-weight: 300;
+}
+
+.layout{
+  min-height: 88vh;
+}
+

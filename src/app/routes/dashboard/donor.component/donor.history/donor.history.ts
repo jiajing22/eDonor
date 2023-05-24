@@ -10,11 +10,11 @@ import {StaffService} from "../../../../shared/services/staff.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-staff-add-record-component',
-  templateUrl: './staff.addRecord.component.html',
-  styleUrls: ['./staff.addRecord.component.css']
+  selector: 'app-donor-view-history-component',
+  templateUrl: './donor.history.html',
+  styleUrls: ['./donor.history.css']
 })
-export class StaffAddRecordComponent {
+export class DonorHistory {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

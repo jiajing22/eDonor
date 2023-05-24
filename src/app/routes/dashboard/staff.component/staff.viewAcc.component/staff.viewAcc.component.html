@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
-Staff profile
-</body>
-</html>
+<navbar-layout-basic></navbar-layout-basic>
+<nz-layout class="layout">
+  <nz-sider>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
+        <ul>
+          <li nz-menu-item>Profile</li>
+          <li nz-menu-item>Edit Profile</li>
+        </ul>
+      </li>
+
+      <a routerLink="../staffSearch"><li nz-menu-item>
+        <span nz-icon nzType="search"></span>
+        <span>Search Donor</span>
+      </li></a>
+
+      <a routerLink="../staffAdd"><li nz-menu-item>
+        <span nz-icon nzType="form"></span>
+        <span>Insert New Record</span>
+      </li></a>
+
+      <a routerLink="../staffPost"><li nz-menu-item>
+        <span nz-icon nzType="upload"></span>
+        <span>Upload New Post</span>
+      </li></a>
+
+    </ul>
+  </nz-sider>
+  <nz-layout class="right-layout">
+    <nz-content class="inner">
+      <nz-descriptions nzTitle="My Account" nzBordered [nzColumn]="1" [nzSize]="'middle'">
+        <nz-descriptions-item nzTitle="Full Name">{{ staff?.fullName }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Gender">{{ staff?.gender }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Email Address">{{ staff?.email }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Staff ID">{{ staff?.staffId }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Position">{{ staff?.staffPosition }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Department Area">{{ staff?.deptArea }}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Department Name">{{ staff?.deptName }}</nz-descriptions-item>
+      </nz-descriptions>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

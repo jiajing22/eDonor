@@ -4,23 +4,26 @@
     <ul nz-menu nzTheme="dark" nzMode="inline">
       <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
         <ul>
-          <li nz-menu-item>Profile</li>
+          <a routerLink="../staffAcc"><li nz-menu-item>Profile</li></a>
           <li nz-menu-item>Edit Profile</li>
         </ul>
       </li>
 
-      <li nz-menu-item>
+      <a routerLink="../staffSearch"><li nz-menu-item>
         <span nz-icon nzType="search"></span>
         <span>Search Donor</span>
-      </li>
-      <li nz-menu-item>
+      </li></a>
+
+      <a routerLink="../staffAdd"><li nz-menu-item>
         <span nz-icon nzType="form"></span>
         <span>Insert New Record</span>
-      </li>
-      <li nz-menu-item>
+      </li></a>
+
+      <a routerLink="../staffPost"><li nz-menu-item>
         <span nz-icon nzType="upload"></span>
         <span>Upload New Post</span>
-      </li>
+      </li></a>
+
     </ul>
   </nz-sider>
   <nz-layout class="right-layout">

@@ -36,6 +36,7 @@ export class DonorEditProfile implements OnInit {
   passwordVisible = false;
   newPasswordVisible = false;
 
+  //TODO: Mark dirty when submit editForm to check validation
   editForm = this.fb.nonNullable.group({
       email: [''],
       address: [''],
@@ -168,8 +169,10 @@ export class DonorEditProfile implements OnInit {
     }else{
       setTimeout(() => {
         this.message.error("Incorrect Old Password. Please try again.");
+        this.passwordForm.get('oldPass')!.setValue('');
         this.loading =  false;
       }, 1000);
+
     }
 }
 
