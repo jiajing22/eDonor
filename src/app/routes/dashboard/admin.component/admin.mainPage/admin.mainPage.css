@@ -1,0 +1,45 @@
+.inner-content {
+  background: #fff;
+  padding: 20px;
+  min-height: 280px;
+}
+nz-content {
+  padding: 0 50px;
+}
+
+.grid-item {
+  white-space: pre;
+  width: 38vh;
+  background-color: #0092ff;
+  border-radius: 4px;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 150px;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.grid-item:hover {
+  background-color: #0077cc;
+  cursor: pointer;
+  transform: translateY(-5px);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 32px;
+  justify-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .grid-item {
+    line-height: 80px;
+  }
+}
+

@@ -7,7 +7,6 @@ import { environment } from '@env/environment';
 import { LayoutBasicComponent } from '../layout/basic/basic.component';
 import { LayoutPassportComponent } from '../layout/passport/passport.component';
 // dashboard pages
-import {AdminComponent} from "./dashboard/admin.component/admin.component";
 // single pages
 import { CallbackComponent } from './passport/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
@@ -76,7 +75,18 @@ const routes: Routes = [
       // 业务子模块
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
     ]},
-  { path: 'admin', component:AdminComponent, data: { title: 'Admin Menu' } },
+  { path: 'admin',
+    component: LayoutBlankComponent,
+    children: [
+      { path: '', redirectTo: 'main', pathMatch: 'full' },
+      {
+        path: 'main',
+        loadChildren: () => import('./dashboard/admin.component/admin-routing.module').then(m => m.AdminRoutingModule),
+        data: { title: 'Admin Menu' } },
+      { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
+      // 业务子模块
+      // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
+    ]},
   { path: '**', redirectTo: 'exception/404' },
 ];
 

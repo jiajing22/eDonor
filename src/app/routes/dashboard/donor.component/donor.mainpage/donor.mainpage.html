@@ -1,15 +1,25 @@
 <navbar-layout-basic></navbar-layout-basic>
-<nz-content>
-  <div class="inner-content">
-    <nz-card class="inner-content">
-      <div class="grid-container">
-        <a routerLink="../donor-account"><div class="grid-item">View Account</div></a>
-        <a routerLink="../donate-history"><div class="grid-item">My Donation History</div></a>
-        <a><div class="grid-item">Make Appointment</div></a>
-        <a><div class="grid-item">Fill Registration Form</div></a>
-      </div>
-    </nz-card>
-  </div>
-</nz-content>
+<nz-layout class="inner-layout">
 
+  <nz-content>
+    <div class="inner-content">
+      <nz-card class="inner-content">
+        <div class="grid-container">
+          <a routerLink="../donor-account">
+            <div class="grid-item">View Account</div>
+          </a>
+          <a routerLink="../donate-history">
+            <div class="grid-item">My Donation History</div>
+          </a>
+          <a>
+            <div class="grid-item">Make Appointment</div>
+          </a>
+          <a>
+            <div class="grid-item">Fill Registration Form</div>
+          </a>
+        </div>
+      </nz-card>
+    </div>
+  </nz-content>
+</nz-layout>
 

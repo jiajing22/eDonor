@@ -1,0 +1,15 @@
+.wrapper {
+  width: 240px;
+}
+
+.whole{
+  display: inline-flex;
+}
+
+.page-content{
+  padding: 32px;
+}
+
+button {
+  margin-bottom: 12px;
+}

@@ -4,14 +4,14 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class RecordService {
+export class HistoryService {
   constructor(private http: HttpClient) {
   }
 
-  baseUrl = 'http://localhost:8080/eDonor/record';
+  baseUrl = 'http://localhost:8080/eDonor/history';
 
-  addRecord(postData: any) {
-    return this.http.post(this.baseUrl, postData);
+  getRecord(donorIc: any) {
+    return this.http.get(this.baseUrl+"/donation/"+ donorIc);
   }
 
 }

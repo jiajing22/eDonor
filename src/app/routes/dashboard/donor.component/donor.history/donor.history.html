@@ -1,11 +1,15 @@
 <navbar-layout-basic></navbar-layout-basic>
 <nz-layout class="layout">
   <nz-sider class="item">
-    <ul nz-menu nzTheme="dark" nzMode="inline">
+    <ul nz-menu nzTheme="light" nzMode="inline">
       <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
         <ul>
-          <a routerLink="../donor-account"><li nz-menu-item>Profile</li></a>
-          <a routerLink="../donor-edit"><li nz-menu-item>Edit Profile</li></a>
+          <a routerLink="../donor-account">
+            <li nz-menu-item>Profile</li>
+          </a>
+          <a routerLink="../donor-edit">
+            <li nz-menu-item>Edit Profile</li>
+          </a>
         </ul>
       </li>
 
@@ -23,4 +27,27 @@
       </li>
     </ul>
   </nz-sider>
+  <nz-layout class="right-layout">
+    <nz-content>
+      <h3>My Donation History</h3>
+      <nz-table #sortTable [nzData]="history" nzTableLayout="fixed" [nzLoading]="loading" [nzPageSize]="5">
+        <thead>
+        <tr>
+          <th *ngFor="let column of listOfColumn" [nzSortFn]="column.compare" [nzSortOrder]="'ascend'" >
+            {{ column.title }}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of sortTable.data">
+          <td>{{ data.donateDate }}</td>
+          <td>{{ data.bloodSerialNo }}</td>
+          <td>{{ data.amount }}</td>
+          <td>{{ data.dHospital }}</td>
+          <td>{{ data.recRemark ? data.recRemark : '-' }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </nz-content>
+  </nz-layout>
 </nz-layout>

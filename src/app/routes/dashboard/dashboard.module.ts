@@ -3,7 +3,6 @@ import { SharedModule } from '@shared';
 import { SHARED_ZORRO_MODULES } from "../../shared/shared-zorro.module";
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { AdminComponent } from "./admin.component/admin.component";
 import { NavbarComponent } from "./navbar.component/navbar.component";
 import { LandingPageComponent } from "./landing-page.component/landing-page.component";
 import { DonorSiderComponent} from "./donor.component/donor.sider.component/donor.sider.component";
@@ -11,7 +10,7 @@ import { CampaignComponent } from "./campaign.component/campaign.component";
 
 import {LayoutModule} from "../../layout/layout.module";
 
-const COMPONENTS = [AdminComponent, NavbarComponent,LandingPageComponent,
+const COMPONENTS = [ NavbarComponent,LandingPageComponent,
                                                   DonorSiderComponent,
                                                  CampaignComponent];
 

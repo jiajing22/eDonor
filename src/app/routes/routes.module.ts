@@ -15,6 +15,7 @@ import {StaffModule} from "./dashboard/staff.component/staff.module";
 import {UserRecoveryComponent} from "./passport/recovery/recovery.component";
 import {ChangePasswordComponent} from "./passport/change-password/change-password.component";
 import { DonorModule} from "./dashboard/donor.component/donor.module";
+import {AdminModule} from "./dashboard/admin.component/admin.module";
 
 const COMPONENTS: Array<Type<void>> = [
   // passport pages
@@ -29,7 +30,8 @@ const COMPONENTS: Array<Type<void>> = [
 ];
 
 @NgModule({
-  imports: [SharedModule, RouteRoutingModule, DashboardModule, NzRadioModule, StaffModule, DonorModule],
+  imports: [SharedModule, RouteRoutingModule, DashboardModule, NzRadioModule,
+    StaffModule, DonorModule, AdminModule],
   declarations: COMPONENTS,
 })
 export class RoutesModule {}

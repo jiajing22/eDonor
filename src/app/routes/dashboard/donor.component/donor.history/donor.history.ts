@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
@@ -8,57 +8,64 @@ import {DonorService} from "../../../../shared/services/donor.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {StaffService} from "../../../../shared/services/staff.service";
 import {Router} from "@angular/router";
+import {HistoryService} from "../../../../shared/services/history.service";
+import {History} from "../../../../shared/model/history.model";
 
 @Component({
   selector: 'app-donor-view-history-component',
   templateUrl: './donor.history.html',
   styleUrls: ['./donor.history.css']
 })
-export class DonorHistory {
+export class DonorHistory implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    private staffService: StaffService,
+    private donorService: DonorService,
+    private historyService: HistoryService,
     private message: NzMessageService,
     private router: Router,
   ) {
   }
 
-  loading= false;
+  loading = false;
   error: string = "";
   decryptedId: string = "";
+  donorIc: string = "";
   sKey = "x^XICt8[Lp'Gm<8";
   hash: string = "";
-  passwordVisible = false;
-
-  form = this.fb.nonNullable.group({
-      staffId: ['',[Validators.required]],
-      password: ['',[Validators.required]],
+  history: History[]=[];
+  listOfColumn = [
+    {
+      title: 'Donate Date',
+      compare: (a: History, b: History) => a.donateDate.localeCompare(b.donateDate),
+    },
+    {
+      title: 'Blood Serial No.',
+      compare: (a: History, b: History) => a.bloodSerialNo.localeCompare(b.bloodSerialNo),
+    },
+    {
+      title: 'Amount',
+      compare: (a: History, b: History) => a.amount - b.amount,
+    },
+    {
+      title: 'Hospital',
+      compare: (a: History, b: History) => a.dHospital.localeCompare(b.dHospital),
+    },
+    {
+      title: 'Remark',
+      compare: (a: History, b: History) => {
+        const remarkA = a.recRemark || '';
+        const remarkB = b.recRemark || '';
+        return remarkA.localeCompare(remarkB);
+      },
     }
-  );
+  ];
 
-  get id(): AbstractControl {
-    return this.form.get('staffId')!;
-  }
 
-  get pw(): AbstractControl {
-    return this.form.get('password')!;
-  }
-
-  submit():void{
-    this.error = '';
-    Object.keys(this.form.controls).forEach(key => {
-      const control = (this.form.controls as NzSafeAny)[key] as AbstractControl;
-      control.markAsDirty();
-      control.updateValueAndValidity();
-    });
-    if (this.form.invalid) {
-      return;
-    }
-    this.loading =  true;
+  ngOnInit() {
+    this.loading = true;
     let sessionItem = sessionStorage.getItem('userId');
-    this.hash = CryptoJS.SHA256(this.pw.value).toString();
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
@@ -66,37 +73,24 @@ export class DonorHistory {
       console.log('Encrypted message not found.');
     }
 
-    if (this.decryptedId === this.id.value ){
-      this.staffService.getStaffInfo(this.decryptedId)
+    this.donorService.getDonorInfo(this.decryptedId)
+      .pipe(
+        catchError(err => {
+          this.message.error(err.error);
+          return throwError(err);
+        })
+      ).subscribe((res: any) => {
+      this.historyService.getRecord(res.userId)
         .pipe(
           catchError(err => {
             this.message.error(err.error);
             return throwError(err);
           })
-        )
-        .subscribe((res: any) => {
-
-          if (this.hash === res.password){
-            this.router.navigate(['/staff/main/recordForm']);
-            setTimeout(() => {
-              this.cdr.detectChanges();
-            }, 1000);
-
-          } else {
-            this.message.error('Wrong Password!');
-            this.loading=false;
-
-          }
-        });
-
-    } else {
-      this.message.error('Wrong Staff ID!');
-      this.loading=false;
-      setTimeout(() => {
-        this.cdr.detectChanges();
-      }, 1000);
-
-    }
+        ).subscribe((res: any) => {
+          this.history = res;
+          this.loading= false;
+      })
+    })
   }
 
 }
