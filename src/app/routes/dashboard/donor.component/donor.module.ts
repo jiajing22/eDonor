@@ -9,9 +9,13 @@ import { DonorMainpage } from "./donor.mainpage/donor.mainpage";
 import { DonorAccount } from "./donor.account/donor.account";
 import { DonorEditProfile } from "./donor.edit-profile/donor.edit-profile";
 import { DonorHistory } from "./donor.history/donor.history";
+import { DonorSiderComponent } from "./donor.sider.component/donor.sider.component";
+import { DonorAppointment } from "./donor.appointment/donor.appointment";
+import { DonorAppointmentHistory } from "./donor.appointment-history/donor.appointment-history";
 
 const COMPONENTS =
-  [DonorMainpage, DonorAccount, DonorEditProfile, DonorHistory ];
+  [DonorMainpage, DonorAccount, DonorEditProfile, DonorHistory, DonorSiderComponent,
+    DonorAppointment, DonorAppointmentHistory ];
 
 @NgModule({
   imports: [

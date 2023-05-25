@@ -38,6 +38,23 @@
           </nz-form-control>
         </nz-form-item>
 
+        <nz-form-item>
+          <nz-form-label [nzSpan]="8" nzFor="workStart">Working Hour</nz-form-label>
+          <nz-form-control [nzSpan]="6" [nzErrorTip]="confirmErrorTip">
+            <nz-select formControlName="workStart">
+              <nz-option *ngFor="let option of timeSlotsOptions" [nzValue]="option.value"
+                         [nzLabel]="option.label"></nz-option>
+            </nz-select>
+          </nz-form-control>
+          <span>&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+          <nz-form-control [nzSpan]="6" [nzErrorTip]="confirmErrorTip">
+            <nz-select formControlName="workEnd">
+              <nz-option *ngFor="let option of timeSlotsOptions" [nzValue]="option.value"
+                         [nzLabel]="option.label"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
       </form>
     </div>
     <div *nzModalFooter>

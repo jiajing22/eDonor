@@ -6,28 +6,44 @@ import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 @Component({
   selector: 'donor-sidebar',
   templateUrl: './donor.sider.component.html',
-  // styleUrls: [''],
+  styleUrls: ['./donor.sider.component.css'],
 })
-export class DonorSiderComponent implements OnInit{
+export class DonorSiderComponent{
 
   constructor(
     private settings: SettingsService,
     private router: Router,
-    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-    private route: ActivatedRoute
   ) {
   }
 
-  loggedIn: boolean = false;
+  isCollapsed = false;
 
-  ngOnInit(): void {
-    this.loggedIn = localStorage.getItem('userType') != null;
+  toggleCollapsed(): void {
+    this.isCollapsed = !this.isCollapsed;
   }
 
-  logout(): void{
-    localStorage.removeItem('userType');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('status');
-    this.router.navigateByUrl('/dashboard/landing');
+  redirect(destination: string){
+    switch (destination) {
+      case 'home':
+        this.router.navigate(['/donorMenu/main/main-page']);
+        break;
+      case 'profile':
+        this.router.navigate(['/donorMenu/main/donor-account']);
+        break;
+      case 'edit':
+        this.router.navigate(['/donorMenu/main/donor-edit']);
+        break;
+      case 'history':
+        this.router.navigate(['/donorMenu/main/donate-history']);
+        break;
+      case 'appointment':
+        this.router.navigate(['/donorMenu/main/appointment']);
+        break;
+      case 'form':
+        this.router.navigate(['/donorMenu/main/regform']);
+        break;
+      default:
+        break;
+    }
   }
 }

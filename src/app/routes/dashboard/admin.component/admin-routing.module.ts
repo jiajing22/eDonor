@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'manage-bdcentre', component: AdminManageBdcentre, data: { title: 'Manage Centre' } },
   { path: 'sider', component: AdminSider, data: { title: 'Manage Record' } },
   // { path: 'donor-edit', component: DonorEditProfile, data: { title: 'Account' } },
-  // { path: 'donate-history', component: DonorHistory, data: { title: 'History' } },
+  // { path: 'donate-history', component: DonorAppointment, data: { title: 'History' } },
   // { path: 'staffAdd', component: StaffAddRecordComponent },
   // { path: 'staffPost', component: StaffNewPostComponent }
 ];

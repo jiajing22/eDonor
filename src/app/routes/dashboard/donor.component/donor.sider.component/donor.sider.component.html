@@ -1,33 +1,67 @@
-<nz-layout class="layout">
-  <nz-sider>
-    <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
+<div class="whole">
+  <div class="wrapper">
+    <button nz-button nzType="primary" (click)="toggleCollapsed()">
+      <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+    </button>
+    <ul nz-menu nzMode="inline" nzTheme="light" [nzInlineCollapsed]="isCollapsed">
+
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? 'Home' : ''"
+        (click)="redirect('home')"
+      >
+        <span nz-icon nzType="home"></span>
+        <span>Back To Home</span>
+      </li>
+
+      <li
+        nz-submenu
+        nzTitle="Profile"
+        nzIcon="user">
         <ul>
-          <li nz-menu-item>Profile</li>
-          <li nz-menu-item>Edit Profile</li>
+          <li nz-menu-item (click)="redirect('profile')">View Profile</li>
+          <li nz-menu-item (click)="redirect('edit')">Edit Profile</li>
         </ul>
       </li>
 
-      <li nz-menu-item>
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? 'Donation History' : ''"
+        (click)="redirect('history')"
+      >
         <span nz-icon nzType="history"></span>
-        <span>Blood Donation History</span>
+        <span>Donation History</span>
       </li>
-      <li nz-menu-item>
+
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? 'Appointment' : ''"
+        (click)="redirect('appointment')"
+      >
         <span nz-icon nzType="calendar"></span>
         <span>Appointment</span>
       </li>
-      <li nz-menu-item>
+
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? 'Registration Form' : ''"
+        (click)="redirect('form')"
+      >
         <span nz-icon nzType="form"></span>
         <span>Registration Form</span>
       </li>
-    </ul>
-  </nz-sider>
-  <nz-layout class="right-layout">
-    <nz-content>
-      <div class="inner-content">
 
-      </div>
-    </nz-content>
-    <nz-footer></nz-footer>
-  </nz-layout>
-</nz-layout>
+    </ul>
+  </div>
+  <div class="page-content">
+    <ng-content></ng-content> <!-- Render the provided page content here -->
+  </div>
+</div>

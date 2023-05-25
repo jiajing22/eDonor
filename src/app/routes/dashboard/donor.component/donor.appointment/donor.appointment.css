@@ -1,0 +1,14 @@
+.form{
+  min-width: 124vh;
+  padding: 18px;
+}
+
+.history-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+h4{
+  color: #2b4acb;
+}

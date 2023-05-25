@@ -53,12 +53,17 @@ export class AdminManageBdcentre implements OnInit {
 
   stateOptions = this.states.map(state => ({value: state, label: state}));
 
+  timeSlots: string[] = this.generateTimeSlots();
+  timeSlotsOptions = this.timeSlots.map(timeSlots=>({value:timeSlots, label: timeSlots}));
+
   addNewForm = this.fb.nonNullable.group(
     {
       name: ['', Validators.required],
       state: ['', Validators.required],
       phone: ['', Validators.required],
       address: ['', Validators.required],
+      workStart: ['', Validators.required],
+      workEnd: ['', Validators.required],
     }
   );
 
@@ -78,6 +83,19 @@ export class AdminManageBdcentre implements OnInit {
       this.list = res;
       this.loading = false;
     });
+  }
+
+  generateTimeSlots(): string[] {
+    const startTime = 7;
+    const endTime = 22;
+
+    const timeSlots: string[] = [];
+    for (let hour = startTime; hour < endTime; hour++) {
+      for (const minute of ['00', '30']) {
+        timeSlots.push(`${hour.toString().padStart(2, '0')}:${minute}`);
+      }
+    }
+    return timeSlots;
   }
 
   showModal() {
@@ -108,7 +126,9 @@ export class AdminManageBdcentre implements OnInit {
       centreName: this.addNewForm.get('name')?.value,
       centreState: this.addNewForm.get('state')?.value,
       centrePhone: this.addNewForm.get('phone')?.value,
-      cAddress: this.addNewForm.get('address')?.value
+      cAddress: this.addNewForm.get('address')?.value,
+      workHourStart: this.addNewForm.get('workStart')?.value,
+      workHourEnd: this.addNewForm.get('workEnd')?.value,
     }
 
     if (this.isEdit) {
@@ -165,6 +185,8 @@ export class AdminManageBdcentre implements OnInit {
           state: res.centreState,
           phone: res.centrePhone,
           address: res.cAddress,
+          workStart: res.workHourStart,
+          workEnd: res.workHourEnd,
         });
       });
   }
