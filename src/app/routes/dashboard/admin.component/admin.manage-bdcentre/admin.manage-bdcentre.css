@@ -1,0 +1,12 @@
+.content {
+  width: 700px;
+  margin: auto;
+}
+
+.form{
+  padding-right: 24px;
+}
+
+.action-btn{
+  display: flex;
+}

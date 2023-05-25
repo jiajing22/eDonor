@@ -2,10 +2,11 @@
   <nz-header>
     <div class="logo"></div>
     <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
-      <li nz-menu-item><a routerLink="../landing">Home</a></li>
+      <li nz-menu-item><a (click)="navigate('home')">Home</a></li>
       <li nz-menu-item>About Blood Donation</li>
       <li nz-menu-item><a routerLink="../campaign">Campaign/Activity</a></li>
       <li nz-menu-item>Blood Donation Centre</li>
+      <li *ngIf="loggedIn" nz-menu-item><a (click)="dashboard()">Dashboard</a></li>
       <li nz-menu-item class="signIn" *ngIf="!loggedIn"><a routerLink="../login">Sign In</a></li>
       <li nz-menu-item class="signIn" *ngIf="loggedIn" (click)="logout()">Logout</li>
     </ul>

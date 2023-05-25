@@ -1,4 +1,98 @@
 <navbar-layout-basic></navbar-layout-basic>
 <app-admin-sider-component>
-  this is bdcentre page
+  <h3>Blood Centre Info</h3>
+  <button style="margin-bottom: 12px" nz-button nzType="primary" type="button" (click)="showModal()">Add Record</button>
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Insert New Blood Centre" (nzOnCancel)="handleCancel()">
+    <div *nzModalContent>
+      <form nz-form [formGroup]="addNewForm" class="form">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="8" nzFor="name">Blood Centre Name</nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <input nz-input formControlName="name"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="8" nzFor="state">Located State</nz-form-label>
+          <nz-form-control [nzSpan]="10" [nzErrorTip]="confirmErrorTip">
+            <nz-select formControlName="state">
+              <nz-option *ngFor="let option of stateOptions" [nzValue]="option.value"
+                         [nzLabel]="option.label"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="8" nzFor="phone">Phone Number</nz-form-label>
+          <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
+            <input nz-input formControlName="phone"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSpan]="8" nzFor="address">Centre Address</nz-form-label>
+          <nz-form-control [nzErrorTip]="confirmErrorTip">
+            <nz-textarea-count [nzMaxCharacterCount]="100">
+              <textarea rows="3" nz-input formControlName="address"></textarea>
+            </nz-textarea-count>
+          </nz-form-control>
+        </nz-form-item>
+
+      </form>
+    </div>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+      <button *ngIf="!isEdit" nz-button nzType="primary" type="submit" (click)="handleOk()" [nzLoading]="isConfirmLoading">Add</button>
+      <button
+        *ngIf="isEdit"
+        nz-button nzType="primary" type="submit" (click)="handleOk()"
+        [nzLoading]="isUpdateLoading">
+        Update
+      </button>
+    </div>
+  </nz-modal>
+  <nz-table #basicTable [nzData]="list" [nzLoading]="loading">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>State</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.centreId }}</td>
+      <td>{{ data.centreName }}</td>
+      <td>{{ data.centreState }}</td>
+      <td>{{ data.centrePhone }}</td>
+      <td>{{ data.cAddress }}</td>
+      <td>
+        <div class="action-btn">
+          <button nz-button nzType="link" nzSize="small" (click)="edit(data.centreId)">
+            <span nz-icon nzType="edit" nzTheme="twotone"></span>
+          </button>
+
+          <a
+            nz-popconfirm
+            nzPopconfirmTitle="Are you sure delete this task?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="delete(data.centreId)"
+          >
+            <span nz-icon nzType="delete" nzTheme="twotone"></span>
+          </a>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <ng-template #confirmErrorTip let-i>
+    <ng-container *ngIf="i.errors?.required">This fill is required</ng-container>
+    <ng-container *ngIf="i.errors?.pattern">Wrong format</ng-container>
+    <!--      <ng-container *ngIf="i.errors?.matchControl">The confirm password does not match</ng-container>-->
+  </ng-template>
+
 </app-admin-sider-component>
