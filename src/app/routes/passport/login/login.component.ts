@@ -45,16 +45,6 @@ export class UserLoginComponent implements OnDestroy {
     });
   }
 
-  // #region fields
-
-  // form = this.fb.nonNullable.group({
-  //   userName: ['', Validators.required],
-  //   password: ['', Validators.required],
-  //   // mobile: ['', [Validators.required, Validators.pattern(/^1\d{10}$/)]],
-  //   // captcha: ['', [Validators.required]],
-  //   remember: [true]
-  // });
-
   get userName(): AbstractControl {
     return this.form.get('userName')!;
   }
@@ -159,6 +149,7 @@ export class UserLoginComponent implements OnDestroy {
         .subscribe((res:any) => {
           var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
           sessionStorage.setItem('userId', encrypted);
+          sessionStorage.setItem('userType', 'Donor');
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
@@ -188,6 +179,7 @@ export class UserLoginComponent implements OnDestroy {
         .subscribe((res:any) => {
           var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
           sessionStorage.setItem('userId', encrypted);
+          sessionStorage.setItem('userType', 'Staff');
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
@@ -216,6 +208,7 @@ export class UserLoginComponent implements OnDestroy {
         .subscribe((res:any) => {
           var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
           sessionStorage.setItem('userId', encrypted);
+          sessionStorage.setItem('userType', 'Admin');
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {

@@ -2,6 +2,7 @@ import {Component, Inject, Input, OnInit, Output, TemplateRef} from '@angular/co
 import {SettingsService, User} from '@delon/theme';
 import {ActivatedRoute, Router} from "@angular/router";
 import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'donor-sidebar',
@@ -9,11 +10,16 @@ import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
   styleUrls: ['./donor.sider.component.css'],
 })
 export class DonorSiderComponent{
-
+  isSmallScreen: boolean = false;
   constructor(
     private settings: SettingsService,
     private router: Router,
+    private breakpointObserver: BreakpointObserver
   ) {
+    this.breakpointObserver.observe([Breakpoints.Small])
+      .subscribe(result => {
+        this.isSmallScreen = result.matches;
+      });
   }
 
   isCollapsed = false;
@@ -37,7 +43,7 @@ export class DonorSiderComponent{
         this.router.navigate(['/donorMenu/main/donate-history']);
         break;
       case 'appointment':
-        this.router.navigate(['/donorMenu/main/appointment']);
+        this.router.navigate(['/donorMenu/main/appointment-history']);
         break;
       case 'form':
         this.router.navigate(['/donorMenu/main/regform']);

@@ -2,16 +2,6 @@
   <h2>Login</h2>
   <form nz-form [formGroup]="form" (ngSubmit)="submit()" role="form">
     <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
-    <!--        <nz-form-item>-->
-    <!--          <nz-form-label >Login As</nz-form-label>-->
-    <!--          <nz-form-control >-->
-    <!--            <nz-radio-group [(ngModel)]="userType" [ngModelOptions]="{standalone:true}">-->
-    <!--              <label nz-radio-button [nzValue]="0" >Donor</label>-->
-    <!--              <label nz-radio-button [nzValue]="1">Staff</label>-->
-    <!--              <label nz-radio-button [nzValue]="2">Admin</label>-->
-    <!--            </nz-radio-group>-->
-    <!--          </nz-form-control>-->
-    <!--        </nz-form-item>-->
     <nz-form-item>
       <nz-form-control [nzErrorTip]="userNameError">
         <nz-input-group nzSize="large" nzPrefixIcon="user">
@@ -37,12 +27,6 @@
         <a routerLink="/passport/recovery">Forget Password</a>
       </nz-col>
     </nz-form-item>
-
-    <!--    <nz-form-item>-->
-    <!--      <nz-col [nzSpan]="12">-->
-    <!--        <label nz-checkbox formControlName="remember">{{ 'app.login.remember-me' | i18n }}</label>-->
-    <!--      </nz-col>-->
-    <!--    </nz-form-item>-->
     <nz-form-item>
       <button class="sbmt" nz-button type="submit" nzType="primary" nzSize="large" [nzLoading]="loading" nzBlock>
         {{ 'app.login.login' | i18n }}

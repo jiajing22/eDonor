@@ -13,3 +13,8 @@ nz-content {
   min-height: 88vh;
   background: #fff;
 }
+.history-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}

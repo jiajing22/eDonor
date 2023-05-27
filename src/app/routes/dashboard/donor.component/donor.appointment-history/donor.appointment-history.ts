@@ -10,6 +10,8 @@ import {StaffService} from "../../../../shared/services/staff.service";
 import {Router} from "@angular/router";
 import {HistoryService} from "../../../../shared/services/history.service";
 import {History} from "../../../../shared/model/history.model";
+import {AppointmentService} from "../../../../shared/services/appointment.service";
+import {Appointment} from "../../../../shared/model/appointment.model";
 
 @Component({
   selector: 'app-donor-view-history-component',
@@ -22,7 +24,7 @@ export class DonorAppointmentHistory implements OnInit {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
-    private historyService: HistoryService,
+    private appointmentService: AppointmentService,
     private message: NzMessageService,
     private router: Router,
   ) {
@@ -34,32 +36,12 @@ export class DonorAppointmentHistory implements OnInit {
   donorIc: string = "";
   sKey = "x^XICt8[Lp'Gm<8";
   hash: string = "";
-  history: History[]=[];
+  appointmentList: Appointment[]=[];
   listOfColumn = [
-    {
-      title: 'Donate Date',
-      compare: (a: History, b: History) => a.donateDate.localeCompare(b.donateDate),
-    },
-    {
-      title: 'Blood Serial No.',
-      compare: (a: History, b: History) => a.bloodSerialNo.localeCompare(b.bloodSerialNo),
-    },
-    {
-      title: 'Amount',
-      compare: (a: History, b: History) => a.amount - b.amount,
-    },
-    {
-      title: 'Hospital',
-      compare: (a: History, b: History) => a.dHospital.localeCompare(b.dHospital),
-    },
-    {
-      title: 'Remark',
-      compare: (a: History, b: History) => {
-        const remarkA = a.recRemark || '';
-        const remarkB = b.recRemark || '';
-        return remarkA.localeCompare(remarkB);
-      },
-    }
+    {title: 'Appointment Date'},
+    {title: 'Location'},
+    {title: 'Time'},
+    {title: 'Status'},
   ];
 
 
@@ -80,14 +62,17 @@ export class DonorAppointmentHistory implements OnInit {
           return throwError(err);
         })
       ).subscribe((res: any) => {
-      this.historyService.getRecord(res.userId)
+        let postData = {
+          donorId : res.userId
+        }
+      this.appointmentService.getAppointmentByUser(postData)
         .pipe(
           catchError(err => {
             this.message.error(err.error);
             return throwError(err);
           })
         ).subscribe((res: any) => {
-          this.history = res;
+          this.appointmentList = res;
           this.loading= false;
       })
     })

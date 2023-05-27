@@ -167,6 +167,7 @@ export class DonorAppointment implements OnInit {
   handleCancel(){
     this.isVisible = false;
     this.isConfirmVisible = false;
+    this.bookLoading = false;
   }
 
   handleOk(){

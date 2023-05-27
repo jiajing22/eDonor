@@ -1,9 +1,9 @@
 <div class="whole">
   <div class="wrapper">
-    <button nz-button nzType="primary" (click)="toggleCollapsed()">
+    <button nz-button nzType="text" class="menu-btn" (click)="toggleCollapsed()">
       <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
     </button>
-    <ul nz-menu nzMode="inline" nzTheme="light" [nzInlineCollapsed]="isCollapsed">
+    <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
 
       <li
         nz-menu-item

@@ -14,4 +14,8 @@ export class AppointmentService {
     return this.http.post(this.baseUrl, postData, { responseType: 'text' });
   }
 
+  getAppointmentByUser(postData:any){
+    return this.http.post(this.baseUrl + '-list', postData);
+  }
+
 }

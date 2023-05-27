@@ -1,14 +1,52 @@
-<nz-layout>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<nz-layout class="main-layout">
   <nz-header>
     <div class="logo"></div>
-    <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
-      <li nz-menu-item><a (click)="navigate('home')">Home</a></li>
-      <li nz-menu-item>About Blood Donation</li>
-      <li nz-menu-item><a routerLink="../campaign">Campaign/Activity</a></li>
-      <li nz-menu-item>Blood Donation Centre</li>
-      <li *ngIf="loggedIn" nz-menu-item><a (click)="dashboard()">Dashboard</a></li>
-      <li nz-menu-item class="signIn" *ngIf="!loggedIn"><a routerLink="../login">Sign In</a></li>
-      <li nz-menu-item class="signIn" *ngIf="loggedIn" (click)="logout()">Logout</li>
+    <ul nz-menu nzMode="horizontal" class="header-menu">
+      <a (click)="navigate('home')">
+        <li nz-menu-item>Home</li>
+      </a>
+
+      <a (click)="navigate('home')">
+        <li nz-menu-item>About Blood Donation</li>
+      </a>
+
+      <a routerLink="../campaign">
+        <li nz-menu-item>Campaign/Activity</li>
+      </a>
+
+      <a (click)="navigate('home')">
+        <li nz-menu-item>Blood Donation Centre</li>
+      </a>
+
+      <a *ngIf="loggedIn" (click)="dashboard()">
+        <li nz-menu-item>Dashboard</li>
+      </a>
+
+      <div *ngIf="loggedIn" class="signIn">
+        <div style="display: flex">
+          <span style="margin-right: 2vh; color: white;">Welcome, {{role}}</span>
+          <li nz-submenu nzIcon="user" nzPlacement="bottomRight">
+            <ul>
+              <li nz-menu-item>View Profile</li>
+              <a (click)="logout()" style="color: black;"><li nz-menu-item>Sign Out</li></a>
+            </ul>
+        </div>
+      </div>
+
+      <!--      <a *ngIf="loggedIn" (click)="logout()" class="signIn">-->
+      <!--        <li nz-menu-item>-->
+      <!--        <span nz-icon nzType="user" nzTheme="outline">-->
+      <!--         Welcome,-->
+      <!--        </span>-->
+      <!--        </li>-->
+      <!--      </a>-->
+
+      <a *ngIf="!loggedIn" (click)="navigate('login')" class="signIn" style="padding-left: 55vh">
+        <li nz-menu-item>Sign In</li>
+      </a>
+
+
     </ul>
   </nz-header>
 </nz-layout>

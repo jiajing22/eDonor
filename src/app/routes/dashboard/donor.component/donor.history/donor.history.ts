@@ -3,7 +3,7 @@ import {AbstractControl, FormBuilder, Validators} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
 import * as CryptoJS from "crypto-js";
-import {catchError, throwError} from "rxjs";
+import {catchError, finalize, of, throwError} from "rxjs";
 import {DonorService} from "../../../../shared/services/donor.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {StaffService} from "../../../../shared/services/staff.service";
@@ -69,6 +69,7 @@ export class DonorHistory implements OnInit {
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
+      console.log(this.decryptedId)
     } else {
       console.log('Encrypted message not found.');
     }
@@ -83,14 +84,23 @@ export class DonorHistory implements OnInit {
       this.historyService.getRecord(res.userId)
         .pipe(
           catchError(err => {
-            this.message.error(err.error);
+            if (err.status === 404) {
+              this.history = [];
+              this.loading = false;
+              return of(null);
+            }
             return throwError(err);
           })
         ).subscribe((res: any) => {
-          this.history = res;
-          this.loading= false;
-      })
-    })
+          if (res !== null){
+            this.history = res;
+            this.loading= false;
+          } else {
+            this.history = [];
+            this.loading= false;
+          }
+      });
+    });
   }
 
 }

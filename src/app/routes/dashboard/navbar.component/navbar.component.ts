@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit{
   loggedIn: boolean = false;
   decryptedId: string = "";
   sKey = "x^XICt8[Lp'Gm<8";
+  role: string|null = "";
 
   ngOnInit(): void {
     let sessionItem = sessionStorage.getItem('userId');
@@ -32,7 +33,9 @@ export class NavbarComponent implements OnInit{
       console.log('Encrypted message not found.');
     }
     this.loggedIn = sessionStorage.getItem('userId') != null;
-    console.log(this.decryptedId);
+    if(this.loggedIn){
+      this.role = sessionStorage.getItem('userType');
+    }
   }
 
   logout(): void{
@@ -86,6 +89,9 @@ export class NavbarComponent implements OnInit{
         break;
       case 'bloodCentre':
         this.router.navigate(['/admin/main/manage-bdcentre']);
+        break;
+      case 'login':
+        this.router.navigate(['/dashboard/login']);
         break;
       default:
         break;
