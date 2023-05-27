@@ -1,5 +1,5 @@
 <div class="whole">
-  <div class="wrapper">
+  <div class="wrapper" [ngClass]="{ 'collapsed': isCollapsed && isSmallScreen }">
     <button nz-button nzType="text" class="menu-btn" (click)="toggleCollapsed()">
       <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
     </button>

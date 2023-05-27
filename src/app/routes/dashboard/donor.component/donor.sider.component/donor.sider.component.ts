@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, Output, TemplateRef} from '@angular/core';
+import {Component, HostListener, Inject, Input, OnInit, Output, TemplateRef} from '@angular/core';
 import {SettingsService, User} from '@delon/theme';
 import {ActivatedRoute, Router} from "@angular/router";
 import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
@@ -28,6 +28,13 @@ export class DonorSiderComponent{
     this.isCollapsed = !this.isCollapsed;
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    const screenWidth = window.innerWidth;
+    this.isCollapsed = screenWidth < 768; // Adjust the threshold as needed
+    this.isSmallScreen = screenWidth < 768; // Adjust the threshold as needed
+  }
+
   redirect(destination: string){
     switch (destination) {
       case 'home':
@@ -46,7 +53,7 @@ export class DonorSiderComponent{
         this.router.navigate(['/donorMenu/main/appointment-history']);
         break;
       case 'form':
-        this.router.navigate(['/donorMenu/main/regform']);
+        this.router.navigate(['/donorMenu/main/form']);
         break;
       default:
         break;

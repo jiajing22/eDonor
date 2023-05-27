@@ -1,0 +1,30 @@
+nz-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+
+.layout{
+  min-height: 88vh;
+  background: #fff;
+}
+
+.form{
+  padding: 18px;
+}
+
+::ng-deep .ant-alert-info {
+  margin: 12px 48px;
+  background-color: #e7f9ff;
+  border: 1px solid #1890ff;
+}
+
+::ng-deep .ant-alert-info .ant-alert-icon {
+  color: #1890ff;
+}
+
+.card{
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}

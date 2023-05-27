@@ -12,10 +12,11 @@ import { DonorHistory } from "./donor.history/donor.history";
 import { DonorSiderComponent } from "./donor.sider.component/donor.sider.component";
 import { DonorAppointment } from "./donor.appointment/donor.appointment";
 import { DonorAppointmentHistory } from "./donor.appointment-history/donor.appointment-history";
+import { DonorRegistrationForm } from "./donor.registration-form/donor.registration-form";
 
 const COMPONENTS =
   [DonorMainpage, DonorAccount, DonorEditProfile, DonorHistory, DonorSiderComponent,
-    DonorAppointment, DonorAppointmentHistory ];
+    DonorAppointment, DonorAppointmentHistory, DonorRegistrationForm ];
 
 @NgModule({
   imports: [

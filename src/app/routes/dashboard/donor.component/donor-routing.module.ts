@@ -6,6 +6,7 @@ import {DonorEditProfile} from "./donor.edit-profile/donor.edit-profile";
 import {DonorHistory} from "./donor.history/donor.history";
 import {DonorAppointment} from "./donor.appointment/donor.appointment";
 import {DonorAppointmentHistory} from "./donor.appointment-history/donor.appointment-history";
+import {DonorRegistrationForm} from "./donor.registration-form/donor.registration-form";
 
 const routes: Routes = [
   { path: '', redirectTo: 'main-page',pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'donate-history', component: DonorHistory, data: { title: 'History' } },
   { path: 'appointment', component: DonorAppointment, data: { title: 'Book Appointment' }},
   { path: 'appointment-history', component: DonorAppointmentHistory, data: { title: 'Appointment History' }},
+  { path: 'form', component: DonorRegistrationForm, data: { title: 'Form' }},
   // { path: 'staffPost', component: StaffNewPostComponent }
 ];
 

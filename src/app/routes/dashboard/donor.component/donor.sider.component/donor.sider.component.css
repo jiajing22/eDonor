@@ -1,5 +1,9 @@
 .wrapper {
-  width: 240px;
+  width: 200px;
+}
+
+.wrapper.collapsed {
+  width: 0;
 }
 
 .whole {
@@ -28,4 +32,8 @@ ul {
 li:hover {
   background-color: white;
   color: #de2626;
+}
+
+.ant-menu.ant-menu-inline-collapsed {
+  width: 0;
 }

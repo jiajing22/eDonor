@@ -17,6 +17,7 @@ nz-header{
 .header-menu {
   background-color: #de2626;
   line-height: 64px;
+  overflow-x: auto;
   white-space: nowrap;
   display: flex;
   justify-content: space-between;
