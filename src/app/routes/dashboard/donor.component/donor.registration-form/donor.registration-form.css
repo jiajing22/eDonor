@@ -23,8 +23,23 @@ nz-content {
   color: #1890ff;
 }
 
+::ng-deep .ant-row {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 4px;
+}
+
 .card{
   width: 80%;
   margin: auto;
   text-align: center;
+}
+
+nz-row{
+  color:blue;
+}
+
+.card-14{
+  margin-right: 15vh;
+  background: #d9d9d9;
 }

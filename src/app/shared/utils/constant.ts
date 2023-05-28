@@ -50,6 +50,7 @@ export class messageConstant{
   public static QUESTION12A = 'Injection with human growth hormone? ';
   public static QUESTION12B = 'Cornea transplant?';
   public static QUESTION12C = 'Brain membrane (duramater) transplant?';
+  public static QUESTION12D = 'Bone marrow or stem cell transplant?';
   public static QUESTION13 = 'Risk of infection with variant Creutzfeldt-Jakob Disease (vCJD)';
   public static QUESTION13A = 'Have you ever visited or lived in the United Kingdom (England, Northern Ireland,\n' +
     'Ireland, Wales, Scotland, the Isle of Man, the Channel Island) or the Republic of\n' +
