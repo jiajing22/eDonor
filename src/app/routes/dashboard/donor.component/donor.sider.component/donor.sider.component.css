@@ -11,8 +11,29 @@
 }
 
 .page-content {
+  min-width: 80vh;
   padding: 32px;
 }
+
+.page-content.small {
+  min-width: 20vh;
+  padding: 32px;
+}
+@media screen and (max-width: 767px) {
+  .page-content {
+    min-width: 20vh;
+    padding: 32px;
+  }
+}
+
+/* Large screen styles */
+@media screen and (min-width: 768px) {
+  .page-content {
+    min-width: 168vh;
+    padding: 32px;
+  }
+}
+
 
 button {
   margin-bottom: 12px;

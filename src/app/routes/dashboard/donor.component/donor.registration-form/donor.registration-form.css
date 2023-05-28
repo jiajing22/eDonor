@@ -13,8 +13,12 @@ nz-content {
   padding: 18px;
 }
 
+.page-btn{
+  margin-right: 40vh;
+}
+
 ::ng-deep .ant-alert-info {
-  margin: 12px 48px;
+  margin: 2vh 13vh 0vh 7vh;
   background-color: #e7f9ff;
   border: 1px solid #1890ff;
 }
@@ -33,10 +37,6 @@ nz-content {
   width: 80%;
   margin: auto;
   text-align: center;
-}
-
-nz-row{
-  color:blue;
 }
 
 .card-14{

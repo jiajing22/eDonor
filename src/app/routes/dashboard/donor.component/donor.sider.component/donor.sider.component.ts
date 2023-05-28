@@ -11,6 +11,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 })
 export class DonorSiderComponent{
   isSmallScreen: boolean = false;
+  isLargeScreen: boolean = false;
   constructor(
     private settings: SettingsService,
     private router: Router,
@@ -22,7 +23,7 @@ export class DonorSiderComponent{
       });
   }
 
-  isCollapsed = false;
+  isCollapsed = true;
 
   toggleCollapsed(): void {
     this.isCollapsed = !this.isCollapsed;

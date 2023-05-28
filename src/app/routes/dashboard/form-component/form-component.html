@@ -1,0 +1,228 @@
+<div style="width: 90%; margin: auto; text-align: justify;">
+  <form nz-form class="form" [formGroup]="form">
+
+    <div nz-row>
+      <div nz-col nzSpan="4" style="text-align: center"></div>
+      <div nz-col nzSpan="12"></div>
+      <div nz-col nzSpan="6" style="margin: auto; text-align: end;">Tick ☑ if 'YES'</div>
+    </div>
+
+    <div nz-row *ngFor="let section of section123">
+      <div nz-col nzSpan="2">{{ section.number }}</div>
+      <div nz-col nzSpan="18">{{ section.text }}</div>
+      <div nz-col nzSpan="2" style="margin: auto">
+        <label nz-checkbox [formControlName]="section.formControlName"></label>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="4" style="text-align: center"></div>
+      <div nz-col nzSpan="16">{{ messageConstant.QUESTION3A }}</div>
+      <div nz-col nzSpan="2" style="margin: auto"><label nz-checkbox formControlName="q3a"></label></div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="4"></div>
+      <div nz-col nzSpan="9">{{ messageConstant.OTHERS }}</div>
+      <div nz-col nzSpan="6" style="margin: auto">
+        <nz-form-control [nzErrorTip]="confirmErrorTip">
+          <input nz-input formControlName="q3a1" [nzSize]="'small'"/>
+        </nz-form-control>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="2">4.</div>
+      <div nz-col nzSpan="18">{{ messageConstant.QUESTION4 }}</div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="4" style="text-align: center">a)</div>
+      <div nz-col nzSpan="16">{{ messageConstant.QUESTION4A }}</div>
+      <div nz-col nzSpan="2" style="margin: auto"><label nz-checkbox formControlName="q4a"></label></div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="4"></div>
+      <div nz-col nzSpan="9">{{ messageConstant.OTHERS }}</div>
+      <div nz-col nzSpan="6" style="margin: auto">
+        <nz-form-control [nzErrorTip]="confirmErrorTip">
+          <input nz-input formControlName="q4a1" [nzSize]="'small'"/>
+        </nz-form-control>
+      </div>
+    </div>
+
+    <div nz-row *ngFor="let section of section4">
+      <div nz-col nzSpan="4" style="text-align: center">{{ section.number }}</div>
+      <div nz-col nzSpan="16">{{ section.text }}</div>
+      <div nz-col nzSpan="2" style="margin: auto">
+        <label nz-checkbox [formControlName]="section.formControlName"></label>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="4"></div>
+      <div nz-col nzSpan="9">{{ messageConstant.OTHERS }}</div>
+      <div nz-col nzSpan="6" style="margin: auto">
+        <nz-form-control [nzErrorTip]="confirmErrorTip">
+          <input nz-input formControlName="q4d1" [nzSize]="'small'"/>
+        </nz-form-control>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="2">5.</div>
+      <div nz-col nzSpan="18">{{ messageConstant.QUESTION5 }}</div>
+    </div>
+
+    <div nz-row>
+      <ng-container *ngFor="let section of section5; let i = index">
+        <ng-container *ngIf="i % 2 === 0">
+          <div nz-col nzSpan="4"></div>
+          <div nz-col nzSpan="5">{{ section.text }}</div>
+          <div nz-col nzSpan="2"><label nz-checkbox [formControlName]="section.formControlName"></label></div>
+        </ng-container>
+        <ng-container *ngIf="i % 2 !== 0">
+          <div nz-col nzSpan="3"></div>
+          <div nz-col nzSpan="6">{{ section.text }}</div>
+          <div nz-col nzSpan="2"><label nz-checkbox [formControlName]="section.formControlName"></label></div>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="3"></div>
+      <div nz-col nzSpan="11">{{ messageConstant.OTHERS }}</div>
+      <div nz-col nzSpan="6">
+        <nz-form-control [nzErrorTip]="confirmErrorTip">
+          <input nz-input formControlName="q5n1" [nzSize]="'small'"/>
+        </nz-form-control>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="2">6.</div>
+      <div nz-col nzSpan="18">{{ messageConstant.QUESTION6 }}</div>
+      <div nz-col nzSpan="2" style="margin: auto"><label nz-checkbox formControlName="q6"></label></div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="3"></div>
+      <div nz-col nzSpan="11">{{ messageConstant.QUESTION6A }}</div>
+      <div nz-col nzSpan="5" style="margin: auto">
+        <nz-form-control [nzErrorTip]="confirmErrorTip">
+          <input nz-input formControlName="q6a1" [nzSize]="'small'"/>
+        </nz-form-control>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="2">7.</div>
+      <div nz-col nzSpan="18">{{ messageConstant.QUESTION7 }}</div>
+    </div>
+
+    <div nz-row *ngFor="let section of section7">
+      <div nz-col nzSpan="4" style="text-align: center">{{ section.number }}</div>
+      <div nz-col nzSpan="16">{{ section.text }}</div>
+      <div nz-col nzSpan="2" style="margin: auto">
+        <label nz-checkbox [formControlName]="section.formControlName"></label>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="2">8.</div>
+      <div nz-col nzSpan="18">{{ messageConstant.QUESTION8 }}</div>
+      <div nz-col nzSpan="2" style="margin: auto">
+        <label nz-checkbox formControlName="q8"></label>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="3"></div>
+      <div nz-col nzSpan="11">{{ messageConstant.QUESTION8A }}</div>
+      <div nz-col nzSpan="5" style="margin: auto">
+        <nz-form-control [nzErrorTip]="confirmErrorTip">
+          <input nz-input formControlName="q8a1" [nzSize]="'small'"/>
+        </nz-form-control>
+      </div>
+    </div>
+
+    <div nz-row *ngFor="let section of section9">
+      <div nz-col nzSpan="2">{{ section.number }}</div>
+      <div nz-col nzSpan="18">{{ section.text }}</div>
+      <div nz-col nzSpan="2" style="margin: auto">
+        <label nz-checkbox [formControlName]="section.formControlName"></label>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="2">12.</div>
+      <div nz-col nzSpan="18">{{ messageConstant.QUESTION12 }}</div>
+    </div>
+
+    <div nz-row *ngFor="let section of section12">
+      <div nz-col nzSpan="4" style="text-align: center">{{ section.number }}</div>
+      <div nz-col nzSpan="16">{{ section.text }}</div>
+      <div nz-col nzSpan="2" style="margin: auto">
+        <label nz-checkbox [formControlName]="section.formControlName"></label>
+      </div>
+    </div>
+
+    <div nz-row>
+      <div nz-col nzSpan="2">13.</div>
+      <div nz-col nzSpan="18">{{ messageConstant.QUESTION13 }}</div>
+    </div>
+
+    <div nz-row *ngFor="let section of section13">
+      <div nz-col nzSpan="4" style="text-align: center">{{ section.number }}</div>
+      <div nz-col nzSpan="16">{{ section.text }}</div>
+      <div nz-col nzSpan="2" style="margin: auto">
+        <label nz-checkbox [formControlName]="section.formControlName"></label>
+      </div>
+    </div>
+
+    <nz-card class="card-14">
+      <div nz-row>
+        <div nz-col nzSpan="2">14.</div>
+        <div nz-col nzSpan="22"><b>{{ messageConstant.QUESTION14 }}</b></div>
+      </div>
+
+      <div nz-row *ngFor="let section of section14">
+        <div nz-col nzSpan="4" style="text-align: center">{{ section.number }}</div>
+        <div nz-col nzSpan="17">{{ section.text }}</div>
+        <div nz-col nzSpan="2" style="margin: auto">
+          <label nz-checkbox [formControlName]="section.formControlName"></label>
+        </div>
+      </div>
+    </nz-card>
+
+    <div nz-row>
+      <div nz-col nzSpan="2">15.</div>
+      <div nz-col nzSpan="18">{{ messageConstant.QUESTION15 }}</div>
+    </div>
+
+    <div nz-row *ngFor="let section of section15">
+      <div nz-col nzSpan="4" style="text-align: center">{{ section.number }}</div>
+      <div nz-col nzSpan="16">{{ section.text }}</div>
+      <div nz-col nzSpan="2" style="margin: auto">
+        <label nz-checkbox [formControlName]="section.formControlName"></label>
+      </div>
+    </div>
+
+    <div style="margin: 5vh 15vh 5vh 0; background: #fff0f0">
+      <h4 style="text-align: center">{{ messageConstant.MSG1 }}</h4>
+    </div>
+
+    <nz-card class="card-14">
+      <h3 style="text-align: center">{{ messageConstant.CONSENT }}</h3>
+      {{ messageConstant.MSG2 }}
+      <div nz-row *ngFor="let section of terms">
+        <div nz-col nzSpan="1" style="margin: auto">
+          <label nz-checkbox [formControlName]="section.formControlName"></label>
+        </div>
+        <div nz-col nzSpan="22" style="text-align: justify">{{ section.text }}</div>
+      </div>
+    </nz-card>
+  </form>
+</div>
+<ng-template #confirmErrorTip let-i>
+  <ng-container *ngIf="i.errors?.required">This fill is required</ng-container>
+  <ng-container *ngIf="i.errors?.pattern">Wrong format</ng-container>
+</ng-template>

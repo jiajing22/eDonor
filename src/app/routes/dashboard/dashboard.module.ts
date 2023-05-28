@@ -8,9 +8,10 @@ import { LandingPageComponent } from "./landing-page.component/landing-page.comp
 import { CampaignComponent } from "./campaign.component/campaign.component";
 
 import {LayoutModule} from "../../layout/layout.module";
+import {RegFormComponent} from "./form-component/form-component";
 
 const COMPONENTS = [ NavbarComponent,LandingPageComponent,
-                                                 CampaignComponent];
+                                                 CampaignComponent, RegFormComponent];
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ const COMPONENTS = [ NavbarComponent,LandingPageComponent,
   ],
   exports: [
     NavbarComponent,
+    RegFormComponent,
   ],
   declarations: [...COMPONENTS]
 })
