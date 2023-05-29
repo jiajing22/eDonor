@@ -5,11 +5,11 @@ import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
-  selector: 'donor-sidebar',
-  templateUrl: './donor.sider.component.html',
-  styleUrls: ['./donor.sider.component.css'],
+  selector: 'staff-sidebar',
+  templateUrl: './staff.sider.component.html',
+  styleUrls: ['./staff.sider.component.css'],
 })
-export class DonorSiderComponent{
+export class StaffSiderComponent {
   isSmallScreen: boolean = false;
   isLargeScreen: boolean = false;
   constructor(
@@ -39,25 +39,28 @@ export class DonorSiderComponent{
   redirect(destination: string){
     switch (destination) {
       case 'home':
-        this.router.navigate(['/donorMenu/main/main-page']);
+        this.router.navigate(['/staff/main/main-page']);
         break;
       case 'profile':
-        this.router.navigate(['/donorMenu/main/donor-account']);
+        this.router.navigate(['/staff/main/staffAcc']);
         break;
       case 'edit':
         this.router.navigate(['/donorMenu/main/donor-edit']);
         break;
-      case 'history':
-        this.router.navigate(['/donorMenu/main/donate-history']);
+      case 'search':
+        this.router.navigate(['/staff/main/staffSearch']);
         break;
-      case 'appointment':
-        this.router.navigate(['/donorMenu/main/appointment-history']);
+      case 'addRecord':
+        this.router.navigate(['/staff/main/staffAdd']);
         break;
-      case 'form':
-        this.router.navigate(['/donorMenu/main/form']);
+      case 'staffPost':
+        this.router.navigate(['/staff/main/staffPost']);
         break;
-      case 'viewForm':
-        this.router.navigate(['/donorMenu/main/view-form']);
+      case 'manageApp':
+        this.router.navigate(['/staff/main/staffPost']);
+        break;
+      case 'manageForm':
+        this.router.navigate(['/staff/main/staffPost']);
         break;
       default:
         break;

@@ -6,6 +6,7 @@ import {HistoryService} from "../../../shared/services/history.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {Router} from "@angular/router";
 import {messageConstant} from "../../../shared/utils/constant";
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-form-component',
@@ -30,13 +31,15 @@ import {messageConstant} from "../../../shared/utils/constant";
 })
 export class RegFormComponent{
   @Input() form!: FormGroup;
+  @Input() regForm!: FormGroup;
+  @Input() childPage!: number;
+  @Input() item: any;
+  @Input() isReadOnly!: boolean;
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
     private historyService: HistoryService,
-    private message: NzMessageService,
     private router: Router,
   ) {
   }
@@ -205,8 +208,55 @@ export class RegFormComponent{
       text: this.messageConstant.TERM4 }
   ];
 
+  ethnic = [
+    {value: 'Malay'},
+    {value: 'Chinese'},
+    {value: 'Indian'},
+    {value: 'Iban'},
+    {value: 'Kadazan'},
+    {value: 'Melanau'},
+    {value: 'Murut'},
+    {value: 'Bidayuh'},
+    {value: 'Bajau'},
+  ];
+
+  maritial = [
+    {value: 'Single'},
+    {value: 'Married'},
+    {value: 'Widowed/Divorced'}
+  ];
+
+  states = [
+    'Johor',
+    'Kedah',
+    'Kelantan',
+    'Melaka',
+    'Negeri Sembilan',
+    'Pahang',
+    'Perak',
+    'Perlis',
+    'Pulau Pinang',
+    'Sabah',
+    'Sarawak',
+    'Selangor',
+    'Terengganu',
+    'Kuala Lumpur',
+    'Labuan',
+    'Putrajaya'
+  ];
+
+  stateOptions = this.states.map(state => ({value: state}));
+
+  isDisabledDate = (current: Date): boolean => {
+    const today = new Date();
+    return current > today;
+  };
 
   ngOnInit() {
+    if(this.isReadOnly){
+      this.regForm?.disable();
+      this.form?.disable();
+    }
   }
 
 }

@@ -30,31 +30,42 @@
         nz-menu-item
         nz-tooltip
         nzTooltipPlacement="right"
-        [nzTooltipTitle]="isCollapsed ? 'Donation History' : ''"
-        (click)="redirect('history')"
+        [nzTooltipTitle]="isCollapsed ? 'Search Donor' : ''"
+        (click)="redirect('search')"
       >
-        <span nz-icon nzType="history"></span>
-        <span>Donation History</span>
+        <span nz-icon nzType="search"></span>
+        <span>Search Donor</span>
       </li>
 
       <li
         nz-menu-item
         nz-tooltip
         nzTooltipPlacement="right"
-        [nzTooltipTitle]="isCollapsed ? 'Appointment' : ''"
-        (click)="redirect('appointment')"
+        [nzTooltipTitle]="isCollapsed ? 'Insert Record' : ''"
+        (click)="redirect('addRecord')"
       >
-        <span nz-icon nzType="calendar"></span>
-        <span>Appointment</span>
+        <span nz-icon nzType="form"></span>
+        <span>Insert Record</span>
+      </li>
+
+      <li
+        nz-menu-item
+        nz-tooltip
+        nzTooltipPlacement="right"
+        [nzTooltipTitle]="isCollapsed ? 'Upload Activity' : ''"
+        (click)="redirect('staffPost')"
+      >
+        <span nz-icon nzType="upload"></span>
+        <span>Upload Activity</span>
       </li>
 
       <li
         nz-submenu
-        nzTitle="Registration Form"
+        nzTitle="Manage"
         nzIcon="form">
         <ul>
-          <li nz-menu-item (click)="redirect('viewForm')">View Form</li>
-          <li nz-menu-item (click)="redirect('form')">Fill Form</li>
+          <li nz-menu-item (click)="redirect('viewForm')">Appointment</li>
+          <li nz-menu-item (click)="redirect('form')">Registration Form</li>
         </ul>
       </li>
 

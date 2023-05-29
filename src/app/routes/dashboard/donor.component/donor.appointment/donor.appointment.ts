@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, Validators} from '@angular/forms';
 import * as CryptoJS from "crypto-js";
 import {catchError, throwError} from "rxjs";
@@ -9,6 +9,7 @@ import {BdcentreService} from "../../../../shared/services/bdcentre.service";
 import { RANDOM_MESSAGE } from "../../../../shared/utils/constant";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
 import {AppointmentService} from "../../../../shared/services/appointment.service";
+import { messageConstant } from "../../../../shared/utils/constant";
 
 @Component({
   selector: 'app-donor-appointment-component',
@@ -188,6 +189,13 @@ export class DonorAppointment implements OnInit {
     return '';
   }
 
+  reset(){
+    this.isSuccess = false;
+    this.confirmLoading = false;
+    this.bookLoading = false;
+    this.isConfirmVisible = false;
+  }
+
   confirm(){
     this.confirmLoading = true;
 
@@ -207,11 +215,20 @@ export class DonorAppointment implements OnInit {
         })
       )
       .subscribe((res: any) => {
-        this.message.success(res);
-        setTimeout(() => {
-          this.isSuccess = true;
-        }, 2000);
-
+        if( res === messageConstant.APMT_SUCCESS ){
+          this.message.success(res);
+          setTimeout(() => {
+            this.isSuccess = true;
+          }, 2000);
+        } else if (res === messageConstant.APMT_ERROR){
+          this.message.error(res);
+          setTimeout(() => {
+            this.reset();
+          }, 2000);
+        } else {
+          this.message.error(res);
+          this.reset();
+        }
       });
   }
 

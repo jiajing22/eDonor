@@ -3,113 +3,14 @@
 <donor-sidebar>
   <h3>Registration Form</h3>
   <div *ngIf="currentPage === 1">
-    <form nz-form class="form" [formGroup]="regForm" (ngSubmit)="submitForm()">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="name" [nzRequired]="true" [nzLabelAlign]="'left'">Full Name</nz-form-label>
-        <nz-form-control [nzSpan]="10" [nzErrorTip]="confirmErrorTip">
-          <input nz-input formControlName="name"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="ic" [nzRequired]="true" [nzLabelAlign]="'left'">IC No.</nz-form-label>
-        <nz-form-control [nzSpan]="10" [nzErrorTip]="confirmErrorTip">
-          <input nz-input formControlName="ic" placeholder="(Without'-')"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="dob" [nzRequired]="true" [nzLabelAlign]="'left'">Date of Birth
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="confirmErrorTip">
-          <nz-date-picker [nzDisabledDate]="isDisabledDate" formControlName="dob"></nz-date-picker>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="age" [nzRequired]="true" [nzLabelAlign]="'left'">Age</nz-form-label>
-        <nz-form-control [nzErrorTip]="confirmErrorTip">
-          <nz-input-number formControlName="age" [nzMin]="18" [nzMax]="70" [nzStep]="1"></nz-input-number>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="ethnic" [nzRequired]="true" [nzLabelAlign]="'left'">Ethnicity</nz-form-label>
-        <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
-          <nz-select formControlName="ethnic">
-            <nz-option *ngFor="let option of ethnic" [nzValue]="option.value"
-                       [nzLabel]="option.value"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="maritial" [nzRequired]="true" [nzLabelAlign]="'left'">Maritial Status
-        </nz-form-label>
-        <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
-          <nz-select formControlName="maritial">
-            <nz-option *ngFor="let option of maritial" [nzValue]="option.value"
-                       [nzLabel]="option.value"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="occupation" [nzRequired]="true" [nzLabelAlign]="'left'">Occupation
-        </nz-form-label>
-        <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
-          <input nz-input formControlName="occupation"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="homeTel" [nzLabelAlign]="'left'">Home Tel No.
-        </nz-form-label>
-        <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
-          <input nz-input formControlName="homeTel"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="hpTel" [nzRequired]="true" [nzLabelAlign]="'left'">H/P Tel No.
-        </nz-form-label>
-        <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
-          <input nz-input formControlName="hpTel"/>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="currentAd" [nzRequired]="true" [nzLabelAlign]="'left'">Current Home Address
-        </nz-form-label>
-        <nz-form-control [nzSpan]="12" [nzErrorTip]="confirmErrorTip">
-          <textarea nz-input formControlName="currentAd"></textarea>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="state" [nzRequired]="true" [nzLabelAlign]="'left'">State</nz-form-label>
-        <nz-form-control [nzSpan]="6" [nzErrorTip]="confirmErrorTip">
-          <nz-select formControlName="state">
-            <nz-option *ngFor="let option of stateOptions" [nzValue]="option.value"
-                       [nzLabel]="option.value"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="6" nzFor="postcode" [nzRequired]="true" [nzLabelAlign]="'left'">Postcode
-        </nz-form-label>
-        <nz-form-control [nzSpan]="6" [nzErrorTip]="confirmErrorTip">
-          <input nz-input formControlName="postcode"/>
-        </nz-form-control>
-      </nz-form-item>
+    <app-form-component [regForm]="regForm" [childPage]="1">
+    </app-form-component>
 
       <nz-form-item [nzJustify]="'end'">
-        <button nz-button type="submit" nzType="dashed">
+        <button nz-button type="submit" nzType="dashed" (click)="submitForm()">
           Next
         </button>
       </nz-form-item>
-    </form>
   </div>
   <ng-template #confirmErrorTip let-i>
     <ng-container *ngIf="i.errors?.required">This fill is required</ng-container>
@@ -151,7 +52,8 @@
       ></nz-alert>
     </div>
 
-    <app-form-component [form]="questionnaires"></app-form-component>
+    <app-form-component [form]="questionnaires" [childPage]="2">
+    </app-form-component>
     <nz-form-item *ngIf="isConsent">
       <ng-container><span style="color: red">Please agree to the DONOR DECLARATION AND CONSENT.</span>
       </ng-container>
@@ -175,7 +77,9 @@
       nzStatus="success"
       nzTitle="Record Successfully Created!">
       <div nz-result-extra>
-        <button nz-button nzType="primary" type="button">View Form</button>
+        <a routerLink="../view-form">
+          <button nz-button nzType="primary" type="button">View Form</button>
+        </a>
         <a routerLink="../main-page">
           <button nz-button type="button">Back To Home</button>
         </a>

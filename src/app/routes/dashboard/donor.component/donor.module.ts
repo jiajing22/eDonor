@@ -13,10 +13,12 @@ import { DonorSiderComponent } from "./donor.sider.component/donor.sider.compone
 import { DonorAppointment } from "./donor.appointment/donor.appointment";
 import { DonorAppointmentHistory } from "./donor.appointment-history/donor.appointment-history";
 import { DonorRegistrationForm } from "./donor.registration-form/donor.registration-form";
+import {DonorViewRegistrationForm} from "./donor.view.registration-form/donor.view.registration-form";
+import { ReactiveFormsModule } from '@angular/forms';
 
 const COMPONENTS =
   [DonorMainpage, DonorAccount, DonorEditProfile, DonorHistory, DonorSiderComponent,
-    DonorAppointment, DonorAppointmentHistory, DonorRegistrationForm ];
+    DonorAppointment, DonorAppointmentHistory, DonorRegistrationForm, DonorViewRegistrationForm];
 
 @NgModule({
   imports: [
@@ -25,6 +27,7 @@ const COMPONENTS =
     SHARED_ZORRO_MODULES,
     DashboardModule,
     LayoutModule,
+    ReactiveFormsModule,
   ],
   exports: [
 

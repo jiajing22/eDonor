@@ -1,0 +1,21 @@
+nz-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+
+.layout{
+  min-height: 88vh;
+  background: #fff;
+}
+
+::ng-deep.ant-tag-processing {
+  color: #1890ff;
+  background: #e6f7ff;
+  border-color: #91d5ff;
+}
+
+::ng-deep.ant-alert-info {
+  background: #e6f7ff;
+  border-color: #91d5ff;
+}

@@ -96,4 +96,8 @@ export class messageConstant{
     'Service Centre, Hospital and the Ministry of Health, Malaysia. ';
   public static TERM4 = 'Understand that all information given and the test results will be kept confidential.\n';
 
+
+  public static APMT_ERROR = 'You already Booked Appointment at this day';
+  public static APMT_SUCCESS = 'Appointment Booked Successfully!';
+
 }

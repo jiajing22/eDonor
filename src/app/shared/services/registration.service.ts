@@ -14,4 +14,8 @@ export class RegistrationService {
     return this.http.post(this.baseUrl, postData, {responseType: "text"});
   }
 
+  getFormList(id:string){
+    return this.http.get(this.baseUrl+"-form/"+id);
+  }
+
 }

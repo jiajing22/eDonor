@@ -9,6 +9,7 @@ import { CampaignComponent } from "./campaign.component/campaign.component";
 
 import {LayoutModule} from "../../layout/layout.module";
 import {RegFormComponent} from "./form-component/form-component";
+import { ReactiveFormsModule } from '@angular/forms';
 
 const COMPONENTS = [ NavbarComponent,LandingPageComponent,
                                                  CampaignComponent, RegFormComponent];
@@ -19,6 +20,7 @@ const COMPONENTS = [ NavbarComponent,LandingPageComponent,
     DashboardRoutingModule,
     SHARED_ZORRO_MODULES,
     LayoutModule,
+    ReactiveFormsModule
   ],
   exports: [
     NavbarComponent,

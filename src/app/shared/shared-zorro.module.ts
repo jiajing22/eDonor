@@ -30,6 +30,7 @@ import {NzDividerModule} from "ng-zorro-antd/divider";
 import {NzListModule} from "ng-zorro-antd/list";
 import {NzTypographyModule} from "ng-zorro-antd/typography";
 import {NzResultModule} from "ng-zorro-antd/result";
+import {NzTagModule} from "ng-zorro-antd/tag";
 
 export const SHARED_ZORRO_MODULES = [
   NzFormModule,
@@ -64,4 +65,5 @@ export const SHARED_ZORRO_MODULES = [
   NzListModule,
   NzTypographyModule,
   NzResultModule,
+  NzTagModule
 ];

@@ -12,10 +12,11 @@ import { StaffViewAccComponent } from "./staff.viewAcc.component/staff.viewAcc.c
 import { StaffNewPostComponent } from "./staff.newPost.component/staff.newPost.component";
 import { StaffRecordForm } from "./staff.recordForm/staff.recordForm";
 import {NavbarComponent} from "../navbar.component/navbar.component";
+import { StaffSiderComponent } from "./staff.sider.component/staff.sider.component";
 
 const COMPONENTS =
     [StaffMainPageComponent, StaffSearchComponent, StaffAddRecordComponent, StaffViewAccComponent,
-    StaffNewPostComponent, StaffRecordForm ];
+    StaffNewPostComponent, StaffRecordForm, StaffSiderComponent ];
 
 @NgModule({
   imports: [

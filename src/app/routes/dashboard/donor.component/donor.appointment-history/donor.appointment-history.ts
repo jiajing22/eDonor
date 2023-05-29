@@ -33,17 +33,17 @@ export class DonorAppointmentHistory implements OnInit {
   loading = false;
   error: string = "";
   decryptedId: string = "";
-  donorIc: string = "";
+  isVisible = false;
   sKey = "x^XICt8[Lp'Gm<8";
-  hash: string = "";
   appointmentList: Appointment[]=[];
+  selectedData: any;
   listOfColumn = [
     {title: 'Appointment Date'},
     {title: 'Location'},
     {title: 'Time'},
     {title: 'Status'},
+    {title: 'Details'},
   ];
-
 
   ngOnInit() {
     this.loading = true;
@@ -76,6 +76,35 @@ export class DonorAppointmentHistory implements OnInit {
           this.loading= false;
       })
     })
+  }
+
+  getFormFields() {
+    return [
+      {label: 'IC', value: this.selectedData.donorId || '-'},
+      {label: 'Location', value: this.selectedData.appmntLocation || '-'},
+      {label: 'Appointment Date', value: this.selectedData.appmntDate|| '-'},
+      {label: 'Selected Time Slot', value: this.selectedData.timeslot || '-'},
+      {label: 'Status', value: this.selectedData.aStatus || '-'},
+    ];
+  }
+
+  getStatusColor(status: string): string {
+    const colorMap: { [status: string]: string } = {
+      Pending: 'processing',
+      Accepted: 'success',
+      Expired: 'error'
+    };
+
+    return colorMap[status] || 'default';
+  }
+
+  show(data:any){
+    this.selectedData = data;
+    this.isVisible = true;
+  }
+
+  handleCancel(){
+    this.isVisible = false;
   }
 
 }

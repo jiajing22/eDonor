@@ -5,7 +5,7 @@
     <h4><a routerLink="../appointment">Book Appointment</a></h4>
   </div>
 
-  <nz-table #sortTable [nzData]="appointmentList" nzTableLayout="fixed" [nzLoading]="loading" [nzPageSize]="5">
+  <nz-table #sortTable [nzData]="appointmentList" nzTableLayout="fixed" [nzLoading]="loading">
     <thead>
     <tr>
       <th *ngFor="let column of listOfColumn">
@@ -18,8 +18,20 @@
       <td>{{ data.appmntDate }}</td>
       <td>{{ data.appmntLocation }}</td>
       <td>{{ data.timeslot }}</td>
-      <td>{{ data.aStatus }}</td>
+      <td><nz-tag [nzColor]="getStatusColor(data.aStatus)">{{ data.aStatus }}</nz-tag></td>
+      <td><a nz-button nzType="link" (click)="show(data)">Details</a></td>
     </tr>
     </tbody>
   </nz-table>
+
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Confirmation" (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
+      <nz-list>
+        <nz-list-item *ngFor="let item of getFormFields()">
+          <span nz-typography style="font-weight: bold">{{ item.label }}</span>
+          <span style="text-align: left">{{ item.value }}</span>
+        </nz-list-item>
+      </nz-list>
+    </ng-container>
+  </nz-modal>
 </donor-sidebar>

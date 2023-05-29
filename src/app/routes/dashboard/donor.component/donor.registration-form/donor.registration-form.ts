@@ -1,13 +1,10 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from '@angular/forms';
-import {HttpClient} from "@angular/common/http";
+import { Component, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import * as CryptoJS from "crypto-js";
 import {catchError, throwError} from "rxjs";
 import {DonorService} from "../../../../shared/services/donor.service";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {Router} from "@angular/router";
 import {History} from "../../../../shared/model/history.model";
-import { messageConstant } from "../../../../shared/utils/constant";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
 import {RegistrationService} from "../../../../shared/services/registration.service";
 
@@ -26,63 +23,21 @@ export class DonorRegistrationForm implements OnInit {
   ];
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
-    private cdr: ChangeDetectorRef,
     private donorService: DonorService,
     private registrationService: RegistrationService,
     private message: NzMessageService,
-    private router: Router,
   ) {
   }
-  protected readonly messageConstant = messageConstant;
   loading = false;
   error: string = "";
   decryptedId: string = "";
   formatDOB: string = "";
   sKey = "x^XICt8[Lp'Gm<8";
-  hash: string = "";
   history: History[]=[];
   currentPage = 1;
   isConsent = false;
-
-  ethnic = [
-    {value: 'Malay'},
-    {value: 'Chinese'},
-    {value: 'Indian'},
-    {value: 'Iban'},
-    {value: 'Kadazan'},
-    {value: 'Melanau'},
-    {value: 'Murut'},
-    {value: 'Bidayuh'},
-    {value: 'Bajau'},
-  ];
-
-  maritial = [
-    {value: 'Single'},
-    {value: 'Married'},
-    {value: 'Widowed/Divorced'}
-  ];
-
-  states = [
-    'Johor',
-    'Kedah',
-    'Kelantan',
-    'Melaka',
-    'Negeri Sembilan',
-    'Pahang',
-    'Perak',
-    'Perlis',
-    'Pulau Pinang',
-    'Sabah',
-    'Sarawak',
-    'Selangor',
-    'Terengganu',
-    'Kuala Lumpur',
-    'Labuan',
-    'Putrajaya'
-  ];
-
-  stateOptions = this.states.map(state => ({value: state}));
+  name:string ="";
+  ic:string ="";
 
   regForm = this.fb.nonNullable.group({
     name: ['',[Validators.required, Validators.pattern(/^[A-Za-z' ]+$/)]],
@@ -91,13 +46,16 @@ export class DonorRegistrationForm implements OnInit {
     age: [null,Validators.required],
     ethnic: [null,Validators.required],
     maritial: [null,Validators.required],
-    occupation: [null,Validators.required],
+    occupation: ['',Validators.required],
     homeTel: [null],
     hpTel: [null,Validators.required],
     currentAd: [null,Validators.required],
     state: [null,Validators.required],
     postcode: [null,[Validators.required, Validators.pattern(/^\d{5}$/)]],
   })
+
+  nameControl: FormControl = this.regForm.get('name') as FormControl;
+  icControl: FormControl = this.regForm.get('ic') as FormControl;
 
   setupFieldDependencies() {
     const dependencies: { [key: string]: string } = {
@@ -127,18 +85,29 @@ export class DonorRegistrationForm implements OnInit {
 
   translateDate(date: FormControl<any>): string {
     const selectedDate: Date | null = date.value;
+    const currentDate: string | null = date.value;
+    if (currentDate && typeof currentDate === 'string') {
+      return currentDate;
+    }
     if (selectedDate) {
       const formattedDate = selectedDate.toLocaleDateString('en-US', {
         month: 'long',
         day: 'numeric',
         year: 'numeric',
       });
+      date.setValue(formattedDate);
       return formattedDate;
     }
     return '';
   }
 
   ngOnInit() {
+
+    this.regForm.get('occupation')?.valueChanges.subscribe((value: string) => {
+      if (value) {
+        this.regForm.get('occupation')?.setValue(value.toUpperCase(), { emitEvent: false });
+      }
+    });
 
     const formControlsConfig: { [key: string]: any } = this.formControlNames.reduce((config: { [key: string]: any }, controlName: string) => {
       if (controlName === 't1' || controlName === 't2' || controlName === 't3' || controlName === 't4') {
@@ -168,6 +137,14 @@ export class DonorRegistrationForm implements OnInit {
           return throwError(err);
         })
       ).subscribe((res: any) => {
+        console.log(res);
+      this.nameControl.setValue(res.fullName);
+      this.icControl.setValue(res.userId);
+
+      [this.nameControl, this.icControl].forEach(control => {
+        control.markAsDirty();
+        control.updateValueAndValidity();
+      });
     });
   }
 
@@ -182,13 +159,10 @@ export class DonorRegistrationForm implements OnInit {
     if (this.regForm.invalid) {
       return;
     }
+    console.log(this.regForm.value);
+
     this.currentPage++;
   }
-
-  isDisabledDate = (current: Date): boolean => {
-    const today = new Date();
-    return current > today;
-  };
 
   areFormControlsInvalid(controlNames: string[]): boolean {
     return controlNames.some(controlName => this.questionnaires.get(controlName)?.invalid);
@@ -201,7 +175,6 @@ export class DonorRegistrationForm implements OnInit {
   previousPage(){
     this.currentPage--;
   }
-
 
   show(){
     Object.keys(this.questionnaires.controls).forEach(key => {

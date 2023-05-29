@@ -1,0 +1,41 @@
+<navbar-layout-basic></navbar-layout-basic>
+<donor-sidebar>
+  <h3>My Registration Form History</h3>
+  <div *ngIf="currentPage === 1">
+    <nz-alert nzType="info" nzMessage="You are advised to register as a blood donor if you plan to donate within 24 hours after registration."></nz-alert>
+
+    <ul nz-list [nzDataSource]="dataForm" nzSize="large">
+      <li nz-list-item *ngFor="let item of dataForm" nzNoFlex>
+        <ul nz-list-item-actions>
+          <nz-list-item-action>
+            <a (click)="showModal(item)">View</a>
+          </nz-list-item-action>
+        </ul>
+        {{ item.title }}
+        <nz-tag [nzColor]="getStatusColor(item.status)">{{ item.status }}</nz-tag>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="currentPage ===2 ">
+    <app-form-component [childPage]="1"
+                        [regForm]="regForm"
+                        [item]="item"
+                        [isReadOnly]="true"
+    ></app-form-component>
+
+    <div style="display: flex; justify-content: center">
+      <button nz-button (click)="previousPage()" >Back</button>
+      <button nz-button (click)="nextPage(item)" style="margin-left: 140px;">Next</button>
+    </div>
+  </div>
+
+  <div *ngIf="currentPage === 3 ">
+    <app-form-component [childPage]="2"
+                        [form]="questionnaires"
+                        [isReadOnly]="true"
+    ></app-form-component>
+    <button nz-button (click)="previousPage()" style="display: flex; margin:auto ">Back</button>
+  </div>
+
+</donor-sidebar>

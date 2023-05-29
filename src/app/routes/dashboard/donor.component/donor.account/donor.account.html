@@ -1,43 +1,15 @@
 <navbar-layout-basic></navbar-layout-basic>
-<nz-layout class="layout">
-  <nz-sider class="item">
-    <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
-        <ul>
-          <li nz-menu-item nzSelected>Profile</li>
-          <a routerLink="../donor-edit"><li nz-menu-item>Edit Profile</li></a>
-        </ul>
-      </li>
-
-      <li nz-menu-item>
-        <a routerLink="../donate-history"><span nz-icon nzType="history"></span>
-          <span>Blood Donation History</span></a>
-      </li>
-      <li nz-menu-item>
-        <span nz-icon nzType="calendar"></span>
-        <span>Appointment</span>
-      </li>
-      <li nz-menu-item>
-        <span nz-icon nzType="form"></span>
-        <span>Registration Form</span>
-      </li>
-    </ul>
-  </nz-sider>
-  <nz-layout class="right-layout">
-    <nz-content class="inner">
-      <nz-descriptions nzTitle="My Account" nzBordered [nzColumn]="1" [nzSize]="'middle'">
-        <nz-descriptions-item nzTitle="Full Name">{{ donor?.fullName }}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="IC No.">{{ donor?.userId }}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Gender">{{ donor?.gender }}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Phone">{{ donor?.phone }}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Email Address">{{ donor?.email }}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Current Address">
-          {{ donor?.address }}<br/>
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Blood Group">{{ donor?.bloodType }}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Donor Type">{{ donor?.donorType }}</nz-descriptions-item>
-      </nz-descriptions>
-    </nz-content>
-  </nz-layout>
-</nz-layout>
-
+<donor-sidebar>
+  <nz-descriptions nzTitle="My Account" nzBordered [nzColumn]="1" [nzSize]="'middle'">
+    <nz-descriptions-item nzTitle="Full Name">{{ donor?.fullName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="IC No.">{{ donor?.userId }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Gender">{{ donor?.gender }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Phone">{{ donor?.phone }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Email Address">{{ donor?.email }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Current Address">
+      {{ donor?.address }}<br/>
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Blood Group">{{ donor?.bloodType }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Donor Type">{{ donor?.donorType }}</nz-descriptions-item>
+  </nz-descriptions>
+</donor-sidebar>
