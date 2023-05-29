@@ -13,10 +13,13 @@ import { StaffNewPostComponent } from "./staff.newPost.component/staff.newPost.c
 import { StaffRecordForm } from "./staff.recordForm/staff.recordForm";
 import {NavbarComponent} from "../navbar.component/navbar.component";
 import { StaffSiderComponent } from "./staff.sider.component/staff.sider.component";
+import { StaffManageAppComponent } from "./staff.manageApp.component/staff.manageApp.component";
+import {StaffManageFormComponent} from "./staff.manageForm.component/staff.manageForm.component";
 
 const COMPONENTS =
     [StaffMainPageComponent, StaffSearchComponent, StaffAddRecordComponent, StaffViewAccComponent,
-    StaffNewPostComponent, StaffRecordForm, StaffSiderComponent ];
+    StaffNewPostComponent, StaffRecordForm, StaffSiderComponent, StaffManageAppComponent,
+      StaffManageFormComponent ];
 
 @NgModule({
   imports: [

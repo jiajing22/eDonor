@@ -1,7 +1,6 @@
-import {Component, HostListener, Inject, Input, OnInit, Output, TemplateRef} from '@angular/core';
-import {SettingsService, User} from '@delon/theme';
-import {ActivatedRoute, Router} from "@angular/router";
-import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
+import {Component, HostListener} from '@angular/core';
+import {SettingsService} from '@delon/theme';
+import { Router} from "@angular/router";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
@@ -11,7 +10,6 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 })
 export class StaffSiderComponent {
   isSmallScreen: boolean = false;
-  isLargeScreen: boolean = false;
   constructor(
     private settings: SettingsService,
     private router: Router,
@@ -56,11 +54,11 @@ export class StaffSiderComponent {
       case 'staffPost':
         this.router.navigate(['/staff/main/staffPost']);
         break;
-      case 'manageApp':
-        this.router.navigate(['/staff/main/staffPost']);
+      case 'app':
+        this.router.navigate(['/staff/main/manageApp']);
         break;
-      case 'manageForm':
-        this.router.navigate(['/staff/main/staffPost']);
+      case 'form':
+        this.router.navigate(['/staff/main/manageForm']);
         break;
       default:
         break;

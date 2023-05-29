@@ -1,0 +1,41 @@
+<navbar-layout-basic></navbar-layout-basic>
+<staff-sidebar>
+  <h3>Manage Donor's Appointment</h3><br/>
+  <nz-table #sortTable [nzData]="appointmentList" nzTableLayout="fixed" [nzLoading]="loading">
+    <thead>
+    <tr>
+      <th *ngFor="let column of listOfColumn">
+        {{ column.title }}
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of sortTable.data">
+      <td>{{ data.donorId }}</td>
+      <td>{{ data.appmntDate }}</td>
+      <td>{{ data.appmntLocation }}</td>
+      <td>{{ data.timeslot }}</td>
+      <td><nz-tag [nzColor]="getStatusColor(data.aStatus)">{{ data.aStatus }}</nz-tag></td>
+      <td><a
+        *ngIf="isPending(data.aStatus)"
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure accept this appointment?"
+        nzPopconfirmPlacement="bottom"
+        (nzOnConfirm)="updateStatus(data, 'Accepted')">
+        Accept
+      </a>
+        &nbsp;&nbsp;&nbsp;
+        <a
+          *ngIf="isPending(data.aStatus)"
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure reject this appointment?"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="updateStatus(data, 'Rejected')">
+          Reject
+        </a>
+        <p *ngIf="!isPending(data.aStatus)">-</p>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</staff-sidebar>

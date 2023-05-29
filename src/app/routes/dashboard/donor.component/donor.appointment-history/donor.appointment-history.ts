@@ -26,7 +26,6 @@ export class DonorAppointmentHistory implements OnInit {
     private donorService: DonorService,
     private appointmentService: AppointmentService,
     private message: NzMessageService,
-    private router: Router,
   ) {
   }
 

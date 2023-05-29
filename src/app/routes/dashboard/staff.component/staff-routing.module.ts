@@ -6,6 +6,8 @@ import {StaffAddRecordComponent} from "./staff.addRecord.component/staff.addReco
 import {StaffViewAccComponent} from "./staff.viewAcc.component/staff.viewAcc.component";
 import {StaffNewPostComponent} from "./staff.newPost.component/staff.newPost.component";
 import {StaffRecordForm} from "./staff.recordForm/staff.recordForm";
+import {StaffManageAppComponent} from "./staff.manageApp.component/staff.manageApp.component";
+import {StaffManageFormComponent} from "./staff.manageForm.component/staff.manageForm.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'main-page',pathMatch: 'full' },
@@ -14,7 +16,9 @@ const routes: Routes = [
   { path: 'staffSearch', component: StaffSearchComponent },
   { path: 'staffAdd', component: StaffAddRecordComponent },
   { path: 'staffPost', component: StaffNewPostComponent },
-  { path: 'recordForm', component: StaffRecordForm }
+  { path: 'recordForm', component: StaffRecordForm },
+  { path: 'manageApp', component: StaffManageAppComponent },
+  { path: 'manageForm', component: StaffManageFormComponent },
 ];
 
 @NgModule({

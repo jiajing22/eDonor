@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {Appointment} from "../model/appointment.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,14 @@ export class AppointmentService {
 
   getAppointmentByUser(postData:any){
     return this.http.post(this.baseUrl + '-list', postData);
+  }
+
+  getAppointmentList(){
+    return this.http.get(this.baseUrl);
+  }
+
+  updateAppStatus(postData: Appointment){
+    return this.http.put(this.baseUrl, postData,{responseType:"text"});
   }
 
 }
