@@ -10,5 +10,6 @@ export interface Donor {
   address: string,
   donorType: string,
   userLastLoginDate: Date
+  donationTimes: number,
   // public userType: string{}
 }

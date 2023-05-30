@@ -1,102 +1,150 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
-import {AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {NzSafeAny} from "ng-zorro-antd/core/types";
-import * as CryptoJS from "crypto-js";
-import {catchError, throwError} from "rxjs";
-import {DonorService} from "../../../../shared/services/donor.service";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {StaffService} from "../../../../shared/services/staff.service";
 import {Router} from "@angular/router";
+import {RegistrationService} from "../../../../shared/services/registration.service";
+import {messageConstant} from "../../../../shared/utils/constant";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-staff-add-record-component',
   templateUrl: './staff.manageForm.component.html',
   styleUrls: ['./staff.manageForm.component.css']
 })
-export class StaffManageFormComponent {
+export class StaffManageFormComponent implements OnInit{
+  questionnaires!: FormGroup;
+  formControlNames = [
+    'q1', 'q2', 'q3', 'q3a', 'q3a1', 'q4a', 'q4a1','q4b', 'q4c', 'q4d', 'q4d1', 'q5a', 'q5b', 'q5c', 'q5d' ,
+    'q5e', 'q5f', 'q5g', 'q5h', 'q5i', 'q5j', 'q5k', 'q5l', 'q5m', 'q5n','q5n1','q6', 'q6a1', 'q7a', 'q7b', 'q7c',
+    'q8', 'q8a1', 'q9', 'q10', 'q11', 'q12a', 'q12b', 'q12c', 'q12d', 'q13a', 'q13b', 'q13c','q14a', 'q14b', 'q14c', 'q14d',
+    'q14e', 'q14f', 'q14g', 'q14h', 'q14i', 'q15a', 'q15b','q15c','q15d','t1','t2', 't3','t4',
+  ];
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    private staffService: StaffService,
+    private registrationService: RegistrationService,
     private message: NzMessageService,
     private router: Router,
   ) {
   }
 
-  loading= false;
+  isLoading= false;
   error: string = "";
   decryptedId: string = "";
   sKey = "x^XICt8[Lp'Gm<8";
-  hash: string = "";
-  passwordVisible = false;
+  dataForm: any[] = [];
+  currentPage = 1;
+  item:any;
+  selectedData:any;
+  isVisible=false;
+  isChecked=false;
 
-  form = this.fb.nonNullable.group({
-      staffId: ['',[Validators.required]],
-      password: ['',[Validators.required]],
-    }
-  );
+  regForm = this.fb.nonNullable.group({
+    name: ['',[Validators.required, Validators.pattern(/^[A-Za-z' ]+$/)]],
+    ic: ['',[Validators.required, Validators.pattern(/^\d{12}$/)]],
+    dob: ['',Validators.required],
+    age: [null,Validators.required],
+    ethnic: [null,Validators.required],
+    maritial: [null,Validators.required],
+    occupation: ['',Validators.required],
+    homeTel: [null],
+    hpTel: [null,Validators.required],
+    currentAd: [null,Validators.required],
+    state: [null,Validators.required],
+    postcode: [null,[Validators.required, Validators.pattern(/^\d{5}$/)]],
+  })
 
-  get id(): AbstractControl {
-    return this.form.get('staffId')!;
+  ngOnInit() {
+    this.loadData();
+    const formControlsConfig: { [key: string]: any } = this.formControlNames.reduce((config: { [key: string]: any }, controlName: string) => {
+      if (controlName === 't1' || controlName === 't2' || controlName === 't3' || controlName === 't4') {
+        config[controlName] = [null, Validators.required];
+      } else {
+        config[controlName] = null;
+      }
+      return config;
+    }, {});
+
+    this.questionnaires = this.fb.group(formControlsConfig);
   }
 
-  get pw(): AbstractControl {
-    return this.form.get('password')!;
+  loadData(){
+    this.isLoading= true;
+    this.registrationService.getAllFormList()
+      .subscribe((res:any)=>{
+        this.dataForm = res;
+        this.isLoading= false;
+      });
   }
 
-  submit():void{
-    this.error = '';
-    Object.keys(this.form.controls).forEach(key => {
-      const control = (this.form.controls as NzSafeAny)[key] as AbstractControl;
-      control.markAsDirty();
-      control.updateValueAndValidity();
+  formatTimestamp(timestamp: any): string {
+    const date = new Date(timestamp.seconds * 1000);
+    return date.toLocaleString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
     });
-    if (this.form.invalid) {
-      return;
-    }
-    this.loading =  true;
-    let sessionItem = sessionStorage.getItem('userId');
-    this.hash = CryptoJS.SHA256(this.pw.value).toString();
-    if (sessionItem) {
-      let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
-      this.decryptedId = item.toString(CryptoJS.enc.Utf8);
-    } else {
-      console.log('Encrypted message not found.');
-    }
-
-    if (this.decryptedId === this.id.value ){
-      this.staffService.getStaffInfo(this.decryptedId)
-        .pipe(
-          catchError(err => {
-            this.message.error(err.error);
-            return throwError(err);
-          })
-        )
-        .subscribe((res: any) => {
-
-          if (this.hash === res.password){
-            this.router.navigate(['/staff/main/recordForm']);
-            setTimeout(() => {
-              this.cdr.detectChanges();
-            }, 1000);
-
-          } else {
-            this.message.error('Wrong Password!');
-            this.loading=false;
-
-          }
-        });
-
-    } else {
-      this.message.error('Wrong Staff ID!');
-      this.loading=false;
-      setTimeout(() => {
-        this.cdr.detectChanges();
-      }, 1000);
-
-    }
   }
 
+  getStatusColor(status: string): string {
+    const colorMap: { [status: string]: string } = {
+      submitted: 'processing',
+      checked: 'success',
+      rejected: 'error',
+      expired: 'default'
+    };
+    return colorMap[status] || 'default';
+  }
+
+  cancel(): void {
+    this.message.info('click cancel');
+  }
+
+  confirm(data:any, status:string): void {
+    let postData = {
+      documentId: data.documentId,
+      formStatus: status
+    };
+    console.log(postData);
+    this.registrationService.updateStatus(postData)
+      .subscribe((res)=>{
+        if (res == null){
+          this.message.error("Status fail to update");
+        }
+        this.message.success('Status updated!');
+        this.loadData();
+      })
+  }
+
+  isSubmitted(status: string): boolean {
+    return status === 'submitted';
+  }
+
+  beforeConfirm(): Observable<boolean> {
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next(true);
+        observer.complete();
+      }, 2000);
+    });
+  }
+
+  viewData(data:any){
+    this.regForm.patchValue(data.regForm);
+    this.item = data.formFields;
+    this.currentPage =2;
+  }
+
+  previousPage(){
+    this.currentPage--;
+  }
+
+  nextPage(item:any){
+    this.questionnaires.patchValue(item)
+    this.currentPage = 3;
+  }
 }

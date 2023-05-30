@@ -1,27 +1,49 @@
 <navbar-layout-basic></navbar-layout-basic>
 <staff-sidebar>
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input type="text" nz-input placeholder="Search Donor" name="id" [(ngModel)]="id"/>
+    <input type="text" nz-input placeholder="Search Donor" name="id" [(ngModel)]="id"
+           (keyup.enter)="search()" (input)="onSearchInputChange()"
+    />
   </nz-input-group>
   <ng-template #suffixIconButton>
     <button nz-button nzType="primary" nzSearch (click)="search()"><span nz-icon nzType="search"></span></button>
   </ng-template>
 
-  <nz-table [nzData]="donorInfo">
-    <thead>
-    <tr>
-      <th>Donor IC</th>
-      <th>Name</th>
-      <th>Blood Type</th>
-      <th>Donation Times</th>
-      <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let result of donorInfo">
-      <td>{{ result.userId }}</td>
-      <td>{{ result.fullName }}</td>
-      <td>{{ result.bloodType }}</td>
-    </tbody>
-  </nz-table>
+  <nz-spin [nzSpinning]="isLoading">
+    <nz-table #basicTable [nzData]="donorResult.length > 0 ? donorResult : donorList">
+      <thead>
+      <tr>
+        <th>Donor IC</th>
+        <th>Name</th>
+        <th>Blood Type</th>
+        <th>Donation Times</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let result of basicTable.data">
+        <td>{{ result.userId }}</td>
+        <td>{{ result.fullName }}</td>
+        <td>{{ result.bloodType }}</td>
+        <td>{{ result.donationTimes }}</td>
+        <td><a (click)="showInfo(result)">View Details</a></td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-spin>
+
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Confirmation">
+    <ng-container *nzModalContent>
+      <nz-list>
+        <nz-list-item *ngFor="let item of getFormFields()">
+          <span nz-typography style="font-weight: bold">{{ item.label }}</span>
+          <span style="text-align: left">{{ item.value }}</span>
+        </nz-list-item>
+      </nz-list>
+    </ng-container>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="handleOk()">Close</button>
+    </div>
+  </nz-modal>
+
 </staff-sidebar>

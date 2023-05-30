@@ -18,4 +18,12 @@ export class RegistrationService {
     return this.http.get(this.baseUrl+"-form/"+id);
   }
 
+  getAllFormList(){
+    return this.http.get(this.baseUrl+"-form");
+  }
+
+  updateStatus(postData:any){
+    return this.http.post(this.baseUrl+"-update", postData, {responseType: "text"});
+  }
+
 }

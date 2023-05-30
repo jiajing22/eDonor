@@ -1,41 +1,52 @@
 <navbar-layout-basic></navbar-layout-basic>
 <staff-sidebar>
   <h3>Manage Donor's Appointment</h3><br/>
-  <nz-table #sortTable [nzData]="appointmentList" nzTableLayout="fixed" [nzLoading]="loading">
-    <thead>
-    <tr>
-      <th *ngFor="let column of listOfColumn">
-        {{ column.title }}
-      </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let data of sortTable.data">
-      <td>{{ data.donorId }}</td>
-      <td>{{ data.appmntDate }}</td>
-      <td>{{ data.appmntLocation }}</td>
-      <td>{{ data.timeslot }}</td>
-      <td><nz-tag [nzColor]="getStatusColor(data.aStatus)">{{ data.aStatus }}</nz-tag></td>
-      <td><a
-        *ngIf="isPending(data.aStatus)"
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure accept this appointment?"
-        nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="updateStatus(data, 'Accepted')">
-        Accept
-      </a>
-        &nbsp;&nbsp;&nbsp;
-        <a
-          *ngIf="isPending(data.aStatus)"
-          nz-popconfirm
-          nzPopconfirmTitle="Are you sure reject this appointment?"
-          nzPopconfirmPlacement="bottom"
-          (nzOnConfirm)="updateStatus(data, 'Rejected')">
-          Reject
-        </a>
-        <p *ngIf="!isPending(data.aStatus)">-</p>
-      </td>
-    </tr>
-    </tbody>
-  </nz-table>
+  <nz-spin [nzSpinning]="initLoad">
+    <nz-table #sortTable [nzData]="appointmentList" nzTableLayout="fixed" [nzLoading]="loading" [nzPageSize]="5">
+      <thead>
+      <tr>
+        <th *ngFor="let column of listOfColumn">
+          {{ column.title }}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of sortTable.data">
+        <td>{{ data.donorId }}</td>
+        <td>{{ data.appmntDate }}</td>
+        <td>{{ data.appmntLocation }}</td>
+        <td>{{ data.timeslot }}</td>
+        <td>
+          <nz-tag [nzColor]="getStatusColor(data.aStatus)">{{ data.aStatus }}</nz-tag>
+        </td>
+        <td>
+          <a *ngIf="isPending(data.aStatus)"
+             (click)="showModal('Accepted', data)">Accept
+          </a>
+          &nbsp;&nbsp;&nbsp;
+          <a *ngIf="isPending(data.aStatus)"
+             (click)="showModal('Rejected', data)">
+            Reject
+          </a>
+          <p *ngIf="!isPending(data.aStatus)">-</p>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-spin>
+
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Confirmation" (nzOnCancel)="handleCancel()">
+    <div *nzModalContent style="text-align: justify">
+      <p *ngIf="isAccept">{{ messageConstant.APMT_ACCEPT }}</p>
+      <p *ngIf="!isAccept">{{ messageConstant.APMT_REJECT }}</p>
+    </div>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+      <button *ngIf="isAccept" nz-button nzType="primary" (click)="updateStatus()" [nzLoading]="isLoading">Accept
+      </button>
+      <button *ngIf="!isAccept" nz-button nzType="primary" (click)="updateStatus()" [nzLoading]="isLoading">Reject
+      </button>
+    </div>
+  </nz-modal>
+
 </staff-sidebar>

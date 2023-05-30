@@ -1,12 +1,6 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
-import {DonorService} from "../../../shared/services/donor.service";
-import {HistoryService} from "../../../shared/services/history.service";
-import {NzMessageService} from "ng-zorro-antd/message";
-import {Router} from "@angular/router";
+import {Component, Input} from "@angular/core";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {messageConstant} from "../../../shared/utils/constant";
-import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-form-component',
@@ -36,11 +30,6 @@ export class RegFormComponent{
   @Input() item: any;
   @Input() isReadOnly!: boolean;
   constructor(
-    private fb: FormBuilder,
-    private cdr: ChangeDetectorRef,
-    private donorService: DonorService,
-    private historyService: HistoryService,
-    private router: Router,
   ) {
   }
   protected readonly messageConstant = messageConstant;

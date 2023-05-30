@@ -1,4 +1,94 @@
 <navbar-layout-basic></navbar-layout-basic>
 <staff-sidebar>
   <h3>Manage Donor's Registration Form</h3><br/>
+  <div *ngIf="currentPage ===1">
+    <nz-spin [nzSpinning]="isLoading">
+      <nz-table #basicTable [nzData]="dataForm">
+        <thead>
+        <tr>
+          <th>Donor IC</th>
+          <th>Name</th>
+          <th>Submit Time</th>
+          <th>Status</th>
+          <th>View</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let result of basicTable.data">
+          <td>{{ result.regForm.donorId }}</td>
+          <td>{{ result.regForm.name }}</td>
+          <td>{{ formatTimestamp(result.regForm.submitTime) }}</td>
+          <td>
+            <nz-tag [nzColor]="getStatusColor(result.regForm.formStatus)">{{ result.regForm.formStatus }}</nz-tag>
+          </td>
+          <td><a (click)="viewData(result)">View Details</a></td>
+          <td>
+            <button
+              *ngIf="isSubmitted(result.regForm.formStatus)"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to check this form?"
+              [nzBeforeConfirm]="beforeConfirm"
+              (nzOnConfirm)="confirm(result.regForm, 'checked')"
+              (nzOnCancel)="cancel()"
+              nz-button
+              nzType="link"
+            >
+              Check
+            </button>
+            &nbsp;&nbsp;
+            <button
+              *ngIf="isSubmitted(result.regForm.formStatus)"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure to reject this form?"
+              [nzBeforeConfirm]="beforeConfirm"
+              (nzOnConfirm)="confirm(result.regForm, 'rejected')"
+              (nzOnCancel)="cancel()"
+              nz-button
+              nzType="link"
+            >
+              Reject
+            </button>
+            <p *ngIf="!isSubmitted(result.regForm.formStatus)">-</p>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </nz-spin>
+  </div>
+
+  <div *ngIf="currentPage ===2">
+    <app-form-component [childPage]="1"
+                        [regForm]="regForm"
+                        [item]="item"
+                        [isReadOnly]="true"
+    ></app-form-component>
+
+    <div style="display: flex; justify-content: center">
+      <button nz-button (click)="previousPage()" >Back</button>
+      <button nz-button (click)="nextPage(item)" style="margin-left: 140px;">Next</button>
+    </div>
+  </div>
+
+  <div *ngIf="currentPage === 3 ">
+    <app-form-component [childPage]="2"
+                        [form]="questionnaires"
+                        [isReadOnly]="true"
+    ></app-form-component>
+    <button nz-button (click)="previousPage()" style="display: flex; margin:auto ">Back</button>
+  </div>
+
+<!--  <nz-modal [(nzVisible)]="isVisible" nzTitle="Confirmation" (nzOnCancel)="handleCancel()">-->
+<!--    <div *nzModalContent style="text-align: justify">-->
+<!--      <p *ngIf="isChecked">{{ messageConstant.APMT_ACCEPT }}</p>-->
+<!--      <p *ngIf="!isChecked">{{ messageConstant.APMT_REJECT }}</p>-->
+<!--    </div>-->
+<!--    <div *nzModalFooter>-->
+<!--      <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>-->
+<!--      <button *ngIf="isChecked" nz-button nzType="primary" (click)="updateStatus()" [nzLoading]="isLoading">Accept-->
+<!--      </button>-->
+<!--      <button *ngIf="!isChecked" nz-button nzType="primary" (click)="updateStatus()" [nzLoading]="isLoading">Reject-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </nz-modal>-->
 </staff-sidebar>

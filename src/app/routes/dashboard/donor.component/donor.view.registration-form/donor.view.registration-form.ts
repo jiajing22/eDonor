@@ -29,7 +29,6 @@ export class DonorViewRegistrationForm implements OnInit {
     private donorService: DonorService,
     private registrationService: RegistrationService,
     private message: NzMessageService,
-    private router: Router,
   ) {
   }
 
@@ -65,7 +64,7 @@ export class DonorViewRegistrationForm implements OnInit {
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
       console.log(this.decryptedId)
     } else {
-      console.log('Encrypted message not found.');
+      this.message.error('You are not logged in!');
     }
 
     this.donorService.getDonorInfo(this.decryptedId)

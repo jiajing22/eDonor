@@ -100,4 +100,7 @@ export class messageConstant{
   public static APMT_ERROR = 'You already Booked Appointment at this day';
   public static APMT_SUCCESS = 'Appointment Booked Successfully!';
 
+  public static APMT_ACCEPT = 'Are you sure accept this appointment?';
+  public static APMT_REJECT = 'Are you sure reject this appointment?';
+
 }
