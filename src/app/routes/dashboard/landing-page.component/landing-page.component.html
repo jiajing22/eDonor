@@ -3,27 +3,48 @@
 <nz-content>
   <img nz-image nzSrc="..\assets\landing-image.png" class="image1" alt="image"/>
 
-  <div class="card-component">
-    <div nz-row [nzGutter]="16">
-      <div nz-col [nzSpan]="8" [nzXs]="24" [nzSm]="24" [nzMd]="8" [nzLg]="8" [nzXl]="8" style="margin-bottom: 24px">
-        <a>
-        <nz-card nzTitle="What is the Blood Donor Eligibility Criteria?">
-          <p>Check out our page for more information on blood donor eligibility criteria and become a lifesaver today!</p>
-        </nz-card>
-        </a>
-      </div>
-      <div nz-col [nzSpan]="8" [nzXs]="24" [nzSm]="24" [nzMd]="8" [nzLg]="8" [nzXl]="8" style="margin-bottom: 24px">
-        <nz-card nzTitle="What is the benefits of Blood Donation?">
-          <p>Donate blood, be a hero, save lives, reduce disease risk, and get a free health check-up!</p>
-        </nz-card>
-      </div>
-      <div nz-col [nzSpan]="8" [nzXs]="24" [nzSm]="24" [nzMd]="8" [nzLg]="8" [nzXl]="8" style="margin-bottom: 24px">
-        <nz-card nzTitle="Where should I donate blood?">
-          <p>Check online for blood donation centers near you and schedule an appointment to make a difference in someone's life today!</p>
-        </nz-card>
+  <nz-spin [nzSpinning]="loading">
+    <div class="event">
+      <nz-list nzGrid>
+        <div nz-row [nzGutter]="16" class="content">
+          <div nz-col [nzSpan]="7" *ngFor="let item of nearestPosts">
+            <nz-list-item>
+              <a (click)="redirect(item)">
+                <nz-ribbon nzText="Upcoming" nzColor="volcano">
+                  <nz-card [nzTitle]="item.title">{{ item.eventDate}}</nz-card>
+                </nz-ribbon>
+              </a>
+            </nz-list-item>
+          </div>
+        </div>
+      </nz-list>
+    </div>
+
+
+    <div class="card-component">
+      <div nz-row [nzGutter]="16" class="content">
+        <div nz-col [nzSpan]="7" [nzXs]="24" [nzSm]="24" [nzMd]="7" [nzLg]="7" [nzXl]="7" class="c2">
+          <a>
+            <nz-card nzTitle="What is the Blood Donor Eligibility Criteria?">
+              <p>Check out our page for more information on blood donor eligibility criteria and become a lifesaver
+                today!</p>
+            </nz-card>
+          </a>
+        </div>
+        <div nz-col [nzSpan]="7" [nzXs]="24" [nzSm]="24" [nzMd]="7" [nzLg]="7" [nzXl]="7" class="c2">
+          <nz-card nzTitle="What is the benefits of Blood Donation?">
+            <p>Donate blood, be a hero, save lives, reduce disease risk, and get a free health check-up!</p>
+          </nz-card>
+        </div>
+        <div nz-col [nzSpan]="7" [nzXs]="24" [nzSm]="24" [nzMd]="7" [nzLg]="7" [nzXl]="7" class="c2">
+          <nz-card nzTitle="Where should I donate blood?">
+            <p>Check online for blood donation centers near you and schedule an appointment to make a difference in
+              someone's life today!</p>
+          </nz-card>
+        </div>
       </div>
     </div>
-  </div>
+  </nz-spin>
 </nz-content>
 
 <nz-footer>Footer</nz-footer>

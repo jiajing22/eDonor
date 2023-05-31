@@ -1,4 +1,3 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <nz-layout class="main-layout">
   <nz-header>
     <div class="logo"></div>
@@ -11,13 +10,13 @@
         <li nz-menu-item>About Blood Donation</li>
       </a>
 
-      <a routerLink="../campaign">
+      <a (click)="navigate('campaign')">
         <li nz-menu-item>Campaign/Activity</li>
       </a>
 
-      <a (click)="navigate('home')">
-        <li nz-menu-item>Blood Donation Centre</li>
-      </a>
+<!--      <a (click)="navigate('home')">-->
+<!--        <li nz-menu-item>Blood Donation Centre</li>-->
+<!--      </a>-->
 
       <a *ngIf="loggedIn" (click)="dashboard()">
         <li nz-menu-item>Dashboard</li>

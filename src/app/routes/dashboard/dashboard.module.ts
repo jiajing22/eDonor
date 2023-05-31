@@ -10,9 +10,10 @@ import { CampaignComponent } from "./campaign.component/campaign.component";
 import {LayoutModule} from "../../layout/layout.module";
 import {RegFormComponent} from "./form-component/form-component";
 import { ReactiveFormsModule } from '@angular/forms';
+import {CampaignListComponent} from "./campaign-list.component/campaign-list.component";
 
-const COMPONENTS = [ NavbarComponent,LandingPageComponent,
-                                                 CampaignComponent, RegFormComponent];
+const COMPONENTS =
+  [ NavbarComponent,LandingPageComponent, CampaignComponent, RegFormComponent, CampaignListComponent];
 
 @NgModule({
   imports: [

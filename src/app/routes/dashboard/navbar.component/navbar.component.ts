@@ -81,8 +81,8 @@ export class NavbarComponent implements OnInit{
       case 'home':
         this.router.navigate(['/dashboard/landing']);
         break;
-      case 'donor':
-        this.router.navigate(['/admin/main/manage-donor']);
+      case 'campaign':
+        this.router.navigate(['/dashboard/campaign']);
         break;
       case 'record':
         this.router.navigate(['/admin/main/manage-record']);

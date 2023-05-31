@@ -2,10 +2,6 @@
   width: 200px;
 }
 
-.wrapper.collapsed {
-  width: 0;
-}
-
 .whole {
   display: inline-flex;
 }
@@ -19,6 +15,10 @@
   .wrapper {
     width: 0;
   }
+
+  wrapper.collapsed {
+    width: 0;
+  }
 }
 
 /* Large screen styles */
@@ -30,6 +30,14 @@
 
   .wrapper {
     width: 200px;
+  }
+
+  wrapper.collapsed {
+    width: 80px;
+  }
+
+  ::ng-deep .ant-menu.ant-menu-inline-collapsed {
+     width: 0;
   }
 }
 

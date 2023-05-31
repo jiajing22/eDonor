@@ -1,36 +1,44 @@
 <navbar-layout-basic></navbar-layout-basic>
-<nz-layout class="layout">
-  <nz-sider>
-    <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-submenu nzOpen nzIcon="user" nzTitle="My Account">
-        <ul>
-          <a routerLink="../staffAcc"><li nz-menu-item>Profile</li></a>
-          <li nz-menu-item>Edit Profile</li>
-        </ul>
-      </li>
+<staff-sidebar>
+  <h3>Upload New Campaign/Activities</h3><br/>
+  <form nz-form [formGroup]="postForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="title" [nzRequired]="true" [nzLabelAlign]="'left'">Title</nz-form-label>
+      <nz-form-control [nzSpan]="10" [nzErrorTip]="confirmErrorTip">
+        <input nz-input formControlName="title"/>
+      </nz-form-control>
+    </nz-form-item>
 
-      <a routerLink="../staffSearch"><li nz-menu-item>
-        <span nz-icon nzType="search"></span>
-        <span>Search Donor</span>
-      </li></a>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="location" [nzRequired]="true" [nzLabelAlign]="'left'">Location</nz-form-label>
+      <nz-form-control [nzSpan]="10" [nzErrorTip]="confirmErrorTip">
+        <input nz-input formControlName="location"/>
+      </nz-form-control>
+    </nz-form-item>
 
-      <a routerLink="../staffAdd"><li nz-menu-item>
-        <span nz-icon nzType="form"></span>
-        <span>Insert New Record</span>
-      </li></a>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="eventDate" [nzRequired]="true" [nzLabelAlign]="'left'">Event Date</nz-form-label>
+      <nz-form-control [nzErrorTip]="confirmErrorTip">
+        <nz-date-picker [nzDisabledDate]="isDisabledDate" formControlName="eventDate"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
 
-      <a routerLink="../staffPost"><li nz-menu-item>
-        <span nz-icon nzType="upload"></span>
-        <span>Upload New Post</span>
-      </li></a>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="description" [nzRequired]="true" [nzLabelAlign]="'left'">Description</nz-form-label>
+      <nz-form-control [nzErrorTip]="confirmErrorTip">
+        <nz-textarea-count [nzMaxCharacterCount]="2000">
+          <textarea nz-input formControlName="description" cols="30" rows="10"></textarea>
+        </nz-textarea-count>
+      </nz-form-control>
+    </nz-form-item>
 
-    </ul>
-  </nz-sider>
-  <nz-layout class="right-layout">
-    <nz-content>
-      <div class="inner-content">
+    <nz-form-item [nzJustify]="'center'">
+      <button nz-button type="submit" [nzLoading]="loading">Post</button>
+    </nz-form-item>
+  </form>
 
-      </div>
-    </nz-content>
-  </nz-layout>
-</nz-layout>
+  <ng-template #confirmErrorTip let-i>
+    <ng-container *ngIf="i.errors?.required">This fill is required</ng-container>
+    <ng-container *ngIf="i.getError('maxlength')">Exceed the maximum length</ng-container>
+  </ng-template>
+</staff-sidebar>

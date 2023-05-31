@@ -34,24 +34,14 @@
 
 /*------------Mobile Responsive------------------------*/
 
-.inner-content {
-  background: #fff;
-  padding: 24px;
-  min-height: 280px;
-}
-nz-content {
-  padding: 0 50px;
+.dash{
+  background: #ECECEC;
 }
 
-.grid-item {
-  background-color: #0092ff;
-  border-radius: 4px;
-  text-align: center;
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  line-height: 150px;
-  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+::ng-deep.ant-tag-processing {
+  color: #1890ff;
+  background: #e6f7ff;
+  border-color: #91d5ff;
 }
 
 .grid-item:hover {

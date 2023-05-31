@@ -23,13 +23,4 @@ export class StaffService {
   getStaffInfo(id:string) {
     return this.http.get(this.baseUrl + "/" + id);
   }
-
-  // addDonor(donor: Donor) {
-  //   console.log(donor);
-  //   console.log(this.baseUrl);
-  //   return this.http.post(this.baseUrl, donor);
-  // }
-  // getDonor() {
-  //   return this.http.get(this.baseUrl);
-  // }
 }

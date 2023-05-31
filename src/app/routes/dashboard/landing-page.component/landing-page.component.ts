@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import {HttpClient} from "@angular/common/http";
 import {DonorService} from "../../../shared/services/donor.service";
-import {Donor} from "../../../shared/model/donor.model";
+import {PostService} from "../../../shared/services/post.service";
+import {NavigationExtras, Router} from "@angular/router";
 
 @Component({
   selector: 'app-landing-page-component',
@@ -12,19 +12,41 @@ import {Donor} from "../../../shared/model/donor.model";
 export class LandingPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
+    private router: Router,
     private cdr: ChangeDetectorRef,
-    private donorService: DonorService
+    private donorService: DonorService,
+    private postService: PostService,
   ) {}
-  // donor: Donor[] = [];
-  // example: string =" ";
-  array = [1, 2, 3, 4];
+
+  posts: any[] = [];
+  nearestPosts: any[] = [];
+  loading=false;
 
   ngOnInit(): void {
-    // this.donorService.getDonor().subscribe((res: any) => {
-    //   console.log(res);
-    //   this.donor = res;
-    //   console.log(this.donor);
-    // });
+    this.loading = true;
+    this.postService.getAll()
+      .subscribe((res:any)=>{
+        this.posts=res;
+        const currentDate = new Date();
+
+        this.nearestPosts = this.posts
+          .filter(post => new Date(post.eventDate) >= currentDate)
+          .sort((a, b) => {
+            const dateA = new Date(a.eventDate);
+            const dateB = new Date(b.eventDate);
+            return dateA.getTime() - dateB.getTime();
+          })
+          .slice(0, 3); // Get the first three nearest posts
+        this.loading = false;
+      });
+  }
+
+  redirect(data:any){
+    const navigationExtras: NavigationExtras = {
+      state: {
+        data: data
+      }
+    };
+    this.router.navigate(['/dashboard/campaign-list'], navigationExtras);
   }
 }

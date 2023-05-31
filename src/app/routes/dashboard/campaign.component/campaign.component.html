@@ -1,2 +1,29 @@
 <navbar-layout-basic></navbar-layout-basic>
-This is campaign and activity page
+
+<div class="content">
+  <div class="post">
+    <nz-list nzItemLayout="horizontal">
+      <nz-list-item *ngFor="let item of posts">
+        <ng-container>
+          <nz-list-item-meta
+            nzAvatar="https://cdn-icons-png.flaticon.com/128/826/826955.png">
+            <nz-list-item-meta-title>
+              {{ item.title }}
+            </nz-list-item-meta-title>
+            <nz-list-item-meta-description>
+              Posted on {{ formatTimestamp(item?.postTime) }}
+            </nz-list-item-meta-description>
+          </nz-list-item-meta>
+
+          <ul nz-list-item-actions>
+            <nz-list-item-action><a>edit</a></nz-list-item-action>
+            <nz-list-item-action><a (click)="more(item)">Read More</a></nz-list-item-action>
+          </ul>
+        </ng-container>
+      </nz-list-item>
+      <nz-list-empty *ngIf="posts.length === 0"></nz-list-empty>
+    </nz-list>
+  </div>
+</div>
+
+<!--<pre style="white-space: pre-line">{{ posts[3]?.description }}</pre>-->

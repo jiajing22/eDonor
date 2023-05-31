@@ -233,6 +233,6 @@ export class DonorAppointment implements OnInit {
   }
 
   navigate(){
-    window.location.reload();
+    this.router.navigate(['/donorMenu/main/appointment-history']);
   }
 }
