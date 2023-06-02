@@ -2,17 +2,15 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestro
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { StartupService } from '@core';
-import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService } from '@delon/auth';
 import { SettingsService, _HttpClient } from '@delon/theme';
-import { environment } from '@env/environment';
-import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
 import {catchError, throwError} from 'rxjs';
 import {DonorService} from "../../../shared/services/donor.service";
 import {StaffService} from "../../../shared/services/staff.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {AdminService} from "../../../shared/services/admin.service";
 import * as CryptoJS from "crypto-js";
+import {AuthService} from "../../../shared/services/auth.service";
 
 @Component({
   selector: 'passport-login',
@@ -25,11 +23,6 @@ export class UserLoginComponent implements OnDestroy {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private settingsService: SettingsService,
-    private socialService: SocialService,
-    @Optional()
-    @Inject(ReuseTabService)
-    private reuseTabService: ReuseTabService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private startupSrv: StartupService,
     private http: _HttpClient,
@@ -37,7 +30,8 @@ export class UserLoginComponent implements OnDestroy {
     private donorService: DonorService,
     private staffService: StaffService,
     private adminService: AdminService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private authService: AuthService,
   ) {
     this.form = fb.nonNullable.group({
       userName: [null, [Validators.required, Validators.pattern(/^[^\p{P}]*$/u)]],
@@ -84,29 +78,10 @@ export class UserLoginComponent implements OnDestroy {
   count = 0;
   interval$: any;
 
-  // #endregion
-
-  switch({ index }: NzTabChangeEvent): void {
-    this.type = index!;
+  auth(){
+    let authToken = this.authService.generateAuthToken();
+    this.authService.setAuthTokenInSessionStorage(authToken);
   }
-
-  // getCaptcha(): void {
-  //   const mobile = this.form.controls.mobile;
-  //   if (mobile.invalid) {
-  //     mobile.markAsDirty({ onlySelf: true });
-  //     mobile.updateValueAndValidity({ onlySelf: true });
-  //     return;
-  //   }
-  //   this.count = 59;
-  //   this.interval$ = setInterval(() => {
-  //     this.count -= 1;
-  //     if (this.count <= 0) {
-  //       clearInterval(this.interval$);
-  //     }
-  //   }, 1000);
-  // }
-
-  // #endregion
 
   submit(): void {
     this.input = this.userName.value;
@@ -121,11 +96,6 @@ export class UserLoginComponent implements OnDestroy {
 
     this.loading = true;
     this.cdr.detectChanges();
-    // this.tokenService.set({
-    //   token: '123456789',
-    //   id: 10000,
-    //   time: +new Date(),
-    // });
 
     if (this.isIC(this.input)) {
       let postData = {
@@ -147,9 +117,21 @@ export class UserLoginComponent implements OnDestroy {
           })
         )
         .subscribe((res:any) => {
+          if (res === 'unverified'){
+            this.message.info('Please activate your account via email');
+            this.loading = false;
+            this.cdr.detectChanges();
+            return;
+          } else if (res === 'invalid'){
+            this.message.info('Wrong Password or Username');
+            this.loading = false;
+            this.cdr.detectChanges();
+            return;
+          }
           var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
           sessionStorage.setItem('userId', encrypted);
           sessionStorage.setItem('userType', 'Donor');
+          this.auth();
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
@@ -158,7 +140,9 @@ export class UserLoginComponent implements OnDestroy {
             this.router.navigate(['../donorMenu']);
           });
         })
-    } else if (this.isStaff(this.input)) {
+    }
+
+    else if (this.isStaff(this.input)) {
       let postData = {
         userId: this.userName.value.toUpperCase(),
         password: this.password.value
@@ -180,6 +164,7 @@ export class UserLoginComponent implements OnDestroy {
           var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
           sessionStorage.setItem('userId', encrypted);
           sessionStorage.setItem('userType', 'Staff');
+          this.auth();
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
@@ -188,7 +173,9 @@ export class UserLoginComponent implements OnDestroy {
             this.router.navigate(['../staff']);
           });
         })
-    } else if(this.isAdmin(this.input)){
+    }
+
+    else if(this.isAdmin(this.input)){
       let postData = {
         userId: this.userName.value.toUpperCase(),
         password: this.password.value
@@ -209,6 +196,7 @@ export class UserLoginComponent implements OnDestroy {
           var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
           sessionStorage.setItem('userId', encrypted);
           sessionStorage.setItem('userType', 'Admin');
+          this.auth();
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
             if (url.includes('/passport')) {
@@ -223,93 +211,7 @@ export class UserLoginComponent implements OnDestroy {
       this.message.error("Invalid login, please make sure enter correct username and password");
       this.form.get('password')!.setValue(null);
     }
-
-    // this.loading = true;
-    // this.cdr.detectChanges();
-    // this.http
-    //   .post(
-    //     '/login/account',
-    //     {
-    //       type: this.type,
-    //       userName: this.form.value.userName,
-    //       password: this.form.value.password
-    //     },
-    //     null,
-    //     {
-    //       context: new HttpContext().set(ALLOW_ANONYMOUS, true)
-    //     }
-    //   )
-    //   .pipe(
-    //     finalize(() => {
-    //       this.loading = false;
-    //       this.cdr.detectChanges();
-    //     })
-    //   )
-    //   .subscribe(res => {
-    //     if (res.msg !== 'ok') {
-    //       this.error = res.msg;
-    //       this.cdr.detectChanges();
-    //       return;
-    //     }
-    //     // 清空路由复用信息
-    //     this.reuseTabService.clear();
-    //     // 设置用户Token信息
-    //     // TODO: Mock expired value
-    //     res.user.expired = +new Date() + 1000 * 60 * 5;
-    //     this.  tokenService.set(res.user);
-    //     // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
-    //     this.startupSrv.load().subscribe(() => {
-    //       let url = this.tokenService.referrer!.url || '/';
-    //       if (url.includes('/passport')) {
-    //         url = '/';
-    //       }
-    //       this.router.navigateByUrl(url);
-    //     });
-    //   });
   }
-
-  // #region social
-
-  open(type: string, openType: SocialOpenType = 'href'): void {
-    let url = ``;
-    let callback = ``;
-    if (environment.production) {
-      callback = `https://ng-alain.github.io/ng-alain/#/passport/callback/${type}`;
-    } else {
-      callback = `http://localhost:4200/#/passport/callback/${type}`;
-    }
-    switch (type) {
-      case 'auth0':
-        url = `//cipchk.auth0.com/login?client=8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5&redirect_uri=${decodeURIComponent(callback)}`;
-        break;
-      case 'github':
-        url = `//github.com/login/oauth/authorize?client_id=9d6baae4b04a23fcafa2&response_type=code&redirect_uri=${decodeURIComponent(
-          callback
-        )}`;
-        break;
-      case 'weibo':
-        url = `https://api.weibo.com/oauth2/authorize?client_id=1239507802&response_type=code&redirect_uri=${decodeURIComponent(callback)}`;
-        break;
-    }
-    if (openType === 'window') {
-      this.socialService
-        .login(url, '/', {
-          type: 'window'
-        })
-        .subscribe(res => {
-          if (res) {
-            this.settingsService.setUser(res);
-            this.router.navigateByUrl('/');
-          }
-        });
-    } else {
-      this.socialService.login(url, '/', {
-        type: 'href'
-      });
-    }
-  }
-
-  // #endregion
 
   ngOnDestroy(): void {
     if (this.interval$) {

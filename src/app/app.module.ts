@@ -83,6 +83,8 @@ import { LayoutModule } from './layout/layout.module';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule } from './shared/st-widget/st-widget.module';
+import {AuthGuard} from "./routes/authGuard";
+import {AuthService} from "./shared/services/auth.service";
 
 @NgModule({
   declarations: [
@@ -107,7 +109,9 @@ import { STWidgetModule } from './shared/st-widget/st-widget.module';
     ...LANG_PROVIDES,
     ...INTERCEPTOR_PROVIDES,
     ...I18NSERVICE_PROVIDES,
-    ...APPINIT_PROVIDES
+    ...APPINIT_PROVIDES,
+    AuthGuard,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

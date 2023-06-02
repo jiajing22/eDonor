@@ -27,7 +27,7 @@ export class DonorService {
   }
 
   register(postData:any){
-    return this.http.post(this.baseUrl, postData);
+    return this.http.post(this.baseUrl, postData, {responseType: "text"});
   }
 
   getDonorInfo(id:string) {

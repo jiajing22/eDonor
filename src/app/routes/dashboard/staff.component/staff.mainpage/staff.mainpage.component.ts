@@ -1,9 +1,12 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {Donor} from "../../../../shared/model/donor.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppointmentService} from "../../../../shared/services/appointment.service";
+import * as CryptoJS from "crypto-js";
+import { messageConstant } from "../../../../shared/utils/constant";
+import {NzMessageService} from "ng-zorro-antd/message";
+import {StaffService} from "../../../../shared/services/staff.service";
 
 @Component({
   selector: 'app-staff-mainpage-component',
@@ -16,15 +19,38 @@ export class StaffMainPageComponent implements OnInit {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private appointmentService: AppointmentService,
+    private staffService: StaffService,
+    private msg: NzMessageService,
   ) {}
-  donor: Donor[] = [];
 
   loading=false;
   fullList: any[] = [];
   nearestApp: any[] = [];
+  decryptedId:any='';
+  userName:any='';
 
   ngOnInit(): void {
     this.loading = true;
+    this.loadUser();
+    this.loadDash();
+  }
+
+  loadUser(){
+    let sessionItem = sessionStorage.getItem('userId');
+    if (sessionItem) {
+      let item = CryptoJS.AES.decrypt(sessionItem, messageConstant.sKey);
+      this.decryptedId = item.toString(CryptoJS.enc.Utf8);
+    } else {
+      this.msg.error('You are not logged in!');
+    }
+
+    this.staffService.getStaffInfo(this.decryptedId)
+      .subscribe((res:any)=>{
+        this.userName = res.fullName;
+      });
+  }
+
+  loadDash(){
     this.appointmentService.getAppointmentList()
       .subscribe((res:any)=>{
         this.fullList=res;
@@ -52,7 +78,7 @@ export class StaffMainPageComponent implements OnInit {
             }
           })
           .slice(0, 5);
-        console.log(this.nearestApp);
+        this.loading = false;
       });
   }
 

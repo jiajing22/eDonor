@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -9,7 +9,11 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class UserRegisterResultComponent {
   params = { email: '' };
   email = '';
-  constructor(route: ActivatedRoute, public msg: NzMessageService) {
+  constructor(route: ActivatedRoute, public msg: NzMessageService, private router: Router) {
     this.params.email = this.email = route.snapshot.queryParams['email'] || 'ng-alain@example.com';
+  }
+
+  login(){
+    this.router.navigate(['/dashboard/login']);
   }
 }

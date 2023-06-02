@@ -1,29 +1,22 @@
 <navbar-layout-basic></navbar-layout-basic>
 <staff-sidebar>
-  <h2>Dashboard</h2>
+  <h1>Welcome Back, {{userName}}</h1>
+  <h2>Dashboard</h2><br/>
+
   <div class="dash">
-    <nz-collapse nzAccordion>
-      <nz-collapse-panel
-        *ngFor="let panel of nearestApp"
-        [nzHeader]="panel.appmntLocation"
-      >
-        <nz-tag [nzColor]="getStatusColor(panel.aStatus)">{{ panel.aStatus }}</nz-tag>
-        <p><b>Donor IC: </b>{{panel.donorId}}</p>
-        <p><b>Appointment Date: </b>{{panel.timeslot}}</p>
-        <p><b>Time Slot: </b>{{panel.timeslot}}</p>
-      </nz-collapse-panel>
-    </nz-collapse>
+    <p>Recent Appointment</p>
+    <nz-spin [nzSpinning]="loading">
+      <nz-collapse nzAccordion>
+        <nz-collapse-panel
+          *ngFor="let panel of nearestApp"
+          [nzHeader]="panel.appmntLocation + ' (' + panel.appmntDate + ')'"
+        >
+          <nz-tag [nzColor]="getStatusColor(panel.aStatus)">{{ panel.aStatus }}</nz-tag>
+          <p><b>Donor IC: </b>{{panel.donorId}}</p>
+          <p><b>Appointment Date: </b>{{panel.appmntDate}}</p>
+          <p><b>Time Slot: </b>{{panel.timeslot}}</p>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </nz-spin>
   </div>
 </staff-sidebar>
-<!--<nz-content>-->
-<!--  <div class="inner-content">-->
-<!--    <nz-card class="inner-content">-->
-<!--      <div class="grid-container">-->
-<!--        <a routerLink="../staffAcc"><div class="grid-item">View Account</div></a>-->
-<!--        <a routerLink="../staffSearch"><div class="grid-item">Search Donor</div></a>-->
-<!--        <a routerLink="../staffAdd"><div class="grid-item">Insert New Record</div></a>-->
-<!--        <a routerLink="../staffPost"><div class="grid-item">Upload New Post</div></a>-->
-<!--      </div>-->
-<!--    </nz-card>-->
-<!--  </div>-->
-<!--</nz-content>-->

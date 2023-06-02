@@ -3,22 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { startPageGuard } from '@core';
 import { SimpleGuard } from '@delon/auth';
 import { environment } from '@env/environment';
-// layout
-import { LayoutBasicComponent } from '../layout/basic/basic.component';
-import { LayoutPassportComponent } from '../layout/passport/passport.component';
-// dashboard pages
-// single pages
 import { CallbackComponent } from './passport/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 // passport pages
 import { UserLoginComponent } from './passport/login/login.component';
 import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
 import { UserRegisterComponent } from './passport/register/register.component';
-import {WelcomeComponent} from "../pages/welcome/welcome.component";
 import {LayoutBlankComponent} from "../layout/blank/blank.component";
-import {StaffMainPageComponent} from "./dashboard/staff.component/staff.mainpage/staff.mainpage.component";
 import {UserRecoveryComponent} from "./passport/recovery/recovery.component";
 import {ChangePasswordComponent} from "./passport/change-password/change-password.component";
+import {AuthGuard} from "./authGuard";
 
 const routes: Routes = [
   {
@@ -31,8 +25,6 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
         data: { title: 'Welcome' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
-      // 业务子模块
-      // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
     ]
   },
   {
@@ -47,9 +39,9 @@ const routes: Routes = [
       { path: 'reset', component: ChangePasswordComponent, data: { title: 'Reset Password' } },
     ]
   },
-  // 单页不包裹Layout
   { path: 'passport/callback/:type', component: CallbackComponent },
   { path: 'donorMenu',
+    canActivate: [AuthGuard],
     component : LayoutBlankComponent,
     children: [
       { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -58,12 +50,11 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/donor.component/donor-routing.module').then(m => m.DonorRoutingModule),
         data: { title: 'User Menu' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
-      // 业务子模块
-      // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
     ]
   },
 
   { path: 'staff',
+    canActivate: [AuthGuard],
     component: LayoutBlankComponent,
     children: [
       { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -72,10 +63,9 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/staff.component/staff-routing.module').then(m => m.StaffRoutingModule),
         data: { title: 'Staff Menu' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
-      // 业务子模块
-      // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
     ]},
   { path: 'admin',
+    canActivate: [AuthGuard],
     component: LayoutBlankComponent,
     children: [
       { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -84,8 +74,6 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/admin.component/admin-routing.module').then(m => m.AdminRoutingModule),
         data: { title: 'Admin Menu' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
-      // 业务子模块
-      // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
     ]},
   { path: '**', redirectTo: 'exception/404' },
 ];

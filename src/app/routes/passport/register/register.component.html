@@ -43,13 +43,13 @@
 
   <nz-form-item>
     <nz-form-control [nzErrorTip]="addressErrorTip">
-      <nz-input-group nzSize="large">
-        <input nz-input formControlName="address" placeholder="Address*"/>
-      </nz-input-group>
+      <nz-textarea-count [nzMaxCharacterCount]="200">
+        <textarea nz-input rows="4" formControlName="address" placeholder="Address*"></textarea>
+      </nz-textarea-count>
       <ng-template #addressErrorTip let-i>
         <ng-container *ngIf="i.errors?.required">Please enter address</ng-container>
         <ng-container *ngIf="i.errors?.pattern">Contain Invalid Character(s)-$%&*</ng-container>
-        <ng-container *ngIf="i.errors?.maxLength">Exceed Maximum Length</ng-container>
+        <ng-container *ngIf="i.getError('maxlength')">Exceed Maximum Length</ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -65,18 +65,6 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
-
-<!--  <nz-form-item>-->
-<!--    <nz-input-group [nzSuffix]="suffixTemplate">-->
-<!--      <input-->
-<!--        [type]="passwordVisible ? 'text' : 'password'"-->
-<!--        nz-input-->
-<!--        placeholder="Password*"-->
-<!--        [(ngModel)]="password"-->
-<!--      />-->
-<!--    </nz-input-group>-->
-<!--    -->
-<!--  </nz-form-item>-->
 
   <nz-form-item>
     <nz-form-control [nzErrorTip]="'validation.password.required' | i18n">
@@ -147,23 +135,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <!--  <nz-form-item>-->
-  <!--    <nz-form-control [nzErrorTip]="'validation.verification-code.required' | i18n">-->
-  <!--      <nz-row [nzGutter]="8">-->
-  <!--        <nz-col [nzSpan]="16">-->
-  <!--          <nz-input-group nzSize="large" nzAddonBeforeIcon="mail">-->
-  <!--            <input nz-input formControlName="captcha" placeholder="Captcha" />-->
-  <!--          </nz-input-group>-->
-  <!--        </nz-col>-->
-  <!--        <nz-col [nzSpan]="8">-->
-  <!--          <button type="button" nz-button nzSize="large" (click)="getCaptcha()" [disabled]="count > 0" nzBlock [nzLoading]="loading">-->
-  <!--            {{ count ? count + 's' : ('app.register.get-verification-code' | i18n) }}-->
-  <!--          </button>-->
-  <!--        </nz-col>-->
-  <!--      </nz-row>-->
-  <!--    </nz-form-control>-->
-  <!--  </nz-form-item>-->
-  <nz-form-item>
+  <nz-form-item [nzJustify]="'center'">
     <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading" class="submit">
       {{ 'app.register.register' | i18n }}
     </button>

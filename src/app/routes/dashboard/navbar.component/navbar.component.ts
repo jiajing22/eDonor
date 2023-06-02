@@ -29,19 +29,18 @@ export class NavbarComponent implements OnInit{
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
-    } else {
-      console.log('Encrypted message not found.');
     }
     this.loggedIn = sessionStorage.getItem('userId') != null;
     if(this.loggedIn){
       this.role = sessionStorage.getItem('userType');
     }
+    console.log(this.decryptedId);
   }
 
   logout(): void{
     sessionStorage.removeItem('userType');
     sessionStorage.removeItem('userId');
-    sessionStorage.removeItem('status');
+    sessionStorage.removeItem('token');
     this.router.navigateByUrl('/dashboard/landing');
   }
 

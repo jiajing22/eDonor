@@ -102,5 +102,6 @@ export class messageConstant{
 
   public static APMT_ACCEPT = 'Are you sure accept this appointment?';
   public static APMT_REJECT = 'Are you sure reject this appointment?';
+  public static sKey = "x^XICt8[Lp'Gm<8";
 
 }
