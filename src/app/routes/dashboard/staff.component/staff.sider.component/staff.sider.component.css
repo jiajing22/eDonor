@@ -24,7 +24,6 @@
 /* Large screen styles */
 @media screen and (min-width: 768px) {
   .page-content {
-    min-width: 800px;
     padding: 32px;
   }
 

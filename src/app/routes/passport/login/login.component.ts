@@ -117,28 +117,24 @@ export class UserLoginComponent implements OnDestroy {
           })
         )
         .subscribe((res:any) => {
-          if (res === 'unverified'){
-            this.message.info('Please activate your account via email');
-            this.loading = false;
-            this.cdr.detectChanges();
-            return;
-          } else if (res === 'invalid'){
+          if (res === null){
             this.message.info('Wrong Password or Username');
             this.loading = false;
             this.cdr.detectChanges();
             return;
           }
-          var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
-          sessionStorage.setItem('userId', encrypted);
-          sessionStorage.setItem('userType', 'Donor');
-          this.auth();
-          this.startupSrv.load().subscribe(() => {
-            let url = this.tokenService.referrer!.url || '/';
-            if (url.includes('/passport')) {
-              url = '/';
-            }
+          if (!res.isVerified){
+            this.message.info('Please activate your account via email');
+            this.loading = false;
+            this.cdr.detectChanges();
+            return;
+          }  else{
+            var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
+            sessionStorage.setItem('userId', encrypted);
+            sessionStorage.setItem('userType', 'Donor');
+            this.auth();
             this.router.navigate(['../donorMenu']);
-          });
+          }
         })
     }
 
@@ -181,18 +177,16 @@ export class UserLoginComponent implements OnDestroy {
         password: this.password.value
       };
       this.adminService.validateAdminLogin(postData)
-        .pipe(
-          catchError(err => {
-            this.message.error(err.error);
-            this.loading = false;
-            setTimeout(() => {
-              this.cdr.detectChanges();
-            }, 1000);
-            this.form.get('password')!.setValue(null);
-            return throwError(err);
-          })
-        )
         .subscribe((res:any) => {
+          if( res == null){
+            setTimeout(() => {
+              this.message.error("Invalid Username or Password!");
+              this.loading = false;
+              this.cdr.detectChanges();
+              this.form.get('password')!.setValue(null);
+              return;
+            }, 1000);
+          }
           var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
           sessionStorage.setItem('userId', encrypted);
           sessionStorage.setItem('userType', 'Admin');

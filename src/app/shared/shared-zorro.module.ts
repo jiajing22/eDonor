@@ -33,6 +33,7 @@ import {NzResultModule} from "ng-zorro-antd/result";
 import {NzTagModule} from "ng-zorro-antd/tag";
 import {NzPaginationModule} from "ng-zorro-antd/pagination";
 import {NzCollapseModule} from "ng-zorro-antd/collapse";
+import {NzStatisticModule} from "ng-zorro-antd/statistic";
 
 export const SHARED_ZORRO_MODULES = [
   NzFormModule,
@@ -69,5 +70,6 @@ export const SHARED_ZORRO_MODULES = [
   NzResultModule,
   NzTagModule,
   NzPaginationModule,
-  NzCollapseModule
+  NzCollapseModule,
+  NzStatisticModule
 ];

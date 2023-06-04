@@ -38,7 +38,6 @@ export class CampaignComponent implements OnInit{
   ngOnInit() {
     this.postService.getAll()
       .subscribe((res:any)=>{
-        console.log(res);
         this.posts = res;
       });
   }

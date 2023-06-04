@@ -27,6 +27,15 @@ export class AdminSider {
       case 'home':
         this.router.navigate(['/admin/main/main-page']);
         break;
+      case 'profile':
+        this.router.navigate(['/admin/main/profile']);
+        break;
+      case 'edit':
+        this.router.navigate(['/admin/main/edit-profile']);
+        break;
+      case 'admin':
+        this.router.navigate(['/admin/main/manage-admin']);
+        break;
       case 'donor':
         this.router.navigate(['/admin/main/manage-donor']);
         break;

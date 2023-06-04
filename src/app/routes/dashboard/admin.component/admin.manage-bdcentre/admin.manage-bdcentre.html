@@ -1,7 +1,7 @@
 <navbar-layout-basic></navbar-layout-basic>
 <app-admin-sider-component>
   <h3>Blood Centre Info</h3>
-  <button style="margin-bottom: 12px" nz-button nzType="primary" type="button" (click)="showModal()">Add Record</button>
+  <button style="margin-bottom: 12px" nz-button nzType="default" type="button" (click)="showModal()">Add Record</button>
   <nz-modal [(nzVisible)]="isVisible" nzTitle="Insert New Blood Centre" (nzOnCancel)="handleCancel()">
     <div *nzModalContent>
       <form nz-form [formGroup]="addNewForm" class="form">

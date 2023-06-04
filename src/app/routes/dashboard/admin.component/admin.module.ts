@@ -10,10 +10,13 @@ import { AdminManageDonor } from "./admin.manage.donor/admin.manage-donor";
 import { AdminManageRecord } from "./admin.manage.record/admin.manage-record";
 import { AdminSider } from "./admin.sider.component/admin.sider";
 import { AdminManageBdcentre } from "./admin.manage-bdcentre/admin.manage-bdcentre";
+import { AdminAccount } from "./admin.account/admin.account";
+import { AdminEditProfile } from "./admin.edit-profile/admin.edit-profile";
+import { AdminManageAdmin } from "./admin.manage.admin/admin.manage-admin";
 
 const COMPONENTS =
   [AdminMainPage, AdminManageDonor, AdminManageRecord, AdminSider,
-   AdminManageBdcentre ];
+   AdminManageBdcentre, AdminAccount, AdminEditProfile, AdminManageAdmin ];
 
 @NgModule({
   imports: [

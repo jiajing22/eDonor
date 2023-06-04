@@ -1,25 +1,37 @@
 <navbar-layout-basic></navbar-layout-basic>
-<nz-layout class="inner-layout">
+<donor-sidebar>
+  <h1>Welcome Back, {{userName}}</h1>
+  <h2>Dashboard</h2><br/>
 
-  <nz-content>
-    <div class="inner-content">
-      <nz-card class="inner-content">
-        <div class="grid-container">
-          <a routerLink="../donor-account">
-            <div class="grid-item">View Account</div>
-          </a>
-          <a routerLink="../donate-history">
-            <div class="grid-item">My Donation History</div>
-          </a>
-          <a routerLink="../appointment-history">
-            <div class="grid-item">Make Appointment</div>
-          </a>
-          <a>
-            <div class="grid-item">Fill Registration Form</div>
-          </a>
+  <div class="dash">
+    <nz-spin [nzSpinning]="loading">
+      <div>
+        <nz-row [nzGutter]="16">
+          <nz-col [nzSpan]="12">
+            <nz-statistic [nzValue]="bloodGroup" [nzTitle]="'Current Blood Group Needed'"></nz-statistic>
+          </nz-col>
+          <nz-col [nzSpan]="12">
+            <nz-statistic [nzValue]="donation" [nzTitle]="'Your Donation Times'"></nz-statistic>
+          </nz-col>
+        </nz-row>
+      </div>
+
+      <div style="margin-top:32px">
+        <h3>Recent Appointment</h3>
+        <div *ngIf="!noApp">
+          <nz-card style="width:400px;" [nzTitle]="list?.appmntLocation">
+            <p>Date: <b>{{ translateDate(list?.appmntDate)}}</b></p>
+            <p>Time Slot: <b>{{ list?.timeslot }}</b></p>
+            <p>Status: <b>{{ list?.aStatus }}</b></p>
+          </nz-card>
         </div>
-      </nz-card>
-    </div>
-  </nz-content>
-</nz-layout>
+
+        <div *ngIf="noApp">
+          <p>No recent data</p>
+        </div>
+
+      </div>
+    </nz-spin>
+  </div>
+</donor-sidebar>
 

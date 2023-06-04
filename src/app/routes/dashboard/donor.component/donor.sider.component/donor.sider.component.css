@@ -2,9 +2,9 @@
   width: 200px;
 }
 
-.wrapper.collapsed {
-  width: 0;
-}
+/*.wrapper.collapsed {*/
+/*  width: 0;*/
+/*}*/
 
 .whole {
   display: inline-flex;
@@ -16,15 +16,11 @@
     padding: 32px;
   }
 
-  .wrapper {
-    width: 0;
-  }
 }
 
 /* Large screen styles */
 @media screen and (min-width: 768px) {
   .page-content {
-    min-width: 800px;
     padding: 32px;
   }
 

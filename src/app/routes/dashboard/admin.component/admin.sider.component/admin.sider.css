@@ -13,3 +13,9 @@
 button {
   margin-bottom: 12px;
 }
+
+.menu-btn {
+  margin-top: 8px;
+  background-color: #de2626;
+  color: white;
+}

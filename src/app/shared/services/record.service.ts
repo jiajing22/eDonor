@@ -14,4 +14,8 @@ export class RecordService {
     return this.http.post(this.baseUrl, postData);
   }
 
+  getAllRecord() {
+    return this.http.get(this.baseUrl);
+  }
+
 }

@@ -1,19 +1,17 @@
 <navbar-layout-basic></navbar-layout-basic>
-<nz-layout class="inner-layout">
-  <nz-content>
-    <div class="inner-content">
-      <nz-card class="inner-content">
-        <div class="grid-container">
-          <a routerLink="../donor-account"><div class="grid-item">Manage Admin</div></a>
-          <a routerLink="../manage-donor"><div class="grid-item">Manage Donor</div></a>
-          <a routerLink="../sider"><div class="grid-item">Manage Staff</div></a>
-          <a><div class="grid-item">Manage Appointment</div></a>
-          <a><div class="grid-item">Manage Blood Centre</div></a>
-          <a><div class="grid-item">Manage Record</div></a>
-          <a><div class="grid-item">Manage Registration Form</div></a>
-          <a><div class="grid-item">Manage Uploaded Post</div></a>
-        </div>
-      </nz-card>
-    </div>
-  </nz-content>
-</nz-layout>
+<app-admin-sider-component>
+  <h1>Welcome Back, {{username}}</h1>
+  <h2>Dashboard</h2><br/>
+
+  <div style="width: 400px">
+    <nz-row [nzGutter]="16">
+      <nz-col [nzSpan]="12">
+        <nz-statistic [nzValue]="newUser" [nzTitle]="'New User Created This Month'"></nz-statistic>
+      </nz-col>
+      <nz-col [nzSpan]="12">
+        <nz-statistic [nzValue]="count" [nzTitle]="'Total Donation'"></nz-statistic>
+      </nz-col>
+    </nz-row>
+  </div>
+
+</app-admin-sider-component>

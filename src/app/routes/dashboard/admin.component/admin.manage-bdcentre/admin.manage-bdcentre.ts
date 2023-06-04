@@ -108,6 +108,7 @@ export class AdminManageBdcentre implements OnInit {
   handleCancel(): void {
     this.addNewForm.reset();
     this.isVisible = false;
+    this.isEdit = false;
   }
 
   handleOk(): void {

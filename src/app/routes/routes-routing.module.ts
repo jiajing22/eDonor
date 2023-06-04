@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   { path: 'passport/callback/:type', component: CallbackComponent },
   { path: 'donorMenu',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component : LayoutBlankComponent,
     children: [
       { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -54,7 +54,7 @@ const routes: Routes = [
   },
 
   { path: 'staff',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component: LayoutBlankComponent,
     children: [
       { path: '', redirectTo: 'main', pathMatch: 'full' },
@@ -65,7 +65,7 @@ const routes: Routes = [
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
     ]},
   { path: 'admin',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component: LayoutBlankComponent,
     children: [
       { path: '', redirectTo: 'main', pathMatch: 'full' },

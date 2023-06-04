@@ -1,15 +1,10 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {NzSafeAny} from "ng-zorro-antd/core/types";
 import * as CryptoJS from "crypto-js";
 import {catchError, throwError} from "rxjs";
 import {DonorService} from "../../../../shared/services/donor.service";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {StaffService} from "../../../../shared/services/staff.service";
-import {Router} from "@angular/router";
-import {HistoryService} from "../../../../shared/services/history.service";
-import {History} from "../../../../shared/model/history.model";
 import {AppointmentService} from "../../../../shared/services/appointment.service";
 import {Appointment} from "../../../../shared/model/appointment.model";
 
@@ -73,8 +68,8 @@ export class DonorAppointmentHistory implements OnInit {
         ).subscribe((res: any) => {
           this.appointmentList = res;
           this.loading= false;
-      })
-    })
+      });
+    });
   }
 
   getFormFields() {

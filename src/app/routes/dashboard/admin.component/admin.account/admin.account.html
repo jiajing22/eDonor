@@ -1,0 +1,9 @@
+<navbar-layout-basic></navbar-layout-basic>
+<app-admin-sider-component>
+  <nz-descriptions nzTitle="My Account" nzBordered [nzColumn]="1" [nzSize]="'middle'">
+    <nz-descriptions-item nzTitle="Full Name">{{ admin?.fullName }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Username">{{ admin?.username }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Gender">{{ admin?.gender }}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Email Address">{{ admin?.email }}</nz-descriptions-item>
+  </nz-descriptions>
+</app-admin-sider-component>

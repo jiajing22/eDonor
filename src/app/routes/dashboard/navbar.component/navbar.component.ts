@@ -34,7 +34,6 @@ export class NavbarComponent implements OnInit{
     if(this.loggedIn){
       this.role = sessionStorage.getItem('userType');
     }
-    console.log(this.decryptedId);
   }
 
   logout(): void{

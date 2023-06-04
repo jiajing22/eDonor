@@ -1,15 +1,8 @@
-export class Appointment {
-
-  constructor
-  (
-    public appointmentId: string,
-    public appmntDate: string,
-    public timeslot: string,
-    public appmntLocation: number,
-    public aStatus: string,
-    public donorId: string
-  ) {
-  }
-
-
+export interface Appointment{
+  appointmentId: string,
+  appmntDate: Date,
+  timeslot: string,
+  appmntLocation: string,
+  aStatus: string,
+  donorId: string
 }
