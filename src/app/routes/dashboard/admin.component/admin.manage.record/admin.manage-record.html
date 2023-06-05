@@ -1,4 +1,40 @@
 <navbar-layout-basic></navbar-layout-basic>
 <app-admin-sider-component>
-  this is record page
+  <h3>Statistic</h3>
+  <div>
+    <nz-select name="id" [(ngModel)]="monthSelected" [nzPlaceHolder]="'Select Month'" style="width: 200px">
+      <nz-option *ngFor="let option of monthOptions" [nzValue]="option.value"
+                 [nzLabel]="option.value"></nz-option>
+    </nz-select>
+    <button nz-button nzType="default" (click)="searchByMonth()">Search</button>
+    <button nz-button nzType="primary" (click)="generatePDF()">Generate Report</button>
+  </div>
+
+  <div>
+    <nz-spin [nzSpinning]="isLoading">
+      <nz-table #basicTable [nzData]="searchResult.length > 0 ? searchResult : allRecord">
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th>Blood Group</th>
+          <th>Volume(ml)</th>
+          <th>Donor IC</th>
+          <th>Full Name</th>
+          <th>Blood Centre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let result of basicTable.data">
+          <td>{{ result.regDate }}</td>
+          <td>{{ result.bloodGroup }}</td>
+          <td>{{ result.volume }}</td>
+          <td>{{ result.donorIc }}</td>
+          <td>{{ result.fullName }}</td>
+          <td>{{ result.bloodCentre }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </nz-spin>
+  </div>
+
 </app-admin-sider-component>

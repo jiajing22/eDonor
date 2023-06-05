@@ -1,11 +1,10 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, Validators } from '@angular/forms';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ALLOW_ANONYMOUS } from '@delon/auth';
 import { _HttpClient } from '@delon/theme';
 import { MatchControl } from '@delon/util/form';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import {catchError, finalize, throwError} from 'rxjs';
+import {catchError, throwError} from 'rxjs';
 import {DonorService} from "../../../shared/services/donor.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 
@@ -27,23 +26,23 @@ export class UserRegisterComponent implements OnInit {
 
   // #region fields
 
+  confirmVisible = false;
   passwordVisible = false;
   password?: string;
 
   form = this.fb.nonNullable.group(
     {
-      ic: ['',Validators.required],
+      ic: ['',[Validators.required, Validators.pattern(/^\d{12}$/)]],
       fullName: ['',Validators.required],
-      gender: ['',Validators.required],
+      gender: [null,Validators.required],
       bloodType: ['',Validators.required],
       mail: ['', [Validators.required, Validators.email]],
       password:
         ['',
           [Validators.required,
-            Validators.minLength(6),
-            UserRegisterComponent.checkPassword.bind(this)]
+            Validators.pattern(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,30}$/)]
         ],
-      confirm: ['', [Validators.required, Validators.minLength(6)]],
+      confirm: ['', [Validators.required, Validators.minLength(8)]],
       mobile: ['', [Validators.required,Validators.pattern(/^[0-9]{9,10}$/)]],
       address: ['', [Validators.required, Validators.maxLength(200), Validators.pattern(/^[^$%&*]+$/)]]
     },
@@ -57,34 +56,8 @@ export class UserRegisterComponent implements OnInit {
   visible = false;
   status = 'pool';
   progress = 0;
-  passwordProgressMap: { [key: string]: 'success' | 'normal' | 'exception' } = {
-    ok: 'success',
-    pass: 'normal',
-    pool: 'exception'
-  };
 
   count = 0;
-  interval$: NzSafeAny;
-
-  static checkPassword(control: FormControl): NzSafeAny {
-    if (!control) {
-      return null;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self: NzSafeAny = this;
-    self.visible = !!control.value;
-    if (control.value && control.value.length > 9) {
-      self.status = 'ok';
-    } else if (control.value && control.value.length > 5) {
-      self.status = 'pass';
-    } else {
-      self.status = 'pool';
-    }
-
-    if (self.visible) {
-      self.progress = control.value.length * 10 > 100 ? 100 : control.value.length * 10;
-    }
-  }
 
   submit(): void {
     this.error = '';
@@ -109,8 +82,6 @@ export class UserRegisterComponent implements OnInit {
       address: this.form.value.address,
     };
 
-    console.log(postData);
-
     this.donorService.register(postData)
       .pipe(
         catchError(err => {
@@ -121,7 +92,6 @@ export class UserRegisterComponent implements OnInit {
       .subscribe((res:any) => {
         this.loading=false;
         this.cdr.detectChanges();
-        console.log(res);
         if (res === 'Existing document ID'){
           this.message.error("Registration Failed!");
         } else if (res === 'registeredIc'){

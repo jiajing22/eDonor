@@ -14,6 +14,7 @@ import {messageConstant} from "../../../shared/utils/constant";
 
     .form{
       padding: 18px;
+      min-width: 681px;
     }
 
     .card-14{

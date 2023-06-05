@@ -34,7 +34,7 @@ export class DonorRegistrationForm implements OnInit {
   formatDOB: string = "";
   sKey = "x^XICt8[Lp'Gm<8";
   history: History[]=[];
-  currentPage = 1;
+  currentPage = 4;
   isConsent = false;
   name:string ="";
   ic:string ="";

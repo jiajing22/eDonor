@@ -57,6 +57,10 @@ export class DonorMainpage implements OnInit {
   loadEvent(data:any){
     this.appointmentService.getAppointmentByUser(data)
       .subscribe((res: any) => {
+        if(res === null){
+          this.noApp = true;
+          return;
+        }
         const parsedData = res.map((item:any) => {
           const date = new Date(item.appmntDate);
           return { ...item, appmntDate: date };

@@ -1,6 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
-import {HttpClient} from "@angular/common/http";
 import {DonorService} from "../../../../shared/services/donor.service";
 import * as CryptoJS from "crypto-js";
 import {messageConstant} from "../../../../shared/utils/constant";
@@ -15,7 +14,6 @@ import {RecordService} from "../../../../shared/services/record.service";
 export class AdminMainPage implements OnInit {
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private adminService: AdminService,
     private donorService: DonorService,

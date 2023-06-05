@@ -39,7 +39,11 @@ export class DonorService {
   }
 
   changePw(postData: any){
-    return this.http.post(this.basicUrl+"/update-password",postData)
+    return this.http.post(this.basicUrl+"/update-password",postData);
+  }
+
+  forgetPw(postData:any){
+    return this.http.post(this.basicUrl+"/forget-password",postData, {responseType:"text"})
   }
 
 }
