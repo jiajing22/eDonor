@@ -2,28 +2,71 @@
 
 <div class="content">
   <div class="post">
-    <nz-list nzItemLayout="horizontal">
-      <nz-list-item *ngFor="let item of posts">
-        <ng-container>
-          <nz-list-item-meta
-            nzAvatar="https://cdn-icons-png.flaticon.com/128/826/826955.png">
-            <nz-list-item-meta-title>
-              {{ item.title }}
-            </nz-list-item-meta-title>
-            <nz-list-item-meta-description>
-              Posted on {{ formatTimestamp(item?.postTime) }}
-            </nz-list-item-meta-description>
-          </nz-list-item-meta>
+    <nz-spin [nzSpinning]="load">
+      <nz-list nzItemLayout="horizontal">
+        <nz-list-item *ngFor="let item of posts">
+          <ng-container>
+            <nz-list-item-meta nzAvatar="https://cdn-icons-png.flaticon.com/128/826/826955.png">
+              <nz-list-item-meta-title>
+                {{ item.title }}
+              </nz-list-item-meta-title>
+              <nz-list-item-meta-description> Posted on {{ formatTimestamp(item?.postTime) }} </nz-list-item-meta-description>
+            </nz-list-item-meta>
 
-          <ul nz-list-item-actions>
-            <nz-list-item-action><a>edit</a></nz-list-item-action>
-            <nz-list-item-action><a (click)="more(item)">Read More</a></nz-list-item-action>
-          </ul>
-        </ng-container>
-      </nz-list-item>
-      <nz-list-empty *ngIf="posts.length === 0"></nz-list-empty>
-    </nz-list>
+            <ul nz-list-item-actions>
+              <nz-list-item-action *ngIf="isStaff"><a (click)="edit(item)">Edit</a></nz-list-item-action>
+              <nz-list-item-action><a (click)="more(item)">Read More</a></nz-list-item-action>
+            </ul>
+          </ng-container>
+        </nz-list-item>
+        <nz-list-empty *ngIf="posts.length === 0"></nz-list-empty>
+      </nz-list>
+    </nz-spin>
   </div>
 </div>
 
+<nz-modal [(nzVisible)]="show" nzTitle="Edit Post" (nzOnCancel)="cancel()">
+  <ng-container *nzModalContent>
+    <form nz-form [formGroup]="updateForm">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="title" [nzRequired]="true" [nzLabelAlign]="'left'">Title</nz-form-label>
+        <nz-form-control [nzSpan]="15" [nzErrorTip]="confirmErrorTip">
+          <input nz-input formControlName="title" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="location" [nzRequired]="true" [nzLabelAlign]="'left'">Location</nz-form-label>
+        <nz-form-control [nzSpan]="16" [nzErrorTip]="confirmErrorTip">
+          <input nz-input formControlName="location" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="eventDate" [nzRequired]="true" [nzLabelAlign]="'left'">Event Date</nz-form-label>
+        <nz-form-control [nzErrorTip]="confirmErrorTip">
+          <nz-date-picker [nzDisabledDate]="isDisabledDate" formControlName="eventDate"></nz-date-picker>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="description" [nzRequired]="true" [nzLabelAlign]="'left'">Description</nz-form-label>
+        <nz-form-control [nzErrorTip]="confirmErrorTip">
+          <nz-textarea-count [nzMaxCharacterCount]="2000">
+            <textarea nz-input formControlName="description" cols="30" rows="10"></textarea>
+          </nz-textarea-count>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-container>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="cancel()">Cancel</button>
+    <button nz-button nzType="primary" type="submit" (click)="update()" [nzLoading]="updateloading">Update</button>
+  </div>
+</nz-modal>
+
+<ng-template #confirmErrorTip let-i>
+  <ng-container *ngIf="i.errors?.required">This fill is required</ng-container>
+  <ng-container *ngIf="i.getError('maxlength')">Exceed the maximum length</ng-container>
+</ng-template>
 <!--<pre style="white-space: pre-line">{{ posts[3]?.description }}</pre>-->

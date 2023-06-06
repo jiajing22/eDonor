@@ -2,37 +2,35 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:8080/authorize/admin';
+  baseUrl = 'https://backendproduction.up.railway.app/authorize/admin';
 
   validateAdminLogin(postData: any) {
-    return this.http.post(this.baseUrl + "/login", postData);
+    return this.http.post(`${this.baseUrl}/login`, postData);
   }
 
-  getAdminById(postData:any){
-    return this.http.post(this.baseUrl + "-get", postData);
+  getAdminById(postData: any) {
+    return this.http.post(`${this.baseUrl}-get`, postData);
   }
 
-  getAdminList(){
+  getAdminList() {
     return this.http.get(this.baseUrl);
   }
 
-  updateAdmin(post:any){
-    return this.http.put(this.baseUrl+"-update", post, {responseType:"text"});
+  updateAdmin(post: any) {
+    return this.http.put(`${this.baseUrl}-update`, post, { responseType: 'text' });
   }
 
-  addAdmin(post:any){
-    return this.http.post(this.baseUrl, post, {responseType:"text"});
+  addAdmin(post: any) {
+    return this.http.post(this.baseUrl, post, { responseType: 'text' });
   }
 
-  deleteAdmin(id:string){
-    return this.http.delete(this.baseUrl+"/"+ id, {responseType:"text"});
+  deleteAdmin(id: string) {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
 }

@@ -10,11 +10,11 @@ import { Donor } from '../model/donor.model';
 export class DonorService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:8080/eDonor/donor';
-  basicUrl = 'http://localhost:8080/eDonor';
+  baseUrl = 'https://backendproduction.up.railway.app/eDonor/donor';
+  basicUrl = 'https://backendproduction.up.railway.app/eDonor';
 
-  validateDonorLogin(postData:any){
-    return this.http.post(this.baseUrl+"/login", postData);
+  validateDonorLogin(postData: any) {
+    return this.http.post(`${this.baseUrl}/login`, postData);
   }
 
   addDonor(donor: Donor) {
@@ -26,24 +26,23 @@ export class DonorService {
     return this.http.get(this.baseUrl);
   }
 
-  register(postData:any){
-    return this.http.post(this.baseUrl, postData, {responseType: "text"});
+  register(postData: any) {
+    return this.http.post(this.baseUrl, postData, { responseType: 'text' });
   }
 
-  getDonorInfo(id:string) {
-    return this.http.get(this.baseUrl + "/" + id);
+  getDonorInfo(id: string) {
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 
-  updateInfo(postData: any){
-    return this.http.put(this.baseUrl,postData);
+  updateInfo(postData: any) {
+    return this.http.put(this.baseUrl, postData);
   }
 
-  changePw(postData: any){
-    return this.http.post(this.basicUrl+"/update-password",postData);
+  changePw(postData: any) {
+    return this.http.post(`${this.basicUrl}/update-password`, postData);
   }
 
-  forgetPw(postData:any){
-    return this.http.post(this.basicUrl+"/forget-password",postData, {responseType:"text"})
+  forgetPw(postData: any) {
+    return this.http.post(`${this.basicUrl}/forget-password`, postData, { responseType: 'text' });
   }
-
 }

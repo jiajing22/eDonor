@@ -5,16 +5,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class PostService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:8080/eDonor/campaign';
+  baseUrl = 'https://backendproduction.up.railway.app/eDonor/campaign';
 
   addPost(postData: any) {
-    return this.http.post(this.baseUrl, postData, {responseType: "text"});
+    return this.http.post(this.baseUrl, postData, { responseType: 'text' });
   }
 
-  getAll(){
+  getAll() {
     return this.http.get(this.baseUrl);
+  }
+
+  updatePost(post: any) {
+    return this.http.put(this.baseUrl, post, { responseType: 'text' });
   }
 }

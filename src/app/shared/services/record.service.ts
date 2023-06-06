@@ -5,10 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RecordService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:8080/eDonor/record';
+  baseUrl = 'https://backendproduction.up.railway.app/eDonor/record';
 
   addRecord(postData: any) {
     return this.http.post(this.baseUrl, postData);
@@ -17,5 +16,4 @@ export class RecordService {
   getAllRecord() {
     return this.http.get(this.baseUrl);
   }
-
 }

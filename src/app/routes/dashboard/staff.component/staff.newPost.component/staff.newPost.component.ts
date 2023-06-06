@@ -1,19 +1,20 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, Validators} from '@angular/forms';
-import {HttpClient} from "@angular/common/http";
-import {NzMessageService} from "ng-zorro-antd/message";
-import * as CryptoJS from "crypto-js";
-import {StaffService} from "../../../../shared/services/staff.service";
-import {NzSafeAny} from "ng-zorro-antd/core/types";
-import {PostService} from "../../../../shared/services/post.service";
-import {Router} from "@angular/router";
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { PostService } from '../../../../shared/services/post.service';
+import { StaffService } from '../../../../shared/services/staff.service';
 
 @Component({
   selector: 'app-staff-new-post-component',
   templateUrl: './staff.newPost.component.html',
   styleUrls: ['./staff.newPost.component.css']
 })
-export class StaffNewPostComponent implements OnInit{
+export class StaffNewPostComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -21,9 +22,8 @@ export class StaffNewPostComponent implements OnInit{
     private msg: NzMessageService,
     private staffService: StaffService,
     private postService: PostService,
-    private router: Router,
-  ) {
-  }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     let sessionItem = sessionStorage.getItem('userId');
@@ -34,22 +34,23 @@ export class StaffNewPostComponent implements OnInit{
       this.msg.error('You are not logged in!');
     }
 
-    this.staffService.getStaffInfo(this.decryptedId)
-      .subscribe((res:any)=>{
-        this.author = res.fullName;
-      });
+    this.staffService.getStaffInfo(this.decryptedId).subscribe((res: any) => {
+      this.author = res.fullName;
+      this.staffId = res.userId;
+    });
   }
 
   sKey = "x^XICt8[Lp'Gm<8";
-  decryptedId='';
-  author='';
-  loading= false;
+  decryptedId = '';
+  author = '';
+  loading = false;
+  staffId = '';
 
   postForm = this.fb.nonNullable.group({
-    title: [null,Validators.required],
-    eventDate: [null,Validators.required],
-    location: [null,Validators.required],
-    description: [null,[Validators.required,Validators.maxLength(2000)]],
+    title: [null, Validators.required],
+    eventDate: [null, Validators.required],
+    location: [null, Validators.required],
+    description: [null, [Validators.required, Validators.maxLength(2000)]]
   });
 
   isDisabledDate = (current: Date): boolean => {
@@ -68,24 +69,24 @@ export class StaffNewPostComponent implements OnInit{
     if (this.postForm.invalid) {
       return;
     }
-    this.loading =  true;
+    this.loading = true;
     let postData = {
-      ... this.postForm.value,
+      ...this.postForm.value,
       eventDate: this.translateDate(this.postForm.get('eventDate') as FormControl),
-      author: this.author
+      author: this.author,
+      staffId: this.staffId
     };
 
-    this.postService.addPost(postData)
-      .subscribe((res:any)=>{
-        if(res){
-          this.msg.success('Post Uploaded!');
-          this.loading =  false;
+    this.postService.addPost(postData).subscribe((res: any) => {
+      if (res) {
+        this.msg.success('Post Uploaded!');
+        this.loading = false;
 
-          setTimeout(() => {
-            this.router.navigate(['/dashboard/campaign']);
-          }, 2000);
-        }
-      })
+        setTimeout(() => {
+          this.router.navigate(['/dashboard/campaign']);
+        }, 2000);
+      }
+    });
   }
 
   translateDate(date: FormControl<any>): string {
@@ -94,11 +95,10 @@ export class StaffNewPostComponent implements OnInit{
       const formattedDate = selectedDate.toLocaleDateString('en-US', {
         month: 'long',
         day: 'numeric',
-        year: 'numeric',
+        year: 'numeric'
       });
       return formattedDate;
     }
     return '';
   }
-
 }

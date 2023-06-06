@@ -5,25 +5,23 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class RegistrationService {
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:8080/eDonor/registration';
+  baseUrl = 'https://backendproduction.up.railway.app/eDonor/registration';
 
   addRecord(postData: any) {
-    return this.http.post(this.baseUrl, postData, {responseType: "text"});
+    return this.http.post(this.baseUrl, postData, { responseType: 'text' });
   }
 
-  getFormList(id:string){
-    return this.http.get(this.baseUrl+"-form/"+id);
+  getFormList(id: string) {
+    return this.http.get(`${this.baseUrl}-form/${id}`);
   }
 
-  getAllFormList(){
-    return this.http.get(this.baseUrl+"-form");
+  getAllFormList() {
+    return this.http.get(`${this.baseUrl}-form`);
   }
 
-  updateStatus(postData:any){
-    return this.http.post(this.baseUrl+"-update", postData, {responseType: "text"});
+  updateStatus(postData: any) {
+    return this.http.post(`${this.baseUrl}-update`, postData, { responseType: 'text' });
   }
-
 }

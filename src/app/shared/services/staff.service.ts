@@ -10,17 +10,17 @@ import { Donor } from '../model/donor.model';
 export class StaffService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:8080/eDonor/staff';
+  baseUrl = 'https://backendproduction.up.railway.app/eDonor/staff';
 
-  validateStaffLogin(postData:any){
-    return this.http.post(this.baseUrl+"/login", postData);
+  validateStaffLogin(postData: any) {
+    return this.http.post(`${this.baseUrl}/login`, postData);
   }
 
-  searchDonor(id:string){
+  searchDonor(id: string) {
     return this.http.get(`${this.baseUrl}/search-donor?id=${id}`);
   }
 
-  getStaffInfo(id:string) {
-    return this.http.get(this.baseUrl + "/" + id);
+  getStaffInfo(id: string) {
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 }
