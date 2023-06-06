@@ -1,7 +1,7 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <navbar-layout-basic></navbar-layout-basic>
 <nz-content>
-  <img nz-image nzSrc="..\assets\landing-image.png" class="image1" alt="image"/>
+  <img nz-image nzSrc="..\assets\image.png" class="image1" alt="image" />
 
   <nz-spin [nzSpinning]="loading">
     <div class="event">
@@ -11,7 +11,7 @@
             <nz-list-item>
               <a (click)="redirect(item)">
                 <nz-ribbon nzText="Upcoming" nzColor="volcano">
-                  <nz-card [nzTitle]="item.title">{{ item.eventDate}}</nz-card>
+                  <nz-card [nzTitle]="item.title">{{ item.eventDate }}</nz-card>
                 </nz-ribbon>
               </a>
             </nz-list-item>
@@ -20,14 +20,12 @@
       </nz-list>
     </div>
 
-
     <div class="card-component">
       <div nz-row [nzGutter]="16" class="content">
         <div nz-col [nzSpan]="7" [nzXs]="24" [nzSm]="24" [nzMd]="7" [nzLg]="7" [nzXl]="7" class="c2">
           <a>
             <nz-card nzTitle="What is the Blood Donor Eligibility Criteria?">
-              <p>Check out our page for more information on blood donor eligibility criteria and become a lifesaver
-                today!</p>
+              <p>Check out our page for more information on blood donor eligibility criteria and become a lifesaver today!</p>
             </nz-card>
           </a>
         </div>
@@ -38,8 +36,9 @@
         </div>
         <div nz-col [nzSpan]="7" [nzXs]="24" [nzSm]="24" [nzMd]="7" [nzLg]="7" [nzXl]="7" class="c2">
           <nz-card nzTitle="Where should I donate blood?">
-            <p>Check online for blood donation centers near you and schedule an appointment to make a difference in
-              someone's life today!</p>
+            <p
+              >Check online for blood donation centers near you and schedule an appointment to make a difference in someone's life today!</p
+            >
           </nz-card>
         </div>
       </div>
