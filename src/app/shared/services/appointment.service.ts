@@ -12,7 +12,7 @@ export class AppointmentService {
   baseUrl = 'https://backendproduction.up.railway.app/eDonor/appointment';
 
   addAppointment(postData: any) {
-    return this.http.post(this.baseUrl, postData, { responseType: 'text' });
+    return this.http.post(`${this.baseUrl}`, postData, { responseType: 'text' });
   }
 
   getAppointmentByUser(postData: any) {
@@ -20,10 +20,10 @@ export class AppointmentService {
   }
 
   getAppointmentList() {
-    return this.http.get(this.baseUrl);
+    return this.http.get(`${this.baseUrl}`);
   }
 
   updateAppStatus(postData: Appointment) {
-    return this.http.put(this.baseUrl, postData, { responseType: 'text' });
+    return this.http.put(`${this.baseUrl}`, postData, { responseType: 'text' });
   }
 }

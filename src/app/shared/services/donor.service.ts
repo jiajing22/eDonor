@@ -23,7 +23,7 @@ export class DonorService {
     return this.http.post(this.baseUrl, donor);
   }
   getDonor() {
-    return this.http.get(this.baseUrl);
+    return this.http.get(`${this.baseUrl}`);
   }
 
   register(postData: any) {
