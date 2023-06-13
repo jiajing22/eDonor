@@ -1,9 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {SettingsService, User} from '@delon/theme';
-import {ActivatedRoute, Router} from "@angular/router";
+import {SettingsService} from '@delon/theme';
+import { Router} from "@angular/router";
 import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
-import {NzMessageService} from "ng-zorro-antd/message";
-import {PostService} from "../../../shared/services/post.service";
 
 @Component({
   selector: 'campaign-activities-component',
@@ -28,9 +26,6 @@ export class CampaignListComponent implements OnInit{
     private settings: SettingsService,
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-    private route: ActivatedRoute,
-    private message:NzMessageService,
-    private postService: PostService,
   ) {
 
     this.data = history.state.data;

@@ -8,7 +8,7 @@ import {StaffNewPostComponent} from "./staff.newPost.component/staff.newPost.com
 import {StaffRecordForm} from "./staff.recordForm/staff.recordForm";
 import {StaffManageAppComponent} from "./staff.manageApp.component/staff.manageApp.component";
 import {StaffManageFormComponent} from "./staff.manageForm.component/staff.manageForm.component";
-import { AuthGuard } from "../../authGuard";
+import { StaffManageRecordComponent } from "./staff.manageRecord.component/staff.manageRecord.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'main-page',pathMatch: 'full' },
@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'recordForm', component: StaffRecordForm },
   { path: 'manageApp', component: StaffManageAppComponent },
   { path: 'manageForm', component: StaffManageFormComponent },
+  { path: 'manageRecord', component: StaffManageRecordComponent },
 ];
 
 @NgModule({

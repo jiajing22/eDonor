@@ -9,10 +9,10 @@ import {AdminService} from "../../../../shared/services/admin.service";
 
 @Component({
   selector: 'app-admin-account-component',
-  templateUrl: './admin.account.html',
-  styleUrls: ['./admin.account.css'],
+  templateUrl: './admin.account.component.html',
+  styleUrls: ['./admin.account.component.css'],
 })
-export class AdminAccount implements OnInit {
+export class AdminAccountComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

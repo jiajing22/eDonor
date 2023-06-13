@@ -40,3 +40,9 @@ p {
   transform: translateY(-5px);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+nz-footer{
+  background-color: #de2626;
+  color: white;
+  text-align: center;
+}

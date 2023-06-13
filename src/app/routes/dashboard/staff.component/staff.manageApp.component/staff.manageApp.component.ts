@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, throwError} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {AppointmentService} from "../../../../shared/services/appointment.service";
 import {Appointment} from "../../../../shared/model/appointment.model";
-import {messageConstant, RANDOM_MESSAGE} from "../../../../shared/utils/constant";
+import {messageConstant} from "../../../../shared/utils/constant";
 
 @Component({
   selector: 'app-staff-manage-app-component',

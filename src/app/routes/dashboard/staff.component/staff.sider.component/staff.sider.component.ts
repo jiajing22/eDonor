@@ -60,6 +60,9 @@ export class StaffSiderComponent {
       case 'form':
         this.router.navigate(['/staff/main/manageForm']);
         break;
+      case 'record':
+        this.router.navigate(['/staff/main/manageRecord']);
+        break;
       default:
         break;
     }
