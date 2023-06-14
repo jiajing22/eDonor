@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -8,13 +8,16 @@ export class PostService {
   constructor(private http: HttpClient) {}
 
   baseUrl = 'https://backendproduction.up.railway.app/eDonor/campaign';
+  // baseUrl = 'http://localhost:8080/eDonor/campaign';
+  // private requestHeader: HttpHeaders = new HttpHeaders({"No-Auth" : "True"});
+  // private options = { headers: this.requestHeader };
 
   addPost(postData: any) {
     return this.http.post(`${this.baseUrl}`, postData, { responseType: 'text' });
   }
 
   getAll() {
-    return this.http.get(`${this.baseUrl}`);
+    return this.http.get(`${this.baseUrl}/get-all`);
   }
 
   updatePost(post: any) {
