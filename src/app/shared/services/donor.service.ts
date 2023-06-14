@@ -10,8 +10,10 @@ import { Donor } from '../model/donor.model';
 export class DonorService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'https://backendproduction.up.railway.app/eDonor/donor';
-  basicUrl = 'https://backendproduction.up.railway.app/eDonor';
+  // baseUrl = 'https://backendproduction.up.railway.app/eDonor/donor';
+  // basicUrl = 'https://backendproduction.up.railway.app/eDonor';
+  baseUrl = 'http://localhost:8080/eDonor/donor';
+  basicUrl = 'http://localhost:8080/eDonor';
 
   validateDonorLogin(postData: any) {
     return this.http.post(`${this.baseUrl}/login`, postData);

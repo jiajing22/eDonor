@@ -56,8 +56,6 @@ export class CampaignComponent implements OnInit {
       if (sessionItem === 'Staff') {
         this.isStaff = true;
       }
-    } else {
-      console.log('Encrypted message not found.');
     }
   }
 

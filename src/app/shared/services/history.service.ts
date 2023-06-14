@@ -7,7 +7,8 @@ import { Injectable } from '@angular/core';
 export class HistoryService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'https://backendproduction.up.railway.app/eDonor/history';
+  // baseUrl = 'https://backendproduction.up.railway.app/eDonor/history';
+  baseUrl = 'http://localhost:8080/eDonor/history';
 
   getRecord(donorIc: any) {
     return this.http.get(`${this.baseUrl}/donation/${donorIc}`);
