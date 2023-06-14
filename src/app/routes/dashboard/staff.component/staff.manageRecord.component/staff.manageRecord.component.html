@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<navbar-layout-basic></navbar-layout-basic>
+<staff-sidebar>
+  <h3>Manage Donation Record</h3>
+
+  <div>
+    <nz-select name="id" [(ngModel)]="monthSelected" [nzPlaceHolder]="'Select Month'" style="width: 200px">
+      <nz-option *ngFor="let option of monthOptions" [nzValue]="option.value" [nzLabel]="option.value"></nz-option>
+    </nz-select>
+    <button nz-button nzType="default" (click)="searchByMonth()">Search</button>
+  </div>
+
+  <div>
+    <nz-spin [nzSpinning]="initLoad">
+      <nz-table #basicTable [nzData]="searchResult.length > 0 ? searchResult : record">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Blood Group</th>
+            <th>Volume(ml)</th>
+            <th>Donor IC</th>
+            <th>Full Name</th>
+            <th>Blood Centre</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of basicTable.data">
+            <td>{{ result.regDate }}</td>
+            <td>{{ result.bloodGroup }}</td>
+            <td>{{ result.volume }}</td>
+            <td>{{ result.donorIc }}</td>
+            <td>{{ result.fullName }}</td>
+            <td>{{ result.bloodCentre }}</td>
+            <td><a (click)="navigate(result)">Edit</a></td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-spin>
+  </div>
+</staff-sidebar>

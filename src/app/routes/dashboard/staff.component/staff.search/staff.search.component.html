@@ -1,8 +1,14 @@
 <navbar-layout-basic></navbar-layout-basic>
 <staff-sidebar>
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input type="text" nz-input placeholder="Search Donor" name="id" [(ngModel)]="id"
-           (keyup.enter)="search()" (input)="onSearchInputChange()"
+    <input
+      type="text"
+      nz-input
+      placeholder="Search Donor"
+      name="id"
+      [(ngModel)]="id"
+      (keyup.enter)="search()"
+      (input)="onSearchInputChange()"
     />
   </nz-input-group>
   <ng-template #suffixIconButton>
@@ -12,32 +18,34 @@
   <nz-spin [nzSpinning]="isLoading">
     <nz-table #basicTable [nzData]="donorResult.length > 0 ? donorResult : donorList">
       <thead>
-      <tr>
-        <th>Donor IC</th>
-        <th>Name</th>
-        <th>Blood Type</th>
-        <th>Donation Times</th>
-        <th>Action</th>
-      </tr>
+        <tr>
+          <th>Donor IC</th>
+          <th>Name</th>
+          <th>Blood Type</th>
+          <th>Donation Times</th>
+          <th>Details</th>
+          <th>Change Donor Type</th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let result of basicTable.data">
-        <td>{{ result.userId }}</td>
-        <td>{{ result.fullName }}</td>
-        <td>{{ result.bloodType }}</td>
-        <td>{{ result.donationTimes }}</td>
-        <td><a (click)="showInfo(result)">View Details</a></td>
-      </tr>
+        <tr *ngFor="let result of basicTable.data">
+          <td>{{ result.userId }}</td>
+          <td>{{ result.fullName }}</td>
+          <td>{{ result.bloodType }}</td>
+          <td>{{ result.donationTimes }}</td>
+          <td><a (click)="showInfo(result)">View Details</a></td>
+          <td><a (click)="showInfo(result)">Update</a></td>
+        </tr>
       </tbody>
     </nz-table>
   </nz-spin>
 
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="Confirmation">
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Confirmation" (nzOnCancel)="handleOk()">
     <ng-container *nzModalContent>
       <nz-list>
         <nz-list-item *ngFor="let item of getFormFields()">
           <span nz-typography style="font-weight: bold">{{ item.label }}</span>
-          <span style="text-align: left">{{ item.value }}</span>
+          <span style="text-align: right; width: 300px">{{ item.value }}</span>
         </nz-list-item>
       </nz-list>
     </ng-container>
@@ -46,4 +54,12 @@
     </div>
   </nz-modal>
 
+  <nz-modal [(nzVisible)]="isUpdate" nzTitle="Confirmation" (nzOnCancel)="cancel()">
+    <ng-container *nzModalContent>
+      <nz-select> </nz-select>
+    </ng-container>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="update()">Update</button>
+    </div>
+  </nz-modal>
 </staff-sidebar>
