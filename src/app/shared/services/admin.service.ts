@@ -8,7 +8,8 @@ import { environment } from '@env/environment';
 export class AdminService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'https://backendproduction.up.railway.app/authorize/admin';
+  // baseUrl = 'https://backendproduction.up.railway.app/authorize/admin';
+  baseUrl = 'http://localhost:8080/authorize/admin';
 
   validateAdminLogin(postData: any) {
     return this.http.post(`${this.baseUrl}/login`, postData);
