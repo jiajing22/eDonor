@@ -1,12 +1,11 @@
 <navbar-layout-basic></navbar-layout-basic>
 <staff-sidebar>
-  <h3>Insert New Record</h3><br/>
+  <h3>Insert New Record</h3><br />
   <form nz-form [formGroup]="form" class="login-form" (ngSubmit)="submit()">
-
     <nz-form-item [nzJustify]="'center'" class="form-item">
       <nz-form-label [nzSpan]="4" nzFor="staffId">Staff ID</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Please enter your Staff ID">
-        <input nz-input formControlName="staffId"/>
+        <input nz-input formControlName="staffId" />
       </nz-form-control>
     </nz-form-item>
 
@@ -14,24 +13,27 @@
       <nz-form-label [nzSpan]="4" nzFor="password">Password</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Please enter your password">
         <nz-input-group [nzSuffix]="suffixTemplate">
-          <input [type]="passwordVisible ? 'text' : 'password'" nz-input type="password" formControlName="password"/>
+          <input [type]="passwordVisible ? 'text' : 'password'" nz-input type="password" formControlName="password" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item [nzJustify]="'center'">
-      <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading">
-        Confirm
-      </button>
+      <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading"> Confirm </button>
     </nz-form-item>
-
   </form>
 
   <ng-template #suffixTemplate>
-      <span
-        nz-icon
-        [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-        (click)="passwordVisible = !passwordVisible"
-      ></span>
+    <span nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></span>
   </ng-template>
 </staff-sidebar>
+
+<nz-modal [(nzVisible)]="routeVisible" nzTitle="Choose Action" (nzOnCancel)="close()">
+  <div *nzModalContent class="modal">
+    <button nz-button nzType="primary" [nzSize]="'large'" style="margin-right: 100px" (click)="navigate('add')">Insert Record</button>
+    <button nz-button nzType="primary" [nzSize]="'large'" (click)="navigate('edit')">Edit Record</button>
+  </div>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="close()">Cancel</button>
+  </div>
+</nz-modal>

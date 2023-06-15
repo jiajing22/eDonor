@@ -6,3 +6,8 @@
 .form-item{
   padding-right: 40px;
 }
+
+.modal{
+  display: flex;
+  justify-content: space-around;
+}

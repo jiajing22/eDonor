@@ -1,25 +1,15 @@
 <div class="whole">
-  <div class="wrapper" [ngClass]="{ 'collapsed': isCollapsed && isSmallScreen }">
+  <div class="wrapper" [ngClass]="{ collapsed: isCollapsed && isSmallScreen }">
     <button nz-button nzType="text" class="menu-btn" (click)="toggleCollapsed()">
       <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
     </button>
     <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-
-      <li
-        nz-menu-item
-        nz-tooltip
-        nzTooltipPlacement="right"
-        [nzTooltipTitle]="isCollapsed ? 'Dashboard' : ''"
-        (click)="redirect('home')"
-      >
+      <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? 'Dashboard' : ''" (click)="redirect('home')">
         <span nz-icon nzType="home"></span>
         <span>Dashboard</span>
       </li>
 
-      <li
-        nz-submenu
-        nzTitle="Profile"
-        nzIcon="user">
+      <li nz-submenu nzTitle="Profile" nzIcon="user">
         <ul>
           <li nz-menu-item (click)="redirect('profile')">View Profile</li>
           <li nz-menu-item (click)="redirect('edit')">Edit Profile</li>
@@ -59,20 +49,16 @@
         <span>Upload Activity</span>
       </li>
 
-      <li
-        nz-submenu
-        nzTitle="Manage"
-        nzIcon="select">
+      <li nz-submenu nzTitle="Manage" nzIcon="select">
         <ul>
           <li nz-menu-item (click)="redirect('app')">Appointment</li>
           <li nz-menu-item (click)="redirect('form')">Registration Form</li>
-          <li nz-menu-item (click)="redirect('record')">Donation Record</li>
         </ul>
       </li>
-
     </ul>
   </div>
   <div class="page-content">
-    <ng-content></ng-content> <!-- Render the provided page content here -->
+    <ng-content></ng-content>
+    <!-- Render the provided page content here -->
   </div>
 </div>

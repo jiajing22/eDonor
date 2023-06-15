@@ -1,24 +1,19 @@
-import {Component, HostListener} from '@angular/core';
-import {SettingsService} from '@delon/theme';
-import { Router} from "@angular/router";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { SettingsService } from '@delon/theme';
 
 @Component({
   selector: 'staff-sidebar',
   templateUrl: './staff.sider.component.html',
-  styleUrls: ['./staff.sider.component.css'],
+  styleUrls: ['./staff.sider.component.css']
 })
 export class StaffSiderComponent {
   isSmallScreen: boolean = false;
-  constructor(
-    private settings: SettingsService,
-    private router: Router,
-    private breakpointObserver: BreakpointObserver
-  ) {
-    this.breakpointObserver.observe([Breakpoints.Small])
-      .subscribe(result => {
-        this.isSmallScreen = result.matches;
-      });
+  constructor(private settings: SettingsService, private router: Router, private breakpointObserver: BreakpointObserver) {
+    this.breakpointObserver.observe([Breakpoints.Small]).subscribe(result => {
+      this.isSmallScreen = result.matches;
+    });
   }
 
   isCollapsed = true;
@@ -34,7 +29,7 @@ export class StaffSiderComponent {
     this.isSmallScreen = screenWidth < 768; // Adjust the threshold as needed
   }
 
-  redirect(destination: string){
+  redirect(destination: string) {
     switch (destination) {
       case 'home':
         this.router.navigate(['/staff/main/main-page']);
@@ -43,7 +38,7 @@ export class StaffSiderComponent {
         this.router.navigate(['/staff/main/staffAcc']);
         break;
       case 'edit':
-        this.router.navigate(['/donorMenu/main/donor-edit']);
+        this.router.navigate(['/staff/main/staffEditProfile']);
         break;
       case 'search':
         this.router.navigate(['/staff/main/staffSearch']);
@@ -59,9 +54,6 @@ export class StaffSiderComponent {
         break;
       case 'form':
         this.router.navigate(['/staff/main/manageForm']);
-        break;
-      case 'record':
-        this.router.navigate(['/staff/main/manageRecord']);
         break;
       default:
         break;
