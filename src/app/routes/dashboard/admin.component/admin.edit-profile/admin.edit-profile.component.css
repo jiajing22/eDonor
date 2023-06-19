@@ -19,9 +19,8 @@ nz-content {
 nz-form-label{
   text-align: left;
 }
-/*TODO: enhance UI*/
 .login-form{
-  width: 80%;
+  width: 600px;
   margin: auto;
 }
 

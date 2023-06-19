@@ -31,4 +31,15 @@ export class BdcentreService {
   updateItem(id: string, postData: any) {
     return this.http.put(`${this.baseUrl}/${id}`, postData, { responseType: 'text' });
   }
+
+  //   --------------------------------Blood Group---------------------------------------------------
+  otherUrl = 'http://localhost:8080/eDonor/bloodGroup';
+
+  updateBloodGroup(id: string, postData: any) {
+    return this.http.put(`${this.otherUrl}/${id}`, postData, { responseType: 'text' });
+  }
+
+  getBloodGroup(id: string) {
+    return this.http.get(`${this.otherUrl}/${id}`);
+  }
 }

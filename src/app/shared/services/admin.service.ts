@@ -34,4 +34,8 @@ export class AdminService {
   deleteAdmin(id: string) {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
+
+  changePassword(post: any) {
+    return this.http.put(`${this.baseUrl}-update-credential`, post, { responseType: 'text' });
+  }
 }
