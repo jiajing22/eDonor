@@ -20,10 +20,9 @@ export class DonorService {
   }
 
   addDonor(donor: Donor) {
-    console.log(donor);
-    console.log(this.baseUrl);
     return this.http.post(this.baseUrl, donor);
   }
+
   getDonor() {
     return this.http.get(`${this.baseUrl}`);
   }
@@ -46,5 +45,13 @@ export class DonorService {
 
   forgetPw(postData: any) {
     return this.http.post(`${this.basicUrl}/forget-password`, postData, { responseType: 'text' });
+  }
+
+  updateDonorInfo(postData:any){
+    return this.http.put(`${this.baseUrl}-update`, postData, { responseType: 'text' });
+  }
+
+  deleteDonor(id:string){
+    return this.http.delete(this.baseUrl+'/'+id, {responseType:'text'});
   }
 }

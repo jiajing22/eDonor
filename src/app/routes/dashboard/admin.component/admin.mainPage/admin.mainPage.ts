@@ -5,6 +5,7 @@ import * as CryptoJS from "crypto-js";
 import {messageConstant} from "../../../../shared/utils/constant";
 import {AdminService} from "../../../../shared/services/admin.service";
 import {RecordService} from "../../../../shared/services/record.service";
+import {BdcentreService} from "../../../../shared/services/bdcentre.service";
 
 @Component({
   selector: 'app-admin-component',
@@ -18,6 +19,7 @@ export class AdminMainPage implements OnInit {
     private adminService: AdminService,
     private donorService: DonorService,
     private recordService: RecordService,
+    private bdcentreService: BdcentreService,
   ) {}
 
   example: string =" ";
@@ -26,6 +28,7 @@ export class AdminMainPage implements OnInit {
   newUser = 0;
   record:any[]=[];
   count = 0;
+  bloodGroup ='';
 
   ngOnInit(): void {
     let sessionItem = sessionStorage.getItem('userId');
@@ -43,6 +46,11 @@ export class AdminMainPage implements OnInit {
     this.adminService.getAdminById(post)
       .subscribe((res: any) => {
         this.username = res.username;
+      });
+
+    this.bdcentreService.getBloodGroup('BG00001')
+      .subscribe((res:any)=>{
+        this.bloodGroup = res.needed;
       });
 
     this.loadUser();

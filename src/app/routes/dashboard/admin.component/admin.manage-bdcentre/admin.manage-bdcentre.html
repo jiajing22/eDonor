@@ -2,7 +2,8 @@
 <app-admin-sider-component>
   <h3>Blood Centre Info</h3>
   <button style="margin-bottom: 12px" nz-button nzType="default" type="button" (click)="showModal()">Add Record</button>
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="Insert New Blood Centre" (nzOnCancel)="handleCancel()">
+  <button style="margin-bottom: 12px" nz-button nzType="default" type="button" (click)="showModal2()">Update Blood Group Needed</button>
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Blood Donation Centre Record" (nzOnCancel)="handleCancel()">
     <div *nzModalContent>
       <form nz-form [formGroup]="addNewForm" class="form">
         <nz-form-item>
@@ -66,6 +67,19 @@
         [nzLoading]="isUpdateLoading">
         Update
       </button>
+    </div>
+  </nz-modal>
+
+  <nz-modal [(nzVisible)]="updateBloodGroupVisible" nzTitle="Update Current Blood Group Needed" (nzOnCancel)="handleCancel2()">
+    <div *nzModalContent>
+      Choose the current blood group needed in the blood bank:
+      <nz-select [(ngModel)]="selected">
+        <nz-option *ngFor="let item of bloodGroups" [nzLabel]="item" [nzValue]="item"></nz-option>
+      </nz-select>
+    </div>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="handleCancel2()">Cancel</button>
+      <button nz-button nzType="primary" type="submit" (click)="updateBloodGroup()" [nzLoading]="isUpdateBGLoading">Update</button>
     </div>
   </nz-modal>
   <nz-table #basicTable [nzData]="list" [nzLoading]="loading">

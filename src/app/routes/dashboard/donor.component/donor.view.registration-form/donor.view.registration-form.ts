@@ -62,7 +62,6 @@ export class DonorViewRegistrationForm implements OnInit {
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
-      console.log(this.decryptedId)
     } else {
       this.message.error('You are not logged in!');
     }
@@ -77,16 +76,7 @@ export class DonorViewRegistrationForm implements OnInit {
         this.donorIc = res.userId;
 
         this.registrationService.getFormList(res.userId)
-          .pipe(
-            catchError(err => {
-              if (err.status === 404) {
-                this.history = [];
-                this.loading = false;
-                return of(null);
-              }
-              return throwError(err);
-            })
-          ).subscribe((res:any) => {
+          .subscribe((res:any) => {
           if (res) {
             this.dataForm = res.map((item:any) => ({
               title: this.formatTimestamp(item.regForm.submitTime),
@@ -94,6 +84,22 @@ export class DonorViewRegistrationForm implements OnInit {
               regForm: item.regForm,
               formFields: item.formFields
             }));
+
+            this.dataForm.sort((a, b) => {
+              const order = ['submitted', 'checked', 'rejected', 'expired'];
+
+              const statusComparison = order.indexOf(a.status) - order.indexOf(b.status);
+              if (statusComparison !== 0) {
+                return statusComparison;
+              }
+
+              const submitTimeA = a.regForm.submitTime;
+              const submitTimeB = b.regForm.submitTime;
+
+              const timeA = (submitTimeA.seconds * 1000) + (submitTimeA.nanos / 1e6);
+              const timeB = (submitTimeB.seconds * 1000) + (submitTimeB.nanos / 1e6);
+              return timeB - timeA;
+            });
           }
         });
     });
@@ -139,8 +145,8 @@ export class DonorViewRegistrationForm implements OnInit {
   getStatusColor(status: string): string {
     const colorMap: { [status: string]: string } = {
       submitted: 'processing',
-      accepted: 'success',
-      expired: 'error'
+      checked: 'success',
+      rejected: 'error'
     };
 
     return colorMap[status] || 'default';

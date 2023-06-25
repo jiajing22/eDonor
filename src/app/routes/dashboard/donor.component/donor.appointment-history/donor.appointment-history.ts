@@ -66,8 +66,27 @@ export class DonorAppointmentHistory implements OnInit {
             return throwError(err);
           })
         ).subscribe((res: any) => {
-          this.appointmentList = res;
-          this.loading= false;
+          if(res) {
+            this.appointmentList = res;
+            console.log(this.appointmentList);
+            const order = ['Pending', 'Accepted', 'Rejected', 'Expired'];
+            this.appointmentList.sort((a, b) => {
+              const statusComparison = order.indexOf(a.aStatus) - order.indexOf(b.aStatus);
+
+              if (statusComparison !== 0) {
+                return statusComparison;
+              }
+              else {
+                // Sort by the most recent appmntDate if the status is the same
+                const dateA = new Date(a.appmntDate).getTime();
+                const dateB = new Date(b.appmntDate).getTime();
+                return dateB - dateA;
+              }
+            });
+            this.loading= false;
+          } else {
+            this.loading = false;
+          }
       });
     });
   }

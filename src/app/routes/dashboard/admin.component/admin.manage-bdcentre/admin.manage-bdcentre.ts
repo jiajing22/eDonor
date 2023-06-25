@@ -32,6 +32,10 @@ export class AdminManageBdcentre implements OnInit {
   isConfirmLoading = false;
   isUpdateLoading = false;
   isEdit = false;
+  updateBloodGroupVisible = false;
+  isUpdateBGLoading = false;
+  selected = '';
+  bloodGroups = ['A', 'B', 'AB', 'O'];
   states = [
     'Johor',
     'Kedah',
@@ -105,10 +109,34 @@ export class AdminManageBdcentre implements OnInit {
     this.isVisible = true;
   }
 
+  showModal2(){
+    this.updateBloodGroupVisible = true;
+  }
+
   handleCancel(): void {
     this.addNewForm.reset();
     this.isVisible = false;
     this.isEdit = false;
+  }
+
+  handleCancel2(): void {
+    this.updateBloodGroupVisible = false;
+  }
+
+  updateBloodGroup(){
+    this.isUpdateBGLoading = true;
+    let post={
+      documentId: 'BG00001',
+      needed: this.selected
+    }
+    this.bdcentreService.updateBloodGroup('BG00001',post)
+      .subscribe((res:any)=>{
+        if(res!=null){
+          this.isUpdateBGLoading = false;
+          this.message.success('Update Successfully');
+          this.updateBloodGroupVisible = false;
+        }
+      })
   }
 
   handleOk(): void {
@@ -141,13 +169,16 @@ export class AdminManageBdcentre implements OnInit {
             return throwError(err);
           })
         ).subscribe((res: any) => {
-        this.message.success(res);
-        setTimeout(() => {
-          this.isVisible = false;
-          this.isUpdateLoading = false;
-          this.isEdit = false;
-        }, 2000);
-        this.loadData();
+          if(res != null){
+            this.message.success("Successfully Updated");
+            setTimeout(() => {
+              this.isVisible = false;
+              this.isUpdateLoading = false;
+              this.isEdit = false;
+            }, 2000);
+            this.loadData();
+          }
+
       })
     } else {
       this.isConfirmLoading = true;

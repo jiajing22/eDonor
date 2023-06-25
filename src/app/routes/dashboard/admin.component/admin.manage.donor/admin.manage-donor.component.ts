@@ -1,43 +1,39 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, Validators} from '@angular/forms';
-import { HttpClient } from "@angular/common/http";
-import { DonorService } from "../../../../shared/services/donor.service";
-import {AdminService} from "../../../../shared/services/admin.service";
+import {HttpClient} from "@angular/common/http";
+import {DonorService} from "../../../../shared/services/donor.service";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
-import {catchError, throwError} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
-  selector: 'app-admin-component',
-  templateUrl: './admin.manage-admin.html',
+  selector: 'app-admin-manage-donor-component',
+  templateUrl: './admin.manage-donor.component.html',
   styles: [`
-    .action-btn{
-      display: flex;
-    }
-    `
+  `
   ]
 })
-export class AdminManageAdmin implements OnInit {
+export class AdminManageDonorComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    private adminService: AdminService,
+    private donorService: DonorService,
     private message: NzMessageService,
-  ) {}
+  ) {
+  }
 
-  loading  :boolean= false;
+  loading: boolean = false;
+  donor: any;
   isVisible = false;
   isEdit = false;
   isUpdateLoading = false;
   isConfirmLoading = false;
-  list :any[]=[];
+  list: any[] = [];
   passwordVisible = false;
   password?: string;
   currId: string = "";
 
   ngOnInit(): void {
-    this.loading = true;
     this.loadData();
     this.addNewForm.get('fullName')?.valueChanges.subscribe((value: string) => {
       if (value) {
@@ -46,9 +42,10 @@ export class AdminManageAdmin implements OnInit {
     });
   }
 
-  loadData(){
-    this.adminService.getAdminList().subscribe((res: any) => {
-      this.list = res;
+  loadData() {
+    this.loading = true;
+    this.donorService.getDonor().subscribe((res: any) => {
+      this.donor = res;
       this.loading = false;
     });
   }
@@ -56,10 +53,14 @@ export class AdminManageAdmin implements OnInit {
   addNewForm = this.fb.nonNullable.group(
     {
       fullName: ['', Validators.required],
-      username: ['', Validators.required],
+      userId: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       gender: ['', Validators.required],
-      email: ['', [Validators.required ,Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
+      bloodType: ['', Validators.required],
+      donorType: ['', Validators.required],
+      address: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{9,10}$/)]],
     }
   );
 
@@ -70,17 +71,17 @@ export class AdminManageAdmin implements OnInit {
       control.updateValueAndValidity();
     });
 
+
     if (this.addNewForm.invalid) {
       return;
     }
 
     if (this.isEdit) {
       this.isUpdateLoading = true;
-      let postData = {... this.addNewForm.value, documentId: this.currId};
-      console.log(postData);
-      this.adminService.updateAdmin(postData)
+      let postData = {...this.addNewForm.value, donorId: this.currId};
+      this.donorService.updateDonorInfo(postData)
         .subscribe((res: any) => {
-          if( res!= null){
+          if (res != null) {
             this.message.success("Record updated successfully");
             setTimeout(() => {
               this.isVisible = false;
@@ -88,22 +89,32 @@ export class AdminManageAdmin implements OnInit {
               this.isEdit = false;
             }, 2000);
             this.loadData();
+          } else {
+            this.message.error("Record updated failed");
+            this.isUpdateLoading = false;
           }
-      });
+        });
     } else {
       this.isConfirmLoading = true;
-      let postData = {... this.addNewForm.value};
-      this.adminService.addAdmin(postData)
+      let postData = {...this.addNewForm.value};
+      this.donorService.register(postData)
         .subscribe((res: any) => {
-          if(res!=null){
+          this.isConfirmLoading = false;
+          if (res === 'Existing document ID') {
+            this.message.error("User Added Failed!");
+          } else if (res === 'registeredIc') {
+            this.message.error('The IC Number is already been registered.');
+          } else if (res === 'emailUsed') {
+            this.message.error('The email is already been used.');
+          } else {
             this.message.success("Record added successfully");
             setTimeout(() => {
               this.isVisible = false;
               this.isConfirmLoading = false;
-            }, 2000);
+            }, 3000);
             this.loadData();
           }
-      });
+        });
     }
   }
 
@@ -114,17 +125,17 @@ export class AdminManageAdmin implements OnInit {
     this.currId = data.documentId;
   }
 
-  delete(id:string){
-    this.adminService.deleteAdmin(id)
+  delete(id: string) {
+    this.donorService.deleteDonor(id)
       .subscribe((res:any)=>{
         if(res!=null){
-          this.message.success('Record deleted successfully');
+          this.message.success("Donor account deleted.");
           this.loadData();
         }
       });
   }
 
-  showModal(){
+  showModal() {
     this.isVisible = true;
   }
 
@@ -135,7 +146,7 @@ export class AdminManageAdmin implements OnInit {
   }
 
   formatTimestamp(timestamp: any): string {
-    if (timestamp == null){
+    if (timestamp == null) {
       return '-';
     }
     const date = new Date(timestamp.seconds * 1000);

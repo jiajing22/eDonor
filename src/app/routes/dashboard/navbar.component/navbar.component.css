@@ -6,10 +6,6 @@
   background-image: url('src/assets/eDonor.png');
 }
 
-.main-layout {
-  background-color: #de2626;
-}
-
 nz-header{
   background-color: #de2626;
 }
@@ -38,7 +34,7 @@ nz-header{
 
 nz-layout {
   /*position: fixed;*/
-  width: 100%;
+  width: inherit;
 }
 
 .signIn{

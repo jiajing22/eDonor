@@ -21,7 +21,7 @@ export class AdminManageRecord implements OnInit {
     private message: NzMessageService,
   ) {}
 
-  monthSelected: string = "";
+  monthSelected: string = '';
   isLoading = false;
   allRecord: any[] = [];
   searchResult: any[] = [];
@@ -54,6 +54,9 @@ export class AdminManageRecord implements OnInit {
   }
 
   searchByMonth(){
+    if(this.monthSelected === ''){
+      this.message.info('Please select the month!');
+    }
     if (this.monthSelected === 'All'){
       this.searchResult = []; // or this.searchResult = [];
       return;
@@ -81,7 +84,7 @@ export class AdminManageRecord implements OnInit {
       this.message.error('Not supported yet!');
       return;
     } else {
-      this.message.error('Please select the option first!');
+      this.message.error('Please select the month');
       return;
     }
 
@@ -156,7 +159,7 @@ export class AdminManageRecord implements OnInit {
   }
 
   calculateGroupCounts(records: any[]): { bloodGroup: string, count: number }[] {
-    const groupCounts: { [bloodGroup: string]: number } = {}; // Type annotation added
+    const groupCounts: { [bloodGroup: string]: number } = {};
     records.forEach(record => {
       const bloodGroup = record.bloodGroup;
       if (groupCounts[bloodGroup]) {

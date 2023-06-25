@@ -11,9 +11,9 @@
     <div *ngIf="currentPage === 1">
       <form nz-form [formGroup]="first" class="login-form" (ngSubmit)="secondPage()">
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="ic">IC No.<span style="color: red"> *</span></nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="donorIc">IC No.<span style="color: red"> *</span></nz-form-label>
           <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
-            <input nz-input formControlName="ic" placeholder="(Without '-')"/>
+            <input nz-input formControlName="donorIc" placeholder="(Without '-')"/>
           </nz-form-control>
         </nz-form-item>
 
@@ -60,7 +60,7 @@
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="bloodCentre">Blood Centre<span style="color: red"> *</span></nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="bloodCentre">Blood Centre</nz-form-label>
           <nz-form-control [nzSpan]="12" [nzErrorTip]="confirmErrorTip">
             <nz-select formControlName="bloodCentre">
               <nz-option *ngFor="let option of bloodCentreOptions" [nzValue]="option.value"
@@ -100,7 +100,7 @@
     <div *ngIf="currentPage === 2">
       <form nz-form [formGroup]="second" class="login-form" (ngSubmit)="lastPage()">
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="weight">Body Weight<span style="color: red"> *</span></nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="weight">Body Weight</nz-form-label>
           <nz-form-control [nzSpan]="4" [nzErrorTip]="confirmErrorTip">
             <nz-input-number-group nzAddOnAfter="kg">
               <nz-input-number formControlName="weight" [nzStep]="1"></nz-input-number>
@@ -109,7 +109,7 @@
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="bloodGroup">Blood Group<span style="color: red"> *</span></nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="bloodGroup">Blood Group</nz-form-label>
           <nz-form-control [nzSpan]="6" [nzErrorTip]="confirmErrorTip">
             <nz-select formControlName="bloodGroup">
               <nz-option *ngFor="let option of selectOptions" [nzValue]="option.value"
@@ -120,7 +120,7 @@
 
         <!--        Radio Button-->
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="hbLevel">Hb Level<span style="color: red"> *</span></nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="hbLevel">Hb Level</nz-form-label>
           <nz-form-control [nzErrorTip]="confirmErrorTip">
             <nz-radio-group formControlName="hbLevel">
               <label nz-radio nzValue="maleMore">Male ≥ 13.5 g/dL</label>
@@ -133,8 +133,7 @@
 
         <!--        Number only-->
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="pAmount">Pre-donation Platelet Amount<span style="color: red"> *</span>
-          </nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="pAmount">Pre-donation Platelet Amount</nz-form-label>
           <nz-form-control [nzErrorTip]="confirmErrorTip">
             <nz-input-number-group nzAddOnAfter="x 10^9/L">
               <nz-input-number formControlName="pAmount" [nzStep]="1"></nz-input-number>
@@ -144,8 +143,7 @@
 
         <!--        Number Only-->
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="bloodPressure">Blood Pressure<span style="color: red"> *</span>
-          </nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="bloodPressure">Blood Pressure</nz-form-label>
           <nz-form-control [nzErrorTip]="confirmErrorTip">
             <nz-input-group nzAddOnAfter="mmHg">
               <input type="text" nz-input formControlName="bloodPressure"/>
@@ -177,14 +175,14 @@
             <nz-form-label [nzSpan]="6" nzFor="doubleCheckEOption" [nzNoColon]="true"></nz-form-label>
             <nz-form-control [nzErrorTip]="confirmErrorTip">
               <nz-radio-group formControlName="doubleCheckEOption" class="multiple">
-                <label nz-radio nzValue="WB">Whole Blood</label>
-                <label nz-radio nzValue="TB">Triple Bag</label>
-                <label nz-radio nzValue="DB">Double Bag</label>
-                <label nz-radio nzValue="SB">Single Bag</label>
-                <label nz-radio nzValue="FB">Filter Bag</label> <br/>
-                <label nz-radio nzValue="A">Apheresis</label>
-                <label nz-radio nzValue="PM">Plasma</label>
-                <label nz-radio nzValue="PT">Platelet</label>
+                <label nz-radio nzValue="Whole Blood">Whole Blood</label>
+                <label nz-radio nzValue="Triple Bag">Triple Bag</label>
+                <label nz-radio nzValue="Double Bag">Double Bag</label>
+                <label nz-radio nzValue="Single Bag">Single Bag</label>
+                <label nz-radio nzValue="Filter Bag">Filter Bag</label> <br/>
+                <label nz-radio nzValue="Apheresis">Apheresis</label>
+                <label nz-radio nzValue="Plasma">Plasma</label>
+                <label nz-radio nzValue="Platelet">Platelet</label>
                 <label nz-radio nzValue="M">Others(specify)</label>
                 <input type="text" nz-input *ngIf="second.value.doubleCheckEOption === 'M'"/>
               </nz-radio-group>
@@ -291,8 +289,7 @@
 
         <!--       Time Picker-->
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="timeStart">Time Donation Started<span style="color: red"> *</span>
-          </nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="timeStart">Time Donation Started</nz-form-label>
           <nz-form-control [nzSpan]="4" [nzErrorTip]="confirmErrorTip">
             <input nz-input formControlName="timeStart" placeholder="hh:mm"/>
           </nz-form-control>
@@ -300,7 +297,7 @@
 
         <!--        Radio Button-->
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="isTaken">Sample Taken?<span style="color: red"> *</span></nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="isTaken">Sample Taken?</nz-form-label>
           <nz-form-control [nzErrorTip]="confirmErrorTip">
             <nz-radio-group formControlName="isTaken">
               <label nz-radio nzValue="yes">Yes</label>
@@ -311,8 +308,7 @@
 
         <!--        Time Picker-->
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="timeEnd">Time Donation Ended<span style="color: red"> *</span>
-          </nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="timeEnd">Time Donation Ended</nz-form-label>
           <nz-form-control [nzSpan]="4" [nzErrorTip]="confirmErrorTip">
             <input nz-input formControlName="timeEnd" placeholder="hh:mm"/>
           </nz-form-control>
@@ -325,9 +321,9 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSpan]="6" nzFor="notes">Notes / Comment (if any)</nz-form-label>
+          <nz-form-label [nzSpan]="6" nzFor="recRemark">Notes / Comment (if any)</nz-form-label>
           <nz-form-control [nzSpan]="12">
-            <textarea rows="2" nz-input formControlName="notes"></textarea>
+            <textarea rows="2" nz-input formControlName="recRemark"></textarea>
           </nz-form-control>
         </nz-form-item>
 
@@ -387,8 +383,11 @@
             <span nz-icon nzType="left"></span>
             Edit
           </button>
-          <button nz-button nzType="primary" type="submit" (click)="submit()" [nzLoading]="loadingSubmit">
+          <button *ngIf="!isEdit" nz-button nzType="primary" type="submit" (click)="submit()" [nzLoading]="loadingSubmit">
             Submit
+          </button>
+          <button *ngIf="isEdit" nz-button nzType="primary" type="submit" (click)="update()" [nzLoading]="loadingUpdate">
+            Update
           </button>
         </nz-button-group>
       </div>
@@ -400,6 +399,7 @@
       <nz-result
         nzStatus="success"
         nzTitle="Record Successfully Created!"
+        style="min-height: 401px"
       >
         <div nz-result-extra>
           <button nz-button nzType="primary" type="button" (click)="new()">Create New Record</button>

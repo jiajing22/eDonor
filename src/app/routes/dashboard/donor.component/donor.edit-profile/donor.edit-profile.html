@@ -21,20 +21,6 @@
     </nz-form-item>
 
     <nz-form-item *ngIf="!changePw">
-      <nz-form-label [nzSpan]="5" nzFor="email">E-mail</nz-form-label>
-      <nz-form-control [nzSpan]="8" nzErrorTip="Please enter your New Email">
-        <input nz-input formControlName="email"/>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item *ngIf="!changePw">
-      <nz-form-label [nzSpan]="5" nzFor="phone">Phone Number</nz-form-label>
-      <nz-form-control [nzSpan]="8" nzErrorTip="Please enter your Phone Numbr">
-        <input nz-input formControlName="phone"/>
-      </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item *ngIf="!changePw">
       <nz-form-label [nzSpan]="5" nzFor="address">Address</nz-form-label>
       <nz-form-control [nzSpan]="12" nzErrorTip="Please enter your Full Name">
         <nz-textarea-count [nzMaxCharacterCount]="100">

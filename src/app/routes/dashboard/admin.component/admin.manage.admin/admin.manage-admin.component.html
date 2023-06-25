@@ -1,4 +1,4 @@
-<navbar-layout-basic xmlns="http://www.w3.org/1999/html"></navbar-layout-basic>
+<navbar-layout-basic></navbar-layout-basic>
 <app-admin-sider-component>
   <!--  <a routerLink="../staffMenu">Donor Info</a>-->
   <h3>Admin List</h3>
@@ -27,7 +27,7 @@
 
           <a
             nz-popconfirm
-            nzPopconfirmTitle="Are you sure delete this task?"
+            nzPopconfirmTitle="Are you sure to delete this admin?"
             nzPopconfirmPlacement="bottom"
             (nzOnConfirm)="delete(data.adminId)"
           >
@@ -39,7 +39,7 @@
     </tbody>
   </nz-table>
 
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="Insert New Blood Centre" (nzOnCancel)="handleCancel()">
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Admin Information" (nzOnCancel)="handleCancel()">
     <div *nzModalContent>
       <form nz-form [formGroup]="addNewForm" class="form">
         <nz-form-item>

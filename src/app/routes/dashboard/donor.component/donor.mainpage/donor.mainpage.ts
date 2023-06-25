@@ -6,6 +6,7 @@ import {messageConstant} from "../../../../shared/utils/constant";
 import {DonorService} from "../../../../shared/services/donor.service";
 import {AppointmentService} from "../../../../shared/services/appointment.service";
 import {Appointment} from "../../../../shared/model/appointment.model";
+import {BdcentreService} from "../../../../shared/services/bdcentre.service";
 
 @Component({
   selector: 'app-donor-main-page-component',
@@ -19,13 +20,14 @@ export class DonorMainpage implements OnInit {
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
     private appointmentService: AppointmentService,
+    private bdcentreService: BdcentreService,
   ) {}
 
   loading= false;
   userName: string ='';
   decryptedId='';
   donation = 0;
-  bloodGroup = 'A';
+  bloodGroup = '';
   list: Appointment | undefined;
   noApp= false;
 
@@ -37,9 +39,6 @@ export class DonorMainpage implements OnInit {
       let decrypted = item.toString(CryptoJS.enc.Utf8);
       this.decryptedId = decrypted;
     }
-    // else {
-    //   console.log('Encrypted message not found.');
-    // }
 
     this.donorService.getDonorInfo(this.decryptedId)
       .subscribe((res: any) => {
@@ -52,6 +51,10 @@ export class DonorMainpage implements OnInit {
         this.loading=false;
       });
 
+    this.bdcentreService.getBloodGroup('BG00001')
+      .subscribe((res:any)=>{
+        this.bloodGroup = res.needed;
+      });
   }
 
   loadEvent(data:any){

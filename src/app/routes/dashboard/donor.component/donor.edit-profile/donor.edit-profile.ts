@@ -36,11 +36,8 @@ export class DonorEditProfile implements OnInit {
   passwordVisible = false;
   newPasswordVisible = false;
 
-  //TODO: Mark dirty when submit editForm to check validation
   editForm = this.fb.nonNullable.group({
-      email: [''],
       address: [''],
-      phone: [''],
     }
   );
 
@@ -52,10 +49,6 @@ export class DonorEditProfile implements OnInit {
     },
     {validators: MatchControl('newPass', 'confirmPass')}
   );
-
-  get email(): AbstractControl {
-    return this.editForm.get('email')!;
-  }
 
   get oldPw(): AbstractControl {
     return this.passwordForm.get('oldPass')!;
@@ -94,17 +87,13 @@ export class DonorEditProfile implements OnInit {
         // this.passwordForm.get('oldPass')?.setValue(this.donor.password);
       });
 
-    this.editForm.get('email')?.disable();
     this.editForm.get('address')?.disable();
-    this.editForm.get('phone')?.disable();
   }
 
   submitForm(): void {
     this.loading =  true;
     let postData = {
       donorId: this.decryptedId,
-      email: this.editForm.get('email')?.value,
-      phone: this.editForm.get('phone')?.value,
       address: this.editForm.get('address')?.value
     };
     console.log(postData)
@@ -122,9 +111,7 @@ export class DonorEditProfile implements OnInit {
         setTimeout(() => {
           this.loading =  false;
         }, 1000);
-        this.editForm.get('email')?.disable();
         this.editForm.get('address')?.disable();
-        this.editForm.get('phone')?.disable();
       });
   }
 
@@ -177,20 +164,14 @@ export class DonorEditProfile implements OnInit {
 }
 
   enableEdit(): void {
-    this.editForm.get('email')?.enable();
     this.editForm.get('address')?.enable();
-    this.editForm.get('phone')?.enable();
     this.isEdit = true;
   }
 
   cancelEdit(): void {
-    this.editForm.get('email')?.disable();
     this.editForm.get('address')?.disable();
-    this.editForm.get('phone')?.disable();
     this.editForm.reset();
-    this.editForm.get('email')?.setValue(this.donor.email);
     this.editForm.get('address')?.setValue(this.donor.address);
-    this.editForm.get('phone')?.setValue(this.donor.phone);
     this.isEdit = false;
   }
 

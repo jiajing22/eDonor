@@ -45,7 +45,7 @@ export class DonorHistory implements OnInit {
       compare: (a: History, b: History) => a.bloodSerialNo.localeCompare(b.bloodSerialNo),
     },
     {
-      title: 'Amount',
+      title: 'Amount(ml)',
       compare: (a: History, b: History) => a.amount - b.amount,
     },
     {

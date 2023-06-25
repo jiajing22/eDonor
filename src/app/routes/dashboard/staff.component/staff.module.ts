@@ -15,11 +15,12 @@ import { StaffSiderComponent } from "./staff.sider.component/staff.sider.compone
 import { StaffManageAppComponent } from "./staff.manageApp.component/staff.manageApp.component";
 import { StaffManageFormComponent } from "./staff.manageForm.component/staff.manageForm.component";
 import { StaffManageRecordComponent } from "./staff.manageRecord.component/staff.manageRecord.component";
+import { StaffEditProfileComponent } from "./staff.editProfile.component/staff.editProfile.component";
 
 const COMPONENTS =
     [StaffMainPageComponent, StaffSearchComponent, StaffAddRecordComponent, StaffViewAccComponent,
     StaffNewPostComponent, StaffRecordForm, StaffSiderComponent, StaffManageAppComponent,
-      StaffManageFormComponent, StaffManageRecordComponent ];
+      StaffManageFormComponent, StaffManageRecordComponent, StaffEditProfileComponent ];
 
 @NgModule({
   imports: [

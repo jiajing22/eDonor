@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, Renderer2} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -10,6 +10,8 @@ import * as CryptoJS from "crypto-js";
 import {catchError, throwError} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {RecordService} from "../../../../shared/services/record.service";
+import {BdcentreService} from "../../../../shared/services/bdcentre.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-staff-record-form',
@@ -22,8 +24,15 @@ export class StaffRecordForm implements OnInit {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
     private recordService: RecordService,
+    private bdcentreService: BdcentreService,
     private message: NzMessageService,
+    private router: Router
   ) {
+    this.first.patchValue(history.state.first);
+    this.second.patchValue(history.state.second);
+    this.third.patchValue(history.state.third);
+    this.isEdit = history.state.isEdit;
+    this.docId = history.state.id;
   }
 
   ngOnInit() {
@@ -34,10 +43,27 @@ export class StaffRecordForm implements OnInit {
     } else {
       console.log('Encrypted message not found.');
     }
+
+    this.first.get('fullName')?.valueChanges.subscribe((value: string) => {
+      if (value) {
+        this.first.get('fullName')?.setValue(value.toUpperCase(), { emitEvent: false });
+      }
+    });
+
+    this.bdcentreService.getAllCentre()
+      .subscribe((res:any)=>{
+        this.bloodCentreOptions = res.map((item: any) => ({
+          value: item.centreName,
+          label: item.centreName
+        }));
+      });
   }
 
+  docId = '';
+  isEdit = false;
   loading = false;
   loadingSubmit = false;
+  loadingUpdate = false;
   fRegDate: string = '';
   fLastDonateDate: string = '';
   error: string = "";
@@ -45,10 +71,11 @@ export class StaffRecordForm implements OnInit {
   sKey = "x^XICt8[Lp'Gm<8";
   currentPage = 1;
   time = new Date();
+  bloodCentreOptions: any[] = []
 
   getFormFields(): any[] {
     return [
-      {label: 'IC', value: this.first.get('ic')?.value || '-' },
+      {label: 'IC', value: this.first.get('donorIc')?.value || '-' },
       {label: 'Full Name', value: this.first.get('fullName')?.value || '-'},
       {label: 'Blood Serial No.', value: this.first.get('bloodSerialNo')?.value || '-'},
       {label: 'Type of Donor', value: this.first.get('donorType')?.value || '-'},
@@ -89,7 +116,7 @@ export class StaffRecordForm implements OnInit {
       {label: 'Sample Taken?', value: this.third.get('isTaken')?.value || '-' },
       {label: 'Time Donation Ended.', value: this.third.get('timeEnd')?.value || '-' },
       {label: 'Remaining Barcodes', value: this.third.get('remainingBarcodes')?.value || '-' },
-      {label: 'Notes / Comment (if any)', value: this.third.get('notes')?.value || '-' },
+      {label: 'Notes / Comment (if any)', value: this.third.get('recRemark')?.value || '-' },
     ];
   }
 
@@ -104,44 +131,23 @@ export class StaffRecordForm implements OnInit {
     {value: 'O-', label: 'O negative (O-)'}
   ];
 
-  //Get from DB
-  bloodCentreOptions = [
-    {value: 'Pusat Darah Negara', label: 'Pusat Darah Negara'},
-    {
-      value: 'Unit Transfusi Perubatan, Hospital Sultanah Aminah',
-      label: 'Unit Transfusi Perubatan, Hospital Sultanah Aminah'
-    },
-    {
-      value: 'Unit Transfusi Perubatan, Hospital Tuanku Jaafar',
-      label: 'Unit Transfusi Perubatan, Hospital Tuanku Jaafar'
-    },
-    {
-      value: 'Unit Transfusi Perubatan Hospital Melaka',
-      label: 'Unit Transfusi Perubatan Hospital Melaka'
-    },
-    {
-      value: 'Unit Transfusi Perubatan Hospital Tengku Ampuan Rahimah',
-      label: 'Unit Transfusi Perubatan Hospital Tengku Ampuan Rahimah'
-    }
-  ];
-
   first = this.fb.nonNullable.group({
-    ic: ['001027011138', [Validators.required, Validators.pattern(/^\d{12}$/)]],
-    fullName: ['John Doe', [Validators.required, Validators.pattern(/^[A-Za-z' ]+$/)]],
-    bloodSerialNo: ['e43413113', [Validators.required]],
-    donorType: ['Regular/Repeat Donor', [Validators.required]],
-    status: ['Not Eligible', [Validators.required]],
+    donorIc: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
+    fullName: ['', Validators.required],
+    bloodSerialNo: ['', [Validators.required]],
+    donorType: ['', [Validators.required]],
+    status: ['', [Validators.required]],
     regDate: ['', [Validators.required]],
     lastDonateDate: ['', [Validators.required]],
-    bloodCentre: ['', [Validators.required]],
+    bloodCentre: [''],
   });
 
   second = this.fb.nonNullable.group({
-    weight: [66, [Validators.required]],
-    bloodGroup: ['A+', [Validators.required]],
-    hbLevel: ['femaleLess', [Validators.required]],
-    pAmount: [12, [Validators.required]],
-    bloodPressure: ['120-140', [Validators.required]],
+    weight: [null],
+    bloodGroup: [''],
+    hbLevel: [''],
+    pAmount: [null],
+    bloodPressure: [''],
     doubleCheckE: ['', [Validators.required]],
     doubleCheckEOption: ['', [Validators.required]],
     volume: [null, [Validators.required]],
@@ -153,12 +159,12 @@ export class StaffRecordForm implements OnInit {
 
   third = this.fb.nonNullable.group({
       venepuncture: [null],
-      isGiven: ['', [Validators.required]],
-      timeStart: ['12:54', [Validators.required]],
-      isTaken: [null, [Validators.required]],
-      timeEnd: ['13:05', [Validators.required]],
-      remainingBarcodes: [null, [Validators.required]],
-      notes: [null],
+      isGiven: [''],
+      timeStart: [''],
+      isTaken: [null],
+      timeEnd: [''],
+      remainingBarcodes: [null],
+      recRemark: [null],
     }
   );
 
@@ -254,7 +260,7 @@ export class StaffRecordForm implements OnInit {
   submit(): void {
     this.loadingSubmit = true;
     let postData = {
-      donorIc: this.first.get('ic')?.value,
+      donorIc: this.first.get('donorIc')?.value,
       fullName: this.first.get('fullName')?.value,
       bloodSerialNo: this.first.get('bloodSerialNo')?.value,
       donorType: this.first.get('donorType')?.value,
@@ -279,10 +285,9 @@ export class StaffRecordForm implements OnInit {
       isTaken: this.third.get('isTaken')?.value,
       timeEnd: this.third.get('timeEnd')?.value,
       remainingBarcodes: this.third.get('remainingBarcodes')?.value,
-      recRemark: this.third.get('notes')?.value,
+      recRemark: this.third.get('recRemark')?.value,
       staffId: this.decryptedId
     }
-    console.log(postData);
 
     this.recordService.addRecord(postData)
       .pipe(
@@ -308,6 +313,28 @@ export class StaffRecordForm implements OnInit {
     this.currentPage = 1;
   }
 
+  update(){
+    this.loadingUpdate = true;
+    let postData={
+      ...this.first.value,
+      ...this.second.value,
+      ...this.third.value,
+      regDate: this.fRegDate,
+      lastDonateDate: this.fLastDonateDate,
+      documentId: this.docId
+    }
+    this.recordService.updateRecord(postData)
+      .subscribe((res:any)=>{
+        if(res!=null){
+          this.message.success("Record updated!");
+          this.loadingUpdate = false;
+          setTimeout(() => {
+            this.router.navigate(['/staff/main/manageRecord']);
+          }, 2000);
+        }
+      });
+  }
+
   previousPage(): void {
     if (this.currentPage === 4) {
       this.currentPage = 1;
@@ -324,6 +351,11 @@ export class StaffRecordForm implements OnInit {
 
   translateDate(date: FormControl<any>): string {
     const selectedDate: Date | null = date.value;
+
+    if (typeof selectedDate === 'string') {
+      return selectedDate; // Return the original value
+    }
+
     if (selectedDate) {
       const formattedDate = selectedDate.toLocaleDateString('en-US', {
         month: 'long',
