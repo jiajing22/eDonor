@@ -24,4 +24,8 @@ export class StaffService {
   getStaffInfo(id: string) {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
+
+  getAllStaff() {
+    return this.http.get(this.baseUrl);
+  }
 }

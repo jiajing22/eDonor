@@ -1,0 +1,21 @@
+.wrapper {
+  width: 240px;
+}
+
+.whole{
+  display: inline-flex;
+}
+
+.page-content{
+  padding: 32px;
+}
+
+button {
+  margin-bottom: 12px;
+}
+
+.menu-btn {
+  margin-top: 8px;
+  background-color: #de2626;
+  color: white;
+}

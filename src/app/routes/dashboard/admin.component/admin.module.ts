@@ -12,17 +12,19 @@ import { AdminManageBdcentre } from './admin.manage-bdcentre/admin.manage-bdcent
 import { AdminManageAdminComponent } from './admin.manage.admin/admin.manage-admin.component';
 import { AdminManageDonorComponent } from './admin.manage.donor/admin.manage-donor.component';
 import { AdminManageRecord } from './admin.manage.record/admin.manage-record';
-import { AdminSider } from './admin.sider.component/admin.sider';
+import { AdminManageStaffComponent } from './admin.manage.staff.component/admin.manage.staff.component';
+import { AdminSiderComponent } from './admin.sider.component/admin.sider.component';
 
 const COMPONENTS = [
   AdminMainPage,
   AdminManageDonorComponent,
   AdminManageRecord,
-  AdminSider,
+  AdminSiderComponent,
   AdminManageBdcentre,
   AdminAccountComponent,
   AdminEditProfileComponent,
-  AdminManageAdminComponent
+  AdminManageAdminComponent,
+  AdminManageStaffComponent
 ];
 
 @NgModule({

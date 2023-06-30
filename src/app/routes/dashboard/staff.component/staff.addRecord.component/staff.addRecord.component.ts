@@ -61,27 +61,16 @@ export class StaffAddRecordComponent {
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
-    } else {
-      console.log('Encrypted message not found.');
     }
-
     if (this.decryptedId === this.id.value) {
-      this.staffService
-        .getStaffInfo(this.decryptedId)
-        .pipe(
-          catchError(err => {
-            this.message.error(err.error);
-            return throwError(err);
-          })
-        )
-        .subscribe((res: any) => {
-          if (this.hash === res.password) {
-            this.routeVisible = true;
-          } else {
-            this.message.error('Wrong Password!');
-            this.loading = false;
-          }
-        });
+      this.staffService.getStaffInfo(this.decryptedId).subscribe((res: any) => {
+        if (this.hash === res.password) {
+          this.routeVisible = true;
+        } else {
+          this.message.error('Wrong Password!');
+          this.loading = false;
+        }
+      });
     } else {
       this.message.error('Wrong Staff ID!');
       this.loading = false;
