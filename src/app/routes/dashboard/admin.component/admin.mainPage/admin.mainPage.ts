@@ -6,6 +6,8 @@ import {messageConstant} from "../../../../shared/utils/constant";
 import {AdminService} from "../../../../shared/services/admin.service";
 import {RecordService} from "../../../../shared/services/record.service";
 import {BdcentreService} from "../../../../shared/services/bdcentre.service";
+import {NzMessageService} from "ng-zorro-antd/message";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-component',
@@ -20,6 +22,8 @@ export class AdminMainPage implements OnInit {
     private donorService: DonorService,
     private recordService: RecordService,
     private bdcentreService: BdcentreService,
+    private message: NzMessageService,
+    private router: Router
   ) {}
 
   example: string =" ";
@@ -31,13 +35,17 @@ export class AdminMainPage implements OnInit {
   bloodGroup ='';
 
   ngOnInit(): void {
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Admin') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+    }
+
     let sessionItem = sessionStorage.getItem('userId');
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, messageConstant.sKey);
       let decrypted = item.toString(CryptoJS.enc.Utf8);
       this.decryptedId = decrypted;
-    } else {
-      console.log('Encrypted message not found.');
     }
     let post = {
       documentId : this.decryptedId

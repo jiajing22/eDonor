@@ -6,6 +6,7 @@ import {DonorService} from "../../../../shared/services/donor.service";
 import {catchError, throwError} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {AdminService} from "../../../../shared/services/admin.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-account-component',
@@ -18,7 +19,8 @@ export class AdminAccountComponent implements OnInit {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private adminService: AdminService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router,
   ) {
   }
 
@@ -27,6 +29,12 @@ export class AdminAccountComponent implements OnInit {
   decryptedId: string = "";
 
   ngOnInit(): void {
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Admin') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+    }
+
     let sessionItem = sessionStorage.getItem('userId');
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);

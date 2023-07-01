@@ -41,6 +41,7 @@ export class NavbarComponent implements OnInit{
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('token');
     this.router.navigateByUrl('/dashboard/landing');
+    window.location.reload();
   }
 
   isDonor(input: string): boolean {

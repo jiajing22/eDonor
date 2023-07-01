@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import {AdminService} from "../../../../shared/services/admin.service";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-component',
@@ -22,6 +23,7 @@ export class AdminManageAdminComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private adminService: AdminService,
     private message: NzMessageService,
+    private router: Router,
   ) {}
 
   loading  :boolean= false;
@@ -35,6 +37,12 @@ export class AdminManageAdminComponent implements OnInit {
   currId: string = "";
 
   ngOnInit(): void {
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Admin') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+    }
+
     this.loading = true;
     this.loadData();
     this.addNewForm.get('fullName')?.valueChanges.subscribe((value: string) => {

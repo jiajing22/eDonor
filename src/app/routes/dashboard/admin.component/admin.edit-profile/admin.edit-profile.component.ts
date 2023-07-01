@@ -7,6 +7,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { AdminService } from '../../../../shared/services/admin.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-edit-profile-component',
@@ -19,7 +20,8 @@ export class AdminEditProfileComponent implements OnInit {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private adminService: AdminService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router,
   ) {}
 
   sKey = "x^XICt8[Lp'Gm<8";
@@ -55,6 +57,12 @@ export class AdminEditProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Admin') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+    }
+
     let sessionItem = sessionStorage.getItem('userId');
 
     if (sessionItem) {

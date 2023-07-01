@@ -4,6 +4,8 @@ import {HttpClient} from "@angular/common/http";
 import {DonorService} from "../../../../shared/services/donor.service";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
 import {NzMessageService} from "ng-zorro-antd/message";
+import * as CryptoJS from "crypto-js";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-manage-donor-component',
@@ -19,6 +21,7 @@ export class AdminManageDonorComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
     private message: NzMessageService,
+    private router: Router,
   ) {
   }
 
@@ -34,6 +37,12 @@ export class AdminManageDonorComponent implements OnInit {
   currId: string = "";
 
   ngOnInit(): void {
+    let sessionItem = sessionStorage.getItem('userType');
+    if (sessionItem !== 'Admin') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+    }
+
     this.loadData();
     this.addNewForm.get('fullName')?.valueChanges.subscribe((value: string) => {
       if (value) {
