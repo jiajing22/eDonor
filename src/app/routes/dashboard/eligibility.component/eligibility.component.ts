@@ -1,34 +1,31 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-eligibility-page-component',
   templateUrl: './eligibility.component.html',
-  styles : [
+  styles: [
     `
-      .box{
+      .box {
         width: 754px;
         margin: 32px auto;
       }
 
-      .one{
+      .one {
         margin: 0 0 4px 16px;
       }
 
-      .two{
+      .two {
         margin: 0 0 4px 32px;
       }
 
-      nz-footer{
+      nz-footer {
         background-color: #de2626;
         color: white;
         text-align: center;
       }
     `
-  ],
+  ]
 })
-export class EligibilityComponent{
-  constructor(
-  ) {
-  }
-
+export class EligibilityComponent {
+  constructor() {}
 }

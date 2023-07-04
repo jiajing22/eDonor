@@ -3,23 +3,20 @@
 <donor-sidebar>
   <h3>Registration Form</h3>
   <div *ngIf="currentPage === 1">
-    <app-form-component [regForm]="regForm" [childPage]="1">
-    </app-form-component>
+    <app-form-component [regForm]="regForm" [childPage]="1"> </app-form-component>
 
-      <nz-form-item [nzJustify]="'end'">
-        <button nz-button type="submit" nzType="dashed" (click)="submitForm()">
-          Next
-        </button>
-      </nz-form-item>
+    <nz-form-item [nzJustify]="'end'">
+      <button nz-button type="submit" nzType="dashed" (click)="submitForm()"> Next </button>
+    </nz-form-item>
   </div>
   <ng-template #confirmErrorTip let-i>
     <ng-container *ngIf="i.errors?.required">This fill is required</ng-container>
     <ng-container *ngIf="i.errors?.pattern">Wrong format</ng-container>
   </ng-template>
 
-  <div *ngIf="currentPage === 2 ">
+  <div *ngIf="currentPage === 2">
     <div>
-      <img src="./assets/reg-form.jpg" alt="attention" width="80%" height="80%" style="margin-left: 10vh">
+      <img src="./assets/reg-form.jpg" alt="attention" width="80%" height="80%" style="margin-left: 10vh" />
     </div>
 
     <nz-form-item [nzJustify]="'center'">
@@ -34,15 +31,16 @@
         </button>
       </nz-button-group>
     </nz-form-item>
-
   </div>
 
-  <div *ngIf="currentPage === 3 ">
+  <div *ngIf="currentPage === 3">
     <div>
       <h4>BLOOD DONOR ELIGIBILITY QUESTIONNAIRES</h4>
       <nz-card class="card">
-        <b> 'Any blood donor who is found to make false declaration pertaining to his or her high risk lifestyle
-          behaviours will be prosecuted in Court under the existing laws' </b>
+        <b>
+          'Any blood donor who is found to make false declaration pertaining to his or her high risk lifestyle behaviours will be prosecuted
+          in Court under the existing laws'
+        </b>
       </nz-card>
       <nz-alert
         nzType="info"
@@ -52,11 +50,9 @@
       ></nz-alert>
     </div>
 
-    <app-form-component [form]="questionnaires" [childPage]="2">
-    </app-form-component>
+    <app-form-component [form]="questionnaires" [childPage]="2"> </app-form-component>
     <nz-form-item *ngIf="isConsent">
-      <ng-container><span style="color: red">Please agree to the DONOR DECLARATION AND CONSENT.</span>
-      </ng-container>
+      <ng-container><span style="color: red">Please agree to the DONOR DECLARATION AND CONSENT.</span> </ng-container>
     </nz-form-item>
 
     <nz-form-item [nzJustify]="'center'">
@@ -65,17 +61,13 @@
           <span nz-icon nzType="left"></span>
           Back
         </button>
-        <button nz-button type="submit" nzType="primary" (click)="show()" [nzLoading]="loading">
-          Submit
-        </button>
+        <button nz-button type="submit" nzType="primary" (click)="show()" [nzLoading]="loading"> Submit </button>
       </nz-button-group>
     </nz-form-item>
   </div>
 
   <div *ngIf="currentPage === 4">
-    <nz-result
-      nzStatus="success"
-      nzTitle="Record Successfully Created!">
+    <nz-result nzStatus="success" nzTitle="Record Successfully Created!">
       <div nz-result-extra>
         <a routerLink="../view-form">
           <button nz-button nzType="primary" type="button">View Form</button>
@@ -86,5 +78,4 @@
       </div>
     </nz-result>
   </div>
-
 </donor-sidebar>

@@ -6,9 +6,7 @@
         <li nz-menu-item>Home</li>
       </a>
 
-      <a nz-dropdown [nzDropdownMenu]="menu" class="drop">
-        About Blood Donation
-      </a>
+      <a nz-dropdown [nzDropdownMenu]="menu" class="drop"> About Blood Donation </a>
 
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu nzSelectable>
@@ -22,9 +20,9 @@
         <li nz-menu-item>Campaign/Activity</li>
       </a>
 
-<!--      <a (click)="navigate('home')">-->
-<!--        <li nz-menu-item>Blood Donation Centre</li>-->
-<!--      </a>-->
+      <!--      <a (click)="navigate('home')">-->
+      <!--        <li nz-menu-item>Blood Donation Centre</li>-->
+      <!--      </a>-->
 
       <a *ngIf="loggedIn" (click)="dashboard()">
         <li nz-menu-item>Dashboard</li>
@@ -32,12 +30,13 @@
 
       <div *ngIf="loggedIn" class="signIn">
         <div style="display: flex">
-          <span style="margin-right: 2vh; color: white;">Welcome, {{role}}</span>
+          <span style="margin-right: 2vh; color: white">Welcome, {{ role }}</span>
           <li nz-submenu nzIcon="user" nzPlacement="bottomRight">
             <ul>
-              <a (click)="logout()" style="color: black;"><li nz-menu-item>Sign Out</li></a>
+              <a (click)="logout()" style="color: black"><li nz-menu-item>Sign Out</li></a>
             </ul>
-        </div>
+          </li></div
+        >
       </div>
 
       <!--      <a *ngIf="loggedIn" (click)="logout()" class="signIn">-->
@@ -51,8 +50,6 @@
       <a *ngIf="!loggedIn" (click)="navigate('login')" class="signIn" style="padding-left: 55vh">
         <li nz-menu-item>Sign In</li>
       </a>
-
-
     </ul>
   </nz-header>
 </nz-layout>

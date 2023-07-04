@@ -1,27 +1,21 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {SettingsService} from '@delon/theme';
-import {ActivatedRoute, Router} from "@angular/router";
-import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
-import * as CryptoJS from "crypto-js";
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { SettingsService } from '@delon/theme';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'navbar-layout-basic',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit{
-
-  constructor(
-    private settings: SettingsService,
-    private router: Router,
-    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-  ) {
-  }
+export class NavbarComponent implements OnInit {
+  constructor(private settings: SettingsService, private router: Router, @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {}
 
   loggedIn: boolean = false;
-  decryptedId: string = "";
+  decryptedId: string = '';
   sKey = "x^XICt8[Lp'Gm<8";
-  role: string|null = "";
+  role: string | null = '';
 
   ngOnInit(): void {
     let sessionItem = sessionStorage.getItem('userId');
@@ -30,53 +24,47 @@ export class NavbarComponent implements OnInit{
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
     }
     this.loggedIn = sessionStorage.getItem('userId') != null;
-    if(this.loggedIn){
+    if (this.loggedIn) {
       this.role = sessionStorage.getItem('userType');
     }
   }
 
-  logout(): void{
+  logout(): void {
     sessionStorage.removeItem('userType');
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('token');
-    this.router.navigateByUrl('/dashboard/landing').then(()=>{
+    this.router.navigateByUrl('/dashboard/landing').then(() => {
       location.reload();
     });
   }
 
   isDonor(input: string): boolean {
     const regex = /^\d{5}$/;
-    return (input.substring(0, 2).toUpperCase() === 'DN')
-      && (input.length === 7)
-      && (regex.test(input.substring(2,7)));
+    return input.substring(0, 2).toUpperCase() === 'DN' && input.length === 7 && regex.test(input.substring(2, 7));
   }
 
-  isStaff(input: string): boolean{
+  isStaff(input: string): boolean {
     const regex = /^\d{5}$/;
-    return (input.substring(0, 2).toUpperCase() === 'ST')
-      && (input.length === 7)
-      && (regex.test(input.substring(2,7)));
+    return input.substring(0, 2).toUpperCase() === 'ST' && input.length === 7 && regex.test(input.substring(2, 7));
   }
 
-  isAdmin(input: string): boolean{
+  isAdmin(input: string): boolean {
     const regex = /^\d{5}$/;
-    return (input.substring(0, 2).toUpperCase() === 'AD')
-      && (input.length === 7)
-      && (regex.test(input.substring(2,7)));
+    return input.substring(0, 2).toUpperCase() === 'AD' && input.length === 7 && regex.test(input.substring(2, 7));
   }
 
-  dashboard(){
-    if(this.isAdmin(this.decryptedId)){
+  dashboard() {
+    if (this.isAdmin(this.decryptedId)) {
       this.router.navigate(['/admin/main/main-page']);
-    } else if (this.isStaff(this.decryptedId)){
+    } else if (this.isStaff(this.decryptedId)) {
       this.router.navigate(['/staff/main/main-page']);
-    } else if (this.isDonor(this.decryptedId)){
+    } else if (this.isDonor(this.decryptedId)) {
       this.router.navigate(['/donorMenu/main/main-page']);
     }
   }
 
-  navigate(place:string){
-    switch (place){
+  navigate(place: string) {
+    switch (place) {
       case 'home':
         this.router.navigate(['/dashboard/landing']);
         break;
