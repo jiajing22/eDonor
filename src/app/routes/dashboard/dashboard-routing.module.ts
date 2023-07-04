@@ -6,6 +6,7 @@ import {LandingPageComponent} from "./landing-page.component/landing-page.compon
 import {UserLoginComponent} from "../passport/login/login.component";
 import {CampaignComponent} from "./campaign.component/campaign.component";
 import {CampaignListComponent} from "./campaign-list.component/campaign-list.component";
+import {EligibilityComponent} from "./eligibility.component/eligibility.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'landing',pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: UserLoginComponent },
   { path: 'campaign', component: CampaignComponent },
   { path: 'campaign-list', component: CampaignListComponent },
+  { path: 'eligibility', component: EligibilityComponent },
 ];
 
 @NgModule({

@@ -6,9 +6,17 @@
         <li nz-menu-item>Home</li>
       </a>
 
-      <a (click)="navigate('home')">
-        <li nz-menu-item>About Blood Donation</li>
+      <a nz-dropdown [nzDropdownMenu]="menu" class="drop">
+        About Blood Donation
       </a>
+
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu nzSelectable>
+          <li nz-menu-item (click)="navigate('eligibility')">Blood Donor Eligibility</li>
+          <li nz-menu-item>Benefits of Blood Donation</li>
+          <li nz-menu-item>Blood Donor Privilege</li>
+        </ul>
+      </nz-dropdown-menu>
 
       <a (click)="navigate('campaign')">
         <li nz-menu-item>Campaign/Activity</li>
@@ -27,7 +35,6 @@
           <span style="margin-right: 2vh; color: white;">Welcome, {{role}}</span>
           <li nz-submenu nzIcon="user" nzPlacement="bottomRight">
             <ul>
-              <li nz-menu-item>View Profile</li>
               <a (click)="logout()" style="color: black;"><li nz-menu-item>Sign Out</li></a>
             </ul>
         </div>

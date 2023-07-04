@@ -1,5 +1,5 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
-import {SettingsService, User} from '@delon/theme';
+import {Component, Inject, OnInit} from '@angular/core';
+import {SettingsService} from '@delon/theme';
 import {ActivatedRoute, Router} from "@angular/router";
 import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 import * as CryptoJS from "crypto-js";
@@ -15,7 +15,6 @@ export class NavbarComponent implements OnInit{
     private settings: SettingsService,
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-    private route: ActivatedRoute
   ) {
   }
 
@@ -40,8 +39,9 @@ export class NavbarComponent implements OnInit{
     sessionStorage.removeItem('userType');
     sessionStorage.removeItem('userId');
     sessionStorage.removeItem('token');
-    this.router.navigateByUrl('/dashboard/landing');
-    window.location.reload();
+    this.router.navigateByUrl('/dashboard/landing').then(()=>{
+      location.reload();
+    });
   }
 
   isDonor(input: string): boolean {
@@ -91,6 +91,9 @@ export class NavbarComponent implements OnInit{
         break;
       case 'login':
         this.router.navigate(['/dashboard/login']);
+        break;
+      case 'eligibility':
+        this.router.navigate(['/dashboard/eligibility']);
         break;
       default:
         break;

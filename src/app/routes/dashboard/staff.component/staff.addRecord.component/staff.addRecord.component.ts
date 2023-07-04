@@ -88,12 +88,12 @@ export class StaffAddRecordComponent {
   navigate(route: string) {
     if (route === 'add') {
       // this.router.navigate(['/staff/main/recordForm']);
-      window.open('/#/staff/main/recordForm', '_blank');
+      window.open('/eDonor/#/staff/main/recordForm', '_blank');
       this.close();
       this.form.get('password')!.setValue('');
     } else if (route === 'edit') {
       // this.router.navigate(['/staff/main/manageRecord']);
-      window.open('/#/staff/main/manageRecord', '_blank');
+      window.open('/eDonor/#/staff/main/manageRecord', '_blank');
       this.close();
     }
   }
