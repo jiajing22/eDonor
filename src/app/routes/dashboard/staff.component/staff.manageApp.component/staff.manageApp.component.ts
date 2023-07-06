@@ -4,6 +4,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
 import {AppointmentService} from "../../../../shared/services/appointment.service";
 import {Appointment} from "../../../../shared/model/appointment.model";
 import {messageConstant} from "../../../../shared/utils/constant";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-staff-manage-app-component',
@@ -15,6 +16,7 @@ export class StaffManageAppComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private appointmentService: AppointmentService,
     private message: NzMessageService,
+    private router: Router,
   ) {
   }
 
@@ -23,7 +25,6 @@ export class StaffManageAppComponent implements OnInit {
   decryptedId: string = "";
   sKey = "x^XICt8[Lp'Gm<8";
   appointmentList: Appointment[] = [];
-  selectedData: any;
   isLoading = false;
   isVisible = false;
   isAccept = false;
@@ -40,7 +41,16 @@ export class StaffManageAppComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.authenticate();
     this.loadList();
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+    }
   }
 
   loadList() {
@@ -54,18 +64,13 @@ export class StaffManageAppComponent implements OnInit {
       )
       .subscribe((res: any) => {
         this.appointmentList = res;
+        this.appointmentList.sort((a: any, b: any) => {
+          const dateA = new Date(a.appmntDate);
+          const dateB = new Date(b.appmntDate);
+          return dateB.getTime() - dateA.getTime();
+        });
         this.initLoad = false;
       });
-  }
-
-  getFormFields() {
-    return [
-      {label: 'IC', value: this.selectedData.donorId || '-'},
-      {label: 'Location', value: this.selectedData.appmntLocation || '-'},
-      {label: 'Appointment Date', value: this.selectedData.appmntDate || '-'},
-      {label: 'Selected Time Slot', value: this.selectedData.timeslot || '-'},
-      {label: 'Status', value: this.selectedData.aStatus || '-'},
-    ];
   }
 
   getStatusColor(status: string): string {

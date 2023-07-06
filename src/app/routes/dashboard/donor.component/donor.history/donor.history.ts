@@ -1,12 +1,10 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {NzSafeAny} from "ng-zorro-antd/core/types";
 import * as CryptoJS from "crypto-js";
-import {catchError, finalize, of, throwError} from "rxjs";
+import {catchError, of, throwError} from "rxjs";
 import {DonorService} from "../../../../shared/services/donor.service";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {StaffService} from "../../../../shared/services/staff.service";
 import {Router} from "@angular/router";
 import {HistoryService} from "../../../../shared/services/history.service";
 import {History} from "../../../../shared/model/history.model";
@@ -24,7 +22,6 @@ export class DonorHistory implements OnInit {
     private donorService: DonorService,
     private historyService: HistoryService,
     private message: NzMessageService,
-    private router: Router,
   ) {
   }
 
@@ -33,7 +30,6 @@ export class DonorHistory implements OnInit {
   decryptedId: string = "";
   donorIc: string = "";
   sKey = "x^XICt8[Lp'Gm<8";
-  hash: string = "";
   history: History[]=[];
   listOfColumn = [
     {

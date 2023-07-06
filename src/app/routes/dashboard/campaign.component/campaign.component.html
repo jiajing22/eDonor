@@ -10,7 +10,7 @@
               <nz-list-item-meta-title>
                 {{ item.title }}
               </nz-list-item-meta-title>
-              <nz-list-item-meta-description> Posted on {{ formatTimestamp(item?.postTime) }} </nz-list-item-meta-description>
+              <nz-list-item-meta-description> Event date: {{ item.eventDate }} </nz-list-item-meta-description>
             </nz-list-item-meta>
 
             <ul nz-list-item-actions>
@@ -24,6 +24,7 @@
     </nz-spin>
   </div>
 </div>
+<nz-footer>eDonor - Empowering blood donation for a healthier world.</nz-footer>
 
 <nz-modal [(nzVisible)]="show" nzTitle="Edit Post" (nzOnCancel)="cancel()">
   <ng-container *nzModalContent>

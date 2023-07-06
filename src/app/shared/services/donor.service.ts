@@ -54,4 +54,8 @@ export class DonorService {
   deleteDonor(id:string){
     return this.http.delete(this.baseUrl+'/'+id, {responseType:'text'});
   }
+
+  updateDonorType(postData:any){
+    return this.http.put(`${this.baseUrl}-update-type`,postData, {responseType:'text'});
+  }
 }

@@ -1,10 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {Router} from "@angular/router";
 import {RegistrationService} from "../../../../shared/services/registration.service";
-import {messageConstant} from "../../../../shared/utils/constant";
 import {Observable} from "rxjs";
 
 @Component({
@@ -26,7 +24,6 @@ export class StaffManageFormComponent implements OnInit{
     private cdr: ChangeDetectorRef,
     private registrationService: RegistrationService,
     private message: NzMessageService,
-    private router: Router,
   ) {
   }
 
@@ -37,9 +34,7 @@ export class StaffManageFormComponent implements OnInit{
   dataForm: any[] = [];
   currentPage = 1;
   item:any;
-  selectedData:any;
   isVisible=false;
-  isChecked=false;
 
   regForm = this.fb.nonNullable.group({
     name: ['',[Validators.required, Validators.pattern(/^[A-Za-z' ]+$/)]],
@@ -75,6 +70,18 @@ export class StaffManageFormComponent implements OnInit{
     this.registrationService.getAllFormList()
       .subscribe((res:any)=>{
         this.dataForm = res;
+        console.log(res);
+        this.dataForm.sort((a: any, b: any) => {
+          const submitTimeA = new Date(0);
+          submitTimeA.setUTCSeconds(a.regForm.submitTime.seconds);
+          submitTimeA.setUTCMilliseconds(a.regForm.submitTime.nanos / 1000000);
+
+          const submitTimeB = new Date(0);
+          submitTimeB.setUTCSeconds(b.regForm.submitTime.seconds);
+          submitTimeB.setUTCMilliseconds(b.regForm.submitTime.nanos / 1000000);
+
+          return submitTimeB.getTime() - submitTimeA.getTime();
+        });
         this.isLoading= false;
       });
   }
@@ -109,7 +116,6 @@ export class StaffManageFormComponent implements OnInit{
       documentId: data.documentId,
       formStatus: status
     };
-    console.log(postData);
     this.registrationService.updateStatus(postData)
       .subscribe((res)=>{
         if (res == null){

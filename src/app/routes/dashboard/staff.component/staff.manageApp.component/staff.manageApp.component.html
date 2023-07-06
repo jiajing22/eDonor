@@ -2,7 +2,7 @@
 <staff-sidebar>
   <h3>Manage Donor's Appointment</h3><br/>
   <nz-spin [nzSpinning]="initLoad">
-    <nz-table #sortTable [nzData]="appointmentList" nzTableLayout="fixed" [nzLoading]="loading" [nzPageSize]="5">
+    <nz-table #sortTable [nzData]="appointmentList" nzTableLayout="fixed" [nzLoading]="loading">
       <thead>
       <tr>
         <th *ngFor="let column of listOfColumn">

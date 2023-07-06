@@ -30,17 +30,17 @@
       <tbody>
         <tr *ngFor="let result of basicTable.data">
           <td>{{ result.userId }}</td>
-          <td>{{ result.fullName }}</td>
+          <td><a (click)="showInfo(result)">{{ result.fullName }}</a></td>
           <td>{{ result.bloodType }}</td>
           <td>{{ result.donationTimes }}</td>
-          <td><a (click)="showInfo(result)">View Details</a></td>
-          <td><a (click)="showInfo(result)">Update</a></td>
+          <td><a (click)="displayRecord(result.userId)">View Details</a></td>
+          <td><a (click)="showUpdate(result)">Update</a></td>
         </tr>
       </tbody>
     </nz-table>
   </nz-spin>
 
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="Confirmation" (nzOnCancel)="handleOk()">
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Donor Information" (nzOnCancel)="handleOk()">
     <ng-container *nzModalContent>
       <nz-list>
         <nz-list-item *ngFor="let item of getFormFields()">
@@ -54,12 +54,44 @@
     </div>
   </nz-modal>
 
-  <nz-modal [(nzVisible)]="isUpdate" nzTitle="Confirmation" (nzOnCancel)="cancel()">
-    <ng-container *nzModalContent>
-      <nz-select> </nz-select>
-    </ng-container>
+  <nz-modal [(nzVisible)]="isUpdate" nzTitle="Change Donor Type" (nzOnCancel)="cancel()">
+    <div *nzModalContent>
+      Donor Type:
+      <nz-select [(ngModel)]="type">
+        <nz-option *ngFor="let item of donorTypes" [nzLabel]="item" [nzValue]="item"></nz-option>
+      </nz-select>
+    </div>
     <div *nzModalFooter>
-      <button nz-button nzType="default" (click)="update()">Update</button>
+      <button nz-button nzType="default" (click)="update()" [nzLoading]="isUpdateLoading">Update</button>
     </div>
   </nz-modal>
+
+  <nz-modal [(nzVisible)]="isShowRecord" nzTitle="Donor's Blood Donation History" (nzOnCancel)="close()" [nzWidth]="'650px'">
+    <ng-container *nzModalContent>
+      <nz-table #basicTable [nzData]="record">
+        <thead>
+        <tr>
+          <th>Donate Date</th>
+          <th>Blood Serial No.</th>
+          <th>Amount(ml)</th>
+          <th>Hospital</th>
+          <th>Remark</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let result of basicTable.data">
+          <td>{{ result.donateDate }}</td>
+          <td>{{ result.bloodSerialNo }}</td>
+          <td>{{ result.amount }}</td>
+          <td>{{ result.dHospital }}</td>
+          <td>{{ result.recRemark }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </ng-container>
+    <div *nzModalFooter>
+      <button nz-button nzType="default" (click)="close()">Close</button>
+    </div>
+  </nz-modal>
+
 </staff-sidebar>

@@ -9,8 +9,7 @@ import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
   styles: [
     `
       .post{
-        margin: auto;
-        width: 740px;
+        margin: 0 50px;
       }
 
       .content{

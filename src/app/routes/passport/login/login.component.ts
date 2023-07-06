@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestro
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { StartupService } from '@core';
-import { DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService } from '@delon/auth';
-import { SettingsService, _HttpClient } from '@delon/theme';
+import { DA_SERVICE_TOKEN, ITokenService, SocialService } from '@delon/auth';
 import {catchError, throwError} from 'rxjs';
 import {DonorService} from "../../../shared/services/donor.service";
 import {StaffService} from "../../../shared/services/staff.service";
@@ -25,7 +24,6 @@ export class UserLoginComponent implements OnDestroy {
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private startupSrv: StartupService,
-    private http: _HttpClient,
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
     private staffService: StaffService,
@@ -118,7 +116,7 @@ export class UserLoginComponent implements OnDestroy {
         )
         .subscribe((res:any) => {
           if (res === null){
-            this.message.info('Wrong Password or Username');
+            this.message.info('Incorrect Password or Username!');
             this.loading = false;
             this.cdr.detectChanges();
             return;
@@ -144,30 +142,28 @@ export class UserLoginComponent implements OnDestroy {
         password: this.password.value
       };
       this.staffService.validateStaffLogin(postData)
-        .pipe(
-          catchError(err => {
-            this.message.error(err.error);
+        .subscribe((res:any) => {
+          if(res == null ){
+            this.message.error("Incorrect Username or Password!");
             this.loading = false;
             setTimeout(() => {
               this.cdr.detectChanges();
             }, 1000);
-
             this.form.get('password')!.setValue(null);
-            return throwError(err);
-          })
-        )
-        .subscribe((res:any) => {
-          var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
-          sessionStorage.setItem('userId', encrypted);
-          sessionStorage.setItem('userType', 'Staff');
-          this.auth();
-          this.startupSrv.load().subscribe(() => {
-            let url = this.tokenService.referrer!.url || '/';
-            if (url.includes('/passport')) {
-              url = '/';
-            }
-            this.router.navigate(['../staff']);
-          });
+            return;
+          } else {
+            var encrypted = CryptoJS.AES.encrypt(res.userId, this.sKey).toString();
+            sessionStorage.setItem('userId', encrypted);
+            sessionStorage.setItem('userType', 'Staff');
+            this.auth();
+            this.startupSrv.load().subscribe(() => {
+              let url = this.tokenService.referrer!.url || '/';
+              if (url.includes('/passport')) {
+                url = '/';
+              }
+              this.router.navigate(['../staff']);
+            });
+          }
         })
     }
 
@@ -180,7 +176,7 @@ export class UserLoginComponent implements OnDestroy {
         .subscribe((res:any) => {
           if( res == null){
             setTimeout(() => {
-              this.message.error("Invalid Username or Password!");
+              this.message.error("Incorrect Username or Password!");
               this.loading = false;
               this.cdr.detectChanges();
               this.form.get('password')!.setValue(null);

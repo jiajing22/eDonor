@@ -1,0 +1,24 @@
+<navbar-layout-basic></navbar-layout-basic>
+<div class="box">
+  <h2>BLOOD DONOR PRIVILEGE</h2>
+  <p class="one">Malaysian blood donors who have donated blood in Department of Transfusion Medicine University Malaya Medical Centre are entitled to get free treatment as in the following table:-</p>
+  <p class="one">Schedule of Benefits of Blood Donor Treatment at Health Facility (Hospitals, Institutions and Health Clinics), Ministry of Health Malaysia in accordance with KPK Circular Letter 5/2005 dated 20 July 2005.</p>
+  <nz-table #basicTable [nzData]="list" [nzFrontPagination]="false">
+    <thead>
+    <tr>
+      <th>Donation Frequency	</th>
+      <th>Blood Donor Privilege</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{data.frequency}}</td>
+      <td>{{data.privilege}}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <p>* The specified period of privilege is valid from the date of the last donation. The donor should show the certificate book (red book) to the hospital before qualifying for the privilege as in the above table. Ward facilities are dependent on current conditions. If the ward specified in the table is full, then the donor will be placed in the other appropriate ward. This specialty can only be used by blood donors only. Regular resident blood donors are eligible to use this privilege.</p>
+</div>
+
+<nz-footer>eDonor - Empowering blood donation for a healthier world.</nz-footer>

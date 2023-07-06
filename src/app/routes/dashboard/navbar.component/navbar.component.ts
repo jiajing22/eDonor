@@ -83,6 +83,9 @@ export class NavbarComponent implements OnInit {
       case 'eligibility':
         this.router.navigate(['/dashboard/eligibility']);
         break;
+      case 'privilege':
+        this.router.navigate(['/dashboard/privilege']);
+        break;
       default:
         break;
     }

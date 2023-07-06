@@ -11,6 +11,7 @@ import { EligibilityComponent } from './eligibility.component/eligibility.compon
 import { RegFormComponent } from './form-component/form-component';
 import { LandingPageComponent } from './landing-page.component/landing-page.component';
 import { NavbarComponent } from './navbar.component/navbar.component';
+import { PrivilegeComponent } from "./privilege.component/privilege.component";
 
 const COMPONENTS = [
   NavbarComponent,
@@ -18,7 +19,8 @@ const COMPONENTS = [
   CampaignComponent,
   RegFormComponent,
   CampaignListComponent,
-  EligibilityComponent
+  EligibilityComponent,
+  PrivilegeComponent
 ];
 
 @NgModule({

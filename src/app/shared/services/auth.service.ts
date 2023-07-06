@@ -11,6 +11,10 @@ export class AuthService {
   constructor() { }
 
   getExpired(): number{
+    const authData = JSON.parse(sessionStorage.getItem('token')?? '');
+    if (authData) {
+      this.time = authData.expiresAt;
+    }
     return this.time;
   }
 
@@ -61,7 +65,7 @@ export class AuthService {
   }
 
   setAuthTokenInSessionStorage(token: string): void {
-    const expirationMinutes = 10; // Adjust the expiration time as needed
+    const expirationMinutes = 15; // Adjust the expiration time as needed
     const expirationTime = new Date().getTime() + expirationMinutes * 60000;
     this.time = expirationTime;
     const authData = {

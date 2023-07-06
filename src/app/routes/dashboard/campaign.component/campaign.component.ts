@@ -2,8 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
-import { SettingsService, User } from '@delon/theme';
-import * as CryptoJS from 'crypto-js';
+import { SettingsService } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { PostService } from '../../../shared/services/post.service';
@@ -14,12 +13,17 @@ import { PostService } from '../../../shared/services/post.service';
   styles: [
     `
       .post {
-        margin: auto;
-        width: 740px;
+        margin: 0 50px;
       }
 
       .content {
         padding: 32px;
+      }
+
+      nz-footer {
+        background-color: #de2626;
+        color: white;
+        text-align: center;
       }
     `
   ]
@@ -93,7 +97,13 @@ export class CampaignComponent implements OnInit {
     this.load = true;
     this.postService.getAll().subscribe((res: any) => {
       this.posts = res;
+      this.posts.sort((a: any, b: any) => {
+        const dateA = new Date(a.eventDate);
+        const dateB = new Date(b.eventDate);
+        return dateB.getTime() - dateA.getTime();
+      });
       this.load = false;
+      console.log(this.posts);
     });
   }
 

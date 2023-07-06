@@ -8,6 +8,8 @@ import { catchError, throwError } from 'rxjs';
 import { Donor } from '../../../../shared/model/donor.model';
 import { DonorService } from '../../../../shared/services/donor.service';
 import { StaffService } from '../../../../shared/services/staff.service';
+import {History} from "../../../../shared/model/history.model";
+import {HistoryService} from "../../../../shared/services/history.service";
 
 @Component({
   selector: 'app-staff-search',
@@ -22,7 +24,8 @@ export class StaffSearchComponent implements OnInit {
     private route: ActivatedRoute,
     private staffService: StaffService,
     private donorService: DonorService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private historyService: HistoryService,
   ) {}
 
   id: string = '';
@@ -32,6 +35,12 @@ export class StaffSearchComponent implements OnInit {
   selectedData: any;
   isVisible = false;
   isUpdate = false;
+  isUpdateLoading = false;
+  isShowRecord = false
+  donorTypes = ['New Donor', 'Regular/Repeat Donor', 'Lapsed Donor', 'Autologous Donor'];
+  type='';
+  currId = '';
+  record: History[]=[];
 
   onSearchInputChange(): void {
     if (this.id === '') {
@@ -63,12 +72,17 @@ export class StaffSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData(){
     this.isLoading = true;
     this.donorService.getDonor().subscribe((res: any) => {
       this.donorList = res;
       this.isLoading = false;
     });
   }
+
   getFormFields() {
     return [
       { label: 'Full Name', value: this.selectedData.fullName || '-' },
@@ -94,11 +108,48 @@ export class StaffSearchComponent implements OnInit {
 
   showUpdate(data: any) {
     this.isUpdate = true;
+    this.type=data.donorType;
+    this.currId = data.donorId;
   }
 
-  update() {}
+  update() {
+    let data = {
+      donorId: this.currId,
+      donorType: this.type
+    }
+    this.isUpdateLoading = true;
+    this.donorService.updateDonorType(data)
+      .subscribe((res:any)=>{
+        if(res==null){
+          this.message.error('Update Failed!');
+          this.isUpdateLoading = false;
+          this.isUpdate = false;
+        } else {
+          this.message.success('Update Successfully!');
+          this.isUpdateLoading = false;
+          this.isUpdate = false;
+          this.loadData();
+        }
+      });
+  }
+
+  displayRecord(userId:string){
+    this.isShowRecord = true;
+    this.historyService.getRecord(userId)
+      .subscribe((res:any)=>{
+        if (res !== null){
+          this.record = res;
+        } else {
+          this.record = [];
+        }
+      });
+  }
 
   cancel() {
     this.isUpdate = false;
+  }
+
+  close(){
+    this.isShowRecord = false;
   }
 }
