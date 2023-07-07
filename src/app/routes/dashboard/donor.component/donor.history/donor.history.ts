@@ -22,6 +22,7 @@ export class DonorHistory implements OnInit {
     private donorService: DonorService,
     private historyService: HistoryService,
     private message: NzMessageService,
+    private router: Router
   ) {
   }
 
@@ -58,14 +59,22 @@ export class DonorHistory implements OnInit {
     }
   ];
 
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Donor') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
+  }
 
   ngOnInit() {
+    this.authenticate();
     this.loading = true;
     let sessionItem = sessionStorage.getItem('userId');
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
-      console.log(this.decryptedId)
     } else {
       console.log('Encrypted message not found.');
     }

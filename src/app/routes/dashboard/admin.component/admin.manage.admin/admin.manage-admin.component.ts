@@ -41,6 +41,7 @@ export class AdminManageAdminComponent implements OnInit {
     if (userType !== 'Admin') {
       this.message.error("Unauthorized Access!");
       this.router.navigateByUrl('/dashboard/landing');
+      return;
     }
 
     this.loading = true;

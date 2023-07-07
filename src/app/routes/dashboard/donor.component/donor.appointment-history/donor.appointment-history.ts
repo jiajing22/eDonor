@@ -7,6 +7,7 @@ import {DonorService} from "../../../../shared/services/donor.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {AppointmentService} from "../../../../shared/services/appointment.service";
 import {Appointment} from "../../../../shared/model/appointment.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-donor-view-history-component',
@@ -21,6 +22,7 @@ export class DonorAppointmentHistory implements OnInit {
     private donorService: DonorService,
     private appointmentService: AppointmentService,
     private message: NzMessageService,
+    private router: Router
   ) {
   }
 
@@ -40,6 +42,7 @@ export class DonorAppointmentHistory implements OnInit {
   ];
 
   ngOnInit() {
+    this.authenticate();
     this.loading = true;
     let sessionItem = sessionStorage.getItem('userId');
     if (sessionItem) {
@@ -68,7 +71,6 @@ export class DonorAppointmentHistory implements OnInit {
         ).subscribe((res: any) => {
           if(res) {
             this.appointmentList = res;
-            console.log(this.appointmentList);
             const order = ['Pending', 'Accepted', 'Rejected', 'Expired'];
             this.appointmentList.sort((a, b) => {
               const statusComparison = order.indexOf(a.aStatus) - order.indexOf(b.aStatus);
@@ -89,6 +91,15 @@ export class DonorAppointmentHistory implements OnInit {
           }
       });
     });
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Donor') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   getFormFields() {

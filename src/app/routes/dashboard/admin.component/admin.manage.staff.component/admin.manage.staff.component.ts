@@ -6,6 +6,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { DonorService } from '../../../../shared/services/donor.service';
 import { StaffService } from '../../../../shared/services/staff.service';
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-manage-staff-component',
@@ -19,7 +20,8 @@ export class AdminManageStaffComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
     private staffService: StaffService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {}
 
   loading: boolean = false;
@@ -34,12 +36,22 @@ export class AdminManageStaffComponent implements OnInit {
   currId: string = '';
 
   ngOnInit(): void {
+    this.authenticate();
     this.loadData();
     this.addNewForm.get('fullName')?.valueChanges.subscribe((value: string) => {
       if (value) {
         this.addNewForm.get('fullName')?.setValue(value.toUpperCase(), { emitEvent: false });
       }
     });
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Admin') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   loadData() {
@@ -52,7 +64,6 @@ export class AdminManageStaffComponent implements OnInit {
 
   addNewForm = this.fb.nonNullable.group({
     fullName: ['', Validators.required],
-    // userId: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     gender: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
@@ -74,8 +85,8 @@ export class AdminManageStaffComponent implements OnInit {
 
     if (this.isEdit) {
       this.isUpdateLoading = true;
-      let postData = { ...this.addNewForm.value, donorId: this.currId };
-      this.donorService.updateDonorInfo(postData).subscribe((res: any) => {
+      let postData = { ...this.addNewForm.value, documentId: this.currId };
+      this.staffService.updateStaffInfo(postData).subscribe((res: any) => {
         if (res != null) {
           this.message.success('Record updated successfully');
           setTimeout(() => {
@@ -92,22 +103,17 @@ export class AdminManageStaffComponent implements OnInit {
     } else {
       this.isConfirmLoading = true;
       let postData = { ...this.addNewForm.value };
-      this.donorService.register(postData).subscribe((res: any) => {
+      this.staffService.addNewStaff(postData).subscribe((res: any) => {
         this.isConfirmLoading = false;
-        if (res === 'Existing document ID') {
-          this.message.error('User Added Failed!');
-        } else if (res === 'registeredIc') {
-          this.message.error('The IC Number is already been registered.');
-        } else if (res === 'emailUsed') {
-          this.message.error('The email is already been used.');
-        } else {
+        if (res !== null ) {
           this.message.success('Record added successfully');
-          setTimeout(() => {
-            this.isVisible = false;
-            this.isConfirmLoading = false;
-          }, 3000);
-          this.loadData();
+        } else {
+          this.message.error('User Added Failed!');
         }
+        setTimeout(() => {
+          this.isVisible = false;
+        }, 3000);
+        this.loadData();
       });
     }
   }
@@ -120,9 +126,9 @@ export class AdminManageStaffComponent implements OnInit {
   }
 
   delete(id: string) {
-    this.donorService.deleteDonor(id).subscribe((res: any) => {
+    this.staffService.deleteStaff(id).subscribe((res: any) => {
       if (res != null) {
-        this.message.success('Donor account deleted.');
+        this.message.success('Staff account deleted.');
         this.loadData();
       }
     });

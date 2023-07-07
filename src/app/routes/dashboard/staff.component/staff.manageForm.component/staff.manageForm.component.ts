@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {RegistrationService} from "../../../../shared/services/registration.service";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-staff-add-record-component',
@@ -24,6 +25,7 @@ export class StaffManageFormComponent implements OnInit{
     private cdr: ChangeDetectorRef,
     private registrationService: RegistrationService,
     private message: NzMessageService,
+    private router: Router,
   ) {
   }
 
@@ -52,6 +54,7 @@ export class StaffManageFormComponent implements OnInit{
   })
 
   ngOnInit() {
+    this.authenticate();
     this.loadData();
     const formControlsConfig: { [key: string]: any } = this.formControlNames.reduce((config: { [key: string]: any }, controlName: string) => {
       if (controlName === 't1' || controlName === 't2' || controlName === 't3' || controlName === 't4') {
@@ -65,12 +68,20 @@ export class StaffManageFormComponent implements OnInit{
     this.questionnaires = this.fb.group(formControlsConfig);
   }
 
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
+  }
+
   loadData(){
     this.isLoading= true;
     this.registrationService.getAllFormList()
       .subscribe((res:any)=>{
         this.dataForm = res;
-        console.log(res);
         this.dataForm.sort((a: any, b: any) => {
           const submitTimeA = new Date(0);
           submitTimeA.setUTCSeconds(a.regForm.submitTime.seconds);

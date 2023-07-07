@@ -1,13 +1,22 @@
 export const GREETING_MESSAGE = 'Hello, welcome!';
 export const ERROR_MESSAGE = 'An error occurred. Please try again.';
 export const SUCCESS_MESSAGE = 'Operation completed successfully.';
-export const RANDOM_MESSAGE = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' +
-  'Aenean ac scelerisque ante, eu blandit mauris. ' +
-  'Nulla facilisi. Etiam bibendum consequat eros, eu eleifend libero lacinia vitae. ' +
-  'Aliquam erat volutpat. Donec ultricies rhoncus justo nec blandit. Curabitur non libero vel ' +
-  'tortor tempus sagittis a sed tellus. Aenean convallis pulvinar condimentum. Fusce in magna mauris. ' +
-  'Sed sit amet sodales mauris. Integer lacinia ligula quis aliquet maximus. Aliquam volutpat pellentesque ' +
-  'ex eu porta. Nulla vulputate velit turpis. Proin nisl purus, rhoncus id quam at, sagittis luctus justo.';
+export const RANDOM_MESSAGE =
+  '1. Appointment Confirmation: By booking an appointment, you acknowledge and agree that the appointment ' +
+  'is subject to availability and confirmation. The appointment will be considered confirmed only after ' +
+  'receiving a confirmation notification from us.\n\n' +
+  '2. Booking Process: To book an appointment, you must provide accurate and complete information, ' +
+  'including your name, contact details, and any other relevant information requested during the booking process. ' +
+  'You are responsible for ensuring the accuracy of the information provided.\n\n' +
+  '3. Cancellation and Rescheduling: If you need to cancel or reschedule your appointment, ' +
+  'please notify us at least [insert number of hours/days] in advance. ' +
+  'Failure to provide sufficient notice may result in a cancellation fee or forfeiture of any deposit paid, as determined by our policy.\n\n' +
+  '4. Late Arrival: We understand that unforeseen circumstances may cause you to arrive late for your appointment. ' +
+  'However, please note that your appointment time may be shortened to accommodate subsequent bookings. ' +
+  'No fee adjustments will be made for late arrivals.\n\n ' +
+  '5. Privacy and Data Protection: Any personal information you provide during the appointment booking ' +
+  'process will be handled in accordance with our privacy policy. By booking an appointment, ' +
+  'you consent to the collection, storage, and processing of your personal data for the purpose of managing your appointment and providing the requested services.\n\n';
 
 export class messageConstant{
   public static QUESTION1 = 'Are you feeling healthy and well today?';

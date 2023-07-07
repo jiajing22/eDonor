@@ -9,8 +9,8 @@ import { Appointment } from '../model/appointment.model';
 export class AppointmentService {
   constructor(private http: HttpClient) {}
 
-  // baseUrl = 'https://backendproduction.up.railway.app/eDonor/appointment';
-  baseUrl = 'http://localhost:8080/eDonor/appointment';
+  baseUrl = 'https://backendproduction.up.railway.app/eDonor/appointment';
+  // baseUrl = 'http://localhost:8080/eDonor/appointment';
 
   addAppointment(postData: any) {
     return this.http.post(`${this.baseUrl}`, postData, { responseType: 'text' });

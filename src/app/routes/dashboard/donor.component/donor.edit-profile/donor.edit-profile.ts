@@ -7,6 +7,7 @@ import * as CryptoJS from "crypto-js";
 import {catchError, throwError} from "rxjs";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
 import {MatchControl} from "@delon/util/form";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-donor-edit-profile-component',
@@ -19,7 +20,8 @@ export class DonorEditProfile implements OnInit {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {
   }
 
@@ -63,6 +65,7 @@ export class DonorEditProfile implements OnInit {
   }
 
   ngOnInit() {
+    this.authenticate();
     let sessionItem = sessionStorage.getItem('userId');
 
     if (sessionItem) {
@@ -90,13 +93,20 @@ export class DonorEditProfile implements OnInit {
     this.editForm.get('address')?.disable();
   }
 
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Donor') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
+  }
   submitForm(): void {
     this.loading =  true;
     let postData = {
       donorId: this.decryptedId,
       address: this.editForm.get('address')?.value
     };
-    console.log(postData)
 
     this.donorService.updateInfo(postData)
       .pipe(

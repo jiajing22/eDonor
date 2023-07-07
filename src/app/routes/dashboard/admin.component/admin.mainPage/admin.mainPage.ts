@@ -39,6 +39,7 @@ export class AdminMainPage implements OnInit {
     if (userType !== 'Admin') {
       this.message.error("Unauthorized Access!");
       this.router.navigateByUrl('/dashboard/landing');
+      return;
     }
 
     let sessionItem = sessionStorage.getItem('userId');

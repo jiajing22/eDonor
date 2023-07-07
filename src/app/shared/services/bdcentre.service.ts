@@ -9,8 +9,8 @@ import { Bdcentre } from '../model/bdcentre.model';
 export class BdcentreService {
   constructor(private http: HttpClient) {}
 
-  // baseUrl = 'https://backendproduction.up.railway.app/eDonor/bdcentre';
-  baseUrl = 'http://localhost:8080/eDonor/bdcentre';
+  baseUrl = 'https://backendproduction.up.railway.app/eDonor/bdcentre';
+  // baseUrl = 'http://localhost:8080/eDonor/bdcentre';
 
   getAllCentre() {
     return this.http.get(this.baseUrl);

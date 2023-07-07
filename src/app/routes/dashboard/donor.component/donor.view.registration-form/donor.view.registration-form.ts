@@ -29,6 +29,7 @@ export class DonorViewRegistrationForm implements OnInit {
     private donorService: DonorService,
     private registrationService: RegistrationService,
     private message: NzMessageService,
+    private router: Router,
   ) {
   }
 
@@ -57,6 +58,7 @@ export class DonorViewRegistrationForm implements OnInit {
   })
 
   ngOnInit() {
+    this.authenticate();
     this.loading = true;
     let sessionItem = sessionStorage.getItem('userId');
     if (sessionItem) {
@@ -64,6 +66,8 @@ export class DonorViewRegistrationForm implements OnInit {
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
     } else {
       this.message.error('You are not logged in!');
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
     }
 
     this.donorService.getDonorInfo(this.decryptedId)
@@ -114,6 +118,15 @@ export class DonorViewRegistrationForm implements OnInit {
     }, {});
 
     this.questionnaires = this.fb.group(formControlsConfig);
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Donor') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   formatTimestamp(timestamp: any): string {

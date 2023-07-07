@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl} from '@angular/forms';
+import {FormBuilder} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import * as CryptoJS from "crypto-js";
 import {messageConstant} from "../../../../shared/utils/constant";
@@ -7,6 +7,8 @@ import {DonorService} from "../../../../shared/services/donor.service";
 import {AppointmentService} from "../../../../shared/services/appointment.service";
 import {Appointment} from "../../../../shared/model/appointment.model";
 import {BdcentreService} from "../../../../shared/services/bdcentre.service";
+import {Router} from "@angular/router";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-donor-main-page-component',
@@ -21,6 +23,8 @@ export class DonorMainpage implements OnInit {
     private donorService: DonorService,
     private appointmentService: AppointmentService,
     private bdcentreService: BdcentreService,
+    private router: Router,
+    private message: NzMessageService,
   ) {}
 
   loading= false;
@@ -32,6 +36,7 @@ export class DonorMainpage implements OnInit {
   noApp= false;
 
   ngOnInit(): void {
+    this.authenticate();
     this.loading=true;
     let sessionItem = sessionStorage.getItem('userId');
     if (sessionItem) {
@@ -55,6 +60,15 @@ export class DonorMainpage implements OnInit {
       .subscribe((res:any)=>{
         this.bloodGroup = res.needed;
       });
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Donor') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   loadEvent(data:any){

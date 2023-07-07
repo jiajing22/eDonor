@@ -7,6 +7,7 @@ import {catchError, throwError} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {Bdcentre} from "../../../../shared/model/bdcentre.model";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-component',
@@ -20,6 +21,7 @@ export class AdminManageBdcentre implements OnInit {
     private cdr: ChangeDetectorRef,
     private bdcentreService: BdcentreService,
     private message: NzMessageService,
+    private router: Router
   ) {
   }
 
@@ -72,7 +74,17 @@ export class AdminManageBdcentre implements OnInit {
   );
 
   ngOnInit(): void {
+    this.authenticate();
     this.loadData();
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Admin') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   loadData() {

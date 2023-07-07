@@ -5,6 +5,7 @@ import {RecordService} from "../../../../shared/services/record.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import {Router} from "@angular/router";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -19,6 +20,7 @@ export class AdminManageRecord implements OnInit {
     private cdr: ChangeDetectorRef,
     private recordService: RecordService,
     private message: NzMessageService,
+    private router: Router
   ) {}
 
   monthSelected: string = '';
@@ -45,12 +47,22 @@ export class AdminManageRecord implements OnInit {
   monthOptions = this.months.map(month => ({value: month, label: month}));
 
   ngOnInit(): void {
+    this.authenticate();
     this.isLoading = true;
     this.recordService.getAllRecord()
       .subscribe((res:any)=>{
         this.allRecord = res;
         this.isLoading = false;
       })
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Admin') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   searchByMonth(){

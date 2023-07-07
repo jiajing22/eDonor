@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {AppointmentService} from "../../../../shared/services/appointment.service";
 import * as CryptoJS from "crypto-js";
 import { messageConstant } from "../../../../shared/utils/constant";
@@ -21,6 +21,7 @@ export class StaffMainPageComponent implements OnInit {
     private appointmentService: AppointmentService,
     private staffService: StaffService,
     private msg: NzMessageService,
+    private router: Router
   ) {}
 
   loading=false;
@@ -30,9 +31,19 @@ export class StaffMainPageComponent implements OnInit {
   userName:any='';
 
   ngOnInit(): void {
+    this.authenticate()
     this.loading = true;
     this.loadUser();
     this.loadDash();
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.msg.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   loadUser(){

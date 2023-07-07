@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@env/environment';
 
-import { Donor } from '../model/donor.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +25,21 @@ export class StaffService {
 
   getAllStaff() {
     return this.http.get(this.baseUrl);
+  }
+
+  updateStaffInfo(postData:any){
+    return this.http.post(`${this.baseUrl}-update`, postData, {responseType:"text"})
+  }
+
+  changePassword(postData:any){
+    return this.http.post(`${this.baseUrl}-update-credential`, postData, {responseType:"text"})
+  }
+
+  deleteStaff(id:string){
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  }
+
+  addNewStaff(post: any) {
+    return this.http.post(this.baseUrl, post, { responseType: 'text' });
   }
 }

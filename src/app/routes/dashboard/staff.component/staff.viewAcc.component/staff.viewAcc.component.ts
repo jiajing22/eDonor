@@ -5,6 +5,7 @@ import * as CryptoJS from "crypto-js";
 import {catchError, throwError} from "rxjs";
 import {StaffService} from "../../../../shared/services/staff.service";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-staff-view-acc-component',
@@ -17,7 +18,8 @@ export class StaffViewAccComponent implements OnInit{
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private staffService: StaffService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {
   }
 
@@ -26,6 +28,7 @@ export class StaffViewAccComponent implements OnInit{
   decryptedId: string = "";
 
   ngOnInit(): void {
+    this.authenticate();
     let sessionItem = sessionStorage.getItem('userId');
 
     if (sessionItem) {
@@ -46,8 +49,14 @@ export class StaffViewAccComponent implements OnInit{
       .subscribe((res: any) => {
         this.staff = res;
       });
+  }
 
-    //TODO: Limit the address character to 100 character and create another variable for address if needed ----
-    // if the extra variable contain value, put below the {{ donor.address }}
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 }

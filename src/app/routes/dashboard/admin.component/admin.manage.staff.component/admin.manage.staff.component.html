@@ -33,7 +33,7 @@
               nz-popconfirm
               nzPopconfirmTitle="Are you sure to delete this staff?"
               nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="delete(data.donorId)"
+              (nzOnConfirm)="delete(data.staffId)"
             >
               <span nz-icon nzType="delete" nzTheme="twotone"></span>
             </a>
@@ -43,12 +43,12 @@
     </tbody>
   </nz-table>
 
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="Donor Information" (nzOnCancel)="handleCancel()">
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Staff Information" (nzOnCancel)="handleCancel()">
     <div *nzModalContent>
       <form nz-form [formGroup]="addNewForm" class="form">
         <nz-form-item>
-          <nz-form-label [nzSpan]="5" nzFor="fullName" [nzRequired]="true" [nzLabelAlign]="'left'">Full Name</nz-form-label>
-          <nz-form-control [nzSpan]="16" [nzErrorTip]="confirmErrorTip">
+          <nz-form-label [nzSpan]="7" nzFor="fullName" [nzRequired]="true" [nzLabelAlign]="'left'">Full Name</nz-form-label>
+          <nz-form-control [nzSpan]="14" [nzErrorTip]="confirmErrorTip">
             <input nz-input formControlName="fullName" />
           </nz-form-control>
         </nz-form-item>
@@ -61,7 +61,7 @@
         <!--        </nz-form-item>-->
 
         <nz-form-item>
-          <nz-form-label [nzSpan]="5" nzFor="password" [nzRequired]="true" [nzLabelAlign]="'left'">Password</nz-form-label>
+          <nz-form-label [nzSpan]="7" nzFor="password" [nzRequired]="true" [nzLabelAlign]="'left'">Password</nz-form-label>
           <nz-form-control [nzSpan]="12" [nzErrorTip]="confirmErrorTip">
             <nz-input-group [nzSuffix]="suffixTemplate">
               <input [type]="passwordVisible ? 'text' : 'password'" nz-input type="password" formControlName="password" />
@@ -70,7 +70,7 @@
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label [nzSpan]="5" nzFor="gender" [nzRequired]="true" [nzLabelAlign]="'left'">Gender</nz-form-label>
+          <nz-form-label [nzSpan]="7" nzFor="gender" [nzRequired]="true" [nzLabelAlign]="'left'">Gender</nz-form-label>
           <nz-form-control [nzSpan]="8" [nzErrorTip]="confirmErrorTip">
             <nz-select formControlName="gender">
               <nz-option nzValue="male" nzLabel="Male"></nz-option>
@@ -80,28 +80,28 @@
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label [nzSpan]="5" nzFor="email" [nzRequired]="true" [nzLabelAlign]="'left'">Email</nz-form-label>
+          <nz-form-label [nzSpan]="7" nzFor="email" [nzRequired]="true" [nzLabelAlign]="'left'">Email</nz-form-label>
           <nz-form-control [nzSpan]="12" [nzErrorTip]="confirmErrorTip">
             <input nz-input formControlName="email" />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label [nzSpan]="5" nzFor="staffPosition" [nzRequired]="true" [nzLabelAlign]="'left'">Staff Position</nz-form-label>
+          <nz-form-label [nzSpan]="7" nzFor="staffPosition" [nzRequired]="true" [nzLabelAlign]="'left'">Staff Position</nz-form-label>
           <nz-form-control [nzSpan]="12" [nzErrorTip]="confirmErrorTip">
             <input nz-input formControlName="staffPosition" />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label [nzSpan]="5" nzFor="deptName" [nzRequired]="true" [nzLabelAlign]="'left'">Department Name</nz-form-label>
+          <nz-form-label [nzSpan]="7" nzFor="deptName" [nzRequired]="true" [nzLabelAlign]="'left'">Department Name</nz-form-label>
           <nz-form-control [nzSpan]="12" [nzErrorTip]="confirmErrorTip">
             <input nz-input formControlName="deptName" />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label [nzSpan]="5" nzFor="deptArea" [nzRequired]="true" [nzLabelAlign]="'left'">Department Area</nz-form-label>
+          <nz-form-label [nzSpan]="7" nzFor="deptArea" [nzRequired]="true" [nzLabelAlign]="'left'">Department Area</nz-form-label>
           <nz-form-control [nzSpan]="12" [nzErrorTip]="confirmErrorTip">
             <input nz-input formControlName="deptArea" />
           </nz-form-control>

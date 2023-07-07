@@ -7,8 +7,8 @@ import { Injectable } from '@angular/core';
 export class RegistrationService {
   constructor(private http: HttpClient) {}
 
-  // baseUrl = 'https://backendproduction.up.railway.app/eDonor/registration';
-  baseUrl = 'http://localhost:8080/eDonor/registration';
+  baseUrl = 'https://backendproduction.up.railway.app/eDonor/registration';
+  // baseUrl = 'http://localhost:8080/eDonor/registration';
 
   addRecord(postData: any) {
     return this.http.post(this.baseUrl, postData, { responseType: 'text' });

@@ -65,6 +65,7 @@ export class DonorAppointment implements OnInit {
   }
 
   ngOnInit() {
+    this.authenticate();
     this.bdCentreService.getAllCentre()
       .pipe(
         catchError(err => {
@@ -104,6 +105,15 @@ export class DonorAppointment implements OnInit {
         this.icControl.markAsDirty();
         this.icControl.updateValueAndValidity();
       });
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Donor') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   submitForm() {

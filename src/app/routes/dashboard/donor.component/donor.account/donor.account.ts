@@ -1,11 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import * as CryptoJS from "crypto-js";
 import {DonorService} from "../../../../shared/services/donor.service";
 import {catchError, throwError} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
-import {Donor} from "../../../../shared/model/donor.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-donor-account-component',
@@ -18,7 +18,8 @@ export class DonorAccount implements OnInit {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private donorService: DonorService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router,
   ) {
   }
 
@@ -27,6 +28,7 @@ export class DonorAccount implements OnInit {
   decryptedId: string = "";
 
   ngOnInit(): void {
+    this.authenticate();
     let sessionItem = sessionStorage.getItem('userId');
 
     if (sessionItem) {
@@ -34,7 +36,7 @@ export class DonorAccount implements OnInit {
       let decrypted = item.toString(CryptoJS.enc.Utf8);
       this.decryptedId = decrypted;
     } else {
-      console.log('Encrypted message not found.');
+      this.message.error('Not authenticated!');
     }
 
     this.donorService.getDonorInfo(this.decryptedId)
@@ -47,8 +49,14 @@ export class DonorAccount implements OnInit {
       .subscribe((res: any) => {
         this.donor = res;
       });
+  }
 
-    //TODO: Limit the address character to 100 character and create another variable for address if needed ----
-    // if the extra variable contain value, put below the {{ donor.address }}
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Donor') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 }

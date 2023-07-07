@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { catchError, throwError } from 'rxjs';
-
 import { StaffService } from '../../../../shared/services/staff.service';
 
 @Component({
@@ -14,7 +12,7 @@ import { StaffService } from '../../../../shared/services/staff.service';
   templateUrl: './staff.addRecord.component.html',
   styleUrls: ['./staff.addRecord.component.css']
 })
-export class StaffAddRecordComponent {
+export class StaffAddRecordComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -43,6 +41,19 @@ export class StaffAddRecordComponent {
 
   get pw(): AbstractControl {
     return this.form.get('password')!;
+  }
+
+  ngOnInit() {
+    this.authenticate();
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   submit(): void {

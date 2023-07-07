@@ -8,6 +8,7 @@ import { catchError, throwError } from 'rxjs';
 import { StaffService } from '../../../../shared/services/staff.service';
 import {MatchControl} from "@delon/util/form";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-staff-edit-acc-component',
@@ -25,16 +26,14 @@ export class StaffEditProfileComponent implements OnInit {
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
     private staffService: StaffService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {}
 
   sKey = "x^XICt8[Lp'Gm<8";
-  staff: any;
-  // example: string =" ";
   decryptedId: string = "";
   isEdit = false;
   loading = false;
-  changePw = false;
   userPw:string="";
   error = '';
   passwordVisible = false;
@@ -62,14 +61,14 @@ export class StaffEditProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authenticate();
     let sessionItem = sessionStorage.getItem('userId');
-
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
       let decrypted = item.toString(CryptoJS.enc.Utf8);
       this.decryptedId = decrypted;
     } else {
-      console.log('Encrypted message not found.');
+      this.message.error("Not logged In!");
     }
 
     this.staffService
@@ -81,8 +80,17 @@ export class StaffEditProfileComponent implements OnInit {
         })
       )
       .subscribe((res: any) => {
-        this.staff = res;
+        this.userPw = res.password;
       });
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   submitPassForm(): void{
@@ -102,26 +110,20 @@ export class StaffEditProfileComponent implements OnInit {
 
       if ( this.newPw.value === this.confirmPw.value ){
         let postData={
-          donorId: this.decryptedId,
+          userId: this.decryptedId,
           password: this.newPw.value
         }
-        // this.donorService.changePw(postData)
-        //   .pipe(
-        //     catchError(err => {
-        //       this.message.error(err.error);
-        //       this.loading=false;
-        //       return throwError(err);
-        //     })
-        //   )
-        //   .subscribe((res: any) => {
-        //     this.message.success("Successfully Updated");
-        //     setTimeout(() => {
-        //       this.loading =  false;
-        //     }, 1500);
-        //     setTimeout(() => {
-        //       window.location.reload();
-        //     }, 2000);
-        //   });
+
+        this.staffService.changePassword(postData).subscribe((res: any) => {
+          if (res != null) {
+            this.message.success('Password Changed Successfully!');
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
+          } else {
+            this.message.error('Password Changed Failed!');
+          }
+        });
       }
     }else{
       setTimeout(() => {

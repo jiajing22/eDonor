@@ -41,6 +41,7 @@ export class AdminManageDonorComponent implements OnInit {
     if (sessionItem !== 'Admin') {
       this.message.error("Unauthorized Access!");
       this.router.navigateByUrl('/dashboard/landing');
+      return;
     }
 
     this.loadData();

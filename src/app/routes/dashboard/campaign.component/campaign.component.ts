@@ -103,7 +103,6 @@ export class CampaignComponent implements OnInit {
         return dateB.getTime() - dateA.getTime();
       });
       this.load = false;
-      console.log(this.posts);
     });
   }
 
@@ -125,7 +124,6 @@ export class CampaignComponent implements OnInit {
         this.loadData();
       }, 2000);
     });
-    console.log(post);
   }
 
   cancel() {

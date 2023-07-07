@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
@@ -26,6 +26,7 @@ export class StaffNewPostComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.authenticate();
     let sessionItem = sessionStorage.getItem('userId');
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
@@ -38,6 +39,15 @@ export class StaffNewPostComponent implements OnInit {
       this.author = res.fullName;
       this.staffId = res.userId;
     });
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.msg.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   sKey = "x^XICt8[Lp'Gm<8";

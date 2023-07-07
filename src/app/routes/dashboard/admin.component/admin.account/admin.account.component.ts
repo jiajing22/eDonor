@@ -1,9 +1,7 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import * as CryptoJS from "crypto-js";
-import {DonorService} from "../../../../shared/services/donor.service";
-import {catchError, throwError} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {AdminService} from "../../../../shared/services/admin.service";
 import {Router} from "@angular/router";
@@ -33,6 +31,7 @@ export class AdminAccountComponent implements OnInit {
     if (userType !== 'Admin') {
       this.message.error("Unauthorized Access!");
       this.router.navigateByUrl('/dashboard/landing');
+      return;
     }
 
     let sessionItem = sessionStorage.getItem('userId');
@@ -41,7 +40,7 @@ export class AdminAccountComponent implements OnInit {
       let decrypted = item.toString(CryptoJS.enc.Utf8);
       this.decryptedId = decrypted;
     } else {
-      console.log('Encrypted message not found.');
+      this.message.error("You are not logged In!");
     }
     let post = {
       documentId : this.decryptedId

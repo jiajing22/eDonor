@@ -7,6 +7,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
 import {History} from "../../../../shared/model/history.model";
 import {NzSafeAny} from "ng-zorro-antd/core/types";
 import {RegistrationService} from "../../../../shared/services/registration.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-donor-registration-component',
@@ -26,6 +27,7 @@ export class DonorRegistrationForm implements OnInit {
     private donorService: DonorService,
     private registrationService: RegistrationService,
     private message: NzMessageService,
+    private router: Router,
   ) {
   }
   loading = false;
@@ -102,7 +104,7 @@ export class DonorRegistrationForm implements OnInit {
   }
 
   ngOnInit() {
-
+    this.authenticate();
     this.regForm.get('occupation')?.valueChanges.subscribe((value: string) => {
       if (value) {
         this.regForm.get('occupation')?.setValue(value.toUpperCase(), { emitEvent: false });
@@ -125,7 +127,6 @@ export class DonorRegistrationForm implements OnInit {
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
       this.decryptedId = item.toString(CryptoJS.enc.Utf8);
-      console.log(this.decryptedId)
     } else {
       console.log('Encrypted message not found.');
     }
@@ -137,7 +138,6 @@ export class DonorRegistrationForm implements OnInit {
           return throwError(err);
         })
       ).subscribe((res: any) => {
-        console.log(res);
       this.nameControl.setValue(res.fullName);
       this.icControl.setValue(res.userId);
 
@@ -146,6 +146,15 @@ export class DonorRegistrationForm implements OnInit {
         control.updateValueAndValidity();
       });
     });
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Donor') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   submitForm(){
@@ -159,8 +168,6 @@ export class DonorRegistrationForm implements OnInit {
     if (this.regForm.invalid) {
       return;
     }
-    console.log(this.regForm.value);
-
     this.currentPage++;
   }
 

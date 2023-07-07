@@ -61,7 +61,6 @@ export class StaffSearchComponent implements OnInit {
           })
         )
         .subscribe((res: any) => {
-          console.log(res);
           if (res instanceof Array) {
             this.donorResult = res;
           } else {
@@ -72,7 +71,17 @@ export class StaffSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authenticate();
     this.loadData();
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   loadData(){

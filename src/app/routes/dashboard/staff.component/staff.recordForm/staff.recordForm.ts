@@ -11,7 +11,7 @@ import {catchError, throwError} from "rxjs";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {RecordService} from "../../../../shared/services/record.service";
 import {BdcentreService} from "../../../../shared/services/bdcentre.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Router} from "@angular/router";
 
 @Component({
   selector: 'app-staff-record-form',
@@ -36,6 +36,7 @@ export class StaffRecordForm implements OnInit {
   }
 
   ngOnInit() {
+    this.authenticate();
     let sessionItem = sessionStorage.getItem('userId');
     if (sessionItem) {
       let item = CryptoJS.AES.decrypt(sessionItem, this.sKey);
@@ -57,6 +58,15 @@ export class StaffRecordForm implements OnInit {
           label: item.centreName
         }));
       });
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   docId = '';

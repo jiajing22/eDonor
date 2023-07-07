@@ -42,11 +42,21 @@ export class StaffManageRecordComponent implements OnInit {
   monthOptions = this.months.map(month => ({ value: month, label: month }));
 
   ngOnInit() {
+    this.authenticate();
     this.initLoad = true;
     this.recordService.getAllRecord().subscribe((res: any) => {
       this.record = res;
       this.initLoad = false;
     });
+  }
+
+  authenticate(){
+    let userType = sessionStorage.getItem('userType');
+    if (userType !== 'Staff') {
+      this.message.error("Unauthorized Access!");
+      this.router.navigateByUrl('/dashboard/landing');
+      return;
+    }
   }
 
   searchByMonth() {
@@ -73,7 +83,6 @@ export class StaffManageRecordComponent implements OnInit {
   }
 
   navigate(data: any) {
-    console.log(data);
     const navigationExtras: NavigationExtras = {
       state: {
         first: data,
