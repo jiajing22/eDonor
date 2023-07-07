@@ -1,0 +1,24 @@
+<navbar-layout-basic></navbar-layout-basic>
+<div class="box">
+  <h2>BLOOD DONATION CENTRE</h2>
+  <nz-spin [nzSpinning]="load">
+    <nz-table #basicTable [nzData]="list">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>State</th>
+        <th>Phone</th>
+        <th>Address</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.centreName }}</td>
+        <td>{{ data.centreState }}</td>
+        <td>{{ data.centrePhone }}</td>
+        <td>{{ data.cAddress }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-spin>
+</div>

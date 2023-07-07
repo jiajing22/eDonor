@@ -1,6 +1,6 @@
 <navbar-layout-basic></navbar-layout-basic>
 <nz-content>
-  <img src="./assets/image.png" class="image1" alt="image" />
+  <img src="./assets/image.png" class="image1" alt="image"/>
 
   <nz-spin [nzSpinning]="loading">
     <div class="event">
@@ -22,23 +22,28 @@
     <div class="card-component">
       <div nz-row [nzGutter]="16" class="content">
         <div nz-col [nzSpan]="7" [nzXs]="24" [nzSm]="24" [nzMd]="7" [nzLg]="7" [nzXl]="7" class="c2">
-          <a>
+          <a (click)="navigate('eligibility')">
             <nz-card nzTitle="What is the Blood Donor Eligibility Criteria?">
-              <p>Check out our page for more information on blood donor eligibility criteria and become a lifesaver today!</p>
+              <p>Check out our page for more information on blood donor eligibility criteria and become a lifesaver
+                today!</p>
             </nz-card>
           </a>
         </div>
         <div nz-col [nzSpan]="7" [nzXs]="24" [nzSm]="24" [nzMd]="7" [nzLg]="7" [nzXl]="7" class="c2">
-          <nz-card nzTitle="What is the benefits of Blood Donation?">
-            <p>Donate blood, be a hero, save lives, reduce disease risk, and get a free health check-up!</p>
-          </nz-card>
+          <a (click)="navigate('benefits')">
+            <nz-card nzTitle="What is the benefits of Blood Donation?">
+              <p>Donate blood, be a hero, save lives, reduce disease risk, and get a free health check-up!</p>
+            </nz-card>
+          </a>
         </div>
         <div nz-col [nzSpan]="7" [nzXs]="24" [nzSm]="24" [nzMd]="7" [nzLg]="7" [nzXl]="7" class="c2">
-          <nz-card nzTitle="Where should I donate blood?">
-            <p
-              >Check online for blood donation centers near you and schedule an appointment to make a difference in someone's life today!</p
-            >
-          </nz-card>
+          <a (click)="navigate('list')">
+            <nz-card nzTitle="Where should I donate blood?">
+              <p>
+                Check online for blood donation centers near you and schedule an appointment to make a difference in
+                someone's life today!</p>
+            </nz-card>
+          </a>
         </div>
       </div>
     </div>

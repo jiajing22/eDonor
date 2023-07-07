@@ -49,4 +49,20 @@ export class LandingPageComponent implements OnInit {
     };
     this.router.navigate(['/dashboard/campaign-list'], navigationExtras);
   }
+
+  navigate(place: string) {
+    switch (place) {
+      case 'eligibility':
+        this.router.navigate(['/dashboard/eligibility']);
+        break;
+      case 'list':
+        this.router.navigate(['/dashboard/list']);
+        break;
+      case 'benefits':
+        this.router.navigate(['/dashboard/benefits']);
+        break;
+      default:
+        break;
+    }
+  }
 }

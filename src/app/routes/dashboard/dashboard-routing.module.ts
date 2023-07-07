@@ -8,6 +8,8 @@ import { EligibilityComponent } from './eligibility.component/eligibility.compon
 import { LandingPageComponent } from './landing-page.component/landing-page.component';
 import { NavbarComponent } from './navbar.component/navbar.component';
 import {PrivilegeComponent} from "./privilege.component/privilege.component";
+import {BenefitsComponent} from "./benefits.component/benefits.component";
+import {BdCentreListComponent} from "./bdCentreList.component/bdCentreList.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'campaign-list', component: CampaignListComponent },
   { path: 'eligibility', component: EligibilityComponent },
   { path: 'privilege', component: PrivilegeComponent },
+  { path: 'benefits', component: BenefitsComponent },
+  { path: 'list', component: BdCentreListComponent },
 ];
 
 @NgModule({

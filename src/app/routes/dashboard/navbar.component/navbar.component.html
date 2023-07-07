@@ -11,7 +11,7 @@
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu nzSelectable>
           <li nz-menu-item (click)="navigate('eligibility')">Blood Donor Eligibility</li>
-          <li nz-menu-item>Benefits of Blood Donation</li>
+          <li nz-menu-item (click)="navigate('benefits')">Benefits of Blood Donation</li>
           <li nz-menu-item (click)="navigate('privilege')">Blood Donor Privilege</li>
         </ul>
       </nz-dropdown-menu>
@@ -20,9 +20,9 @@
         <li nz-menu-item>Campaign/Activity</li>
       </a>
 
-      <!--      <a (click)="navigate('home')">-->
-      <!--        <li nz-menu-item>Blood Donation Centre</li>-->
-      <!--      </a>-->
+      <a (click)="navigate('list')">
+        <li nz-menu-item>Blood Donation Centre</li>
+      </a>
 
       <a *ngIf="loggedIn" (click)="dashboard()">
         <li nz-menu-item>Dashboard</li>
@@ -38,14 +38,6 @@
           </li></div
         >
       </div>
-
-      <!--      <a *ngIf="loggedIn" (click)="logout()" class="signIn">-->
-      <!--        <li nz-menu-item>-->
-      <!--        <span nz-icon nzType="user" nzTheme="outline">-->
-      <!--         Welcome,-->
-      <!--        </span>-->
-      <!--        </li>-->
-      <!--      </a>-->
 
       <a *ngIf="!loggedIn" (click)="navigate('login')" class="signIn" style="padding-left: 55vh">
         <li nz-menu-item>Sign In</li>
