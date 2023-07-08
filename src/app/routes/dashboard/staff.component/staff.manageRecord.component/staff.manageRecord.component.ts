@@ -46,14 +46,20 @@ export class StaffManageRecordComponent implements OnInit {
     this.initLoad = true;
     this.recordService.getAllRecord().subscribe((res: any) => {
       this.record = res;
+      console.log(res);
+      this.record.sort((a: any, b: any) => {
+        const dateA = new Date(a.regDate);
+        const dateB = new Date(b.regDate);
+        return dateB.getTime() - dateA.getTime();
+      });
       this.initLoad = false;
     });
   }
 
-  authenticate(){
+  authenticate() {
     let userType = sessionStorage.getItem('userType');
     if (userType !== 'Staff') {
-      this.message.error("Unauthorized Access!");
+      this.message.error('Unauthorized Access!');
       this.router.navigateByUrl('/dashboard/landing');
       return;
     }

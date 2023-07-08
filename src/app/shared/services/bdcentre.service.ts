@@ -33,7 +33,7 @@ export class BdcentreService {
   }
 
   //   --------------------------------Blood Group---------------------------------------------------
-  otherUrl = 'http://localhost:8080/eDonor/bloodGroup';
+  otherUrl = 'https://backendproduction.up.railway.app/eDonor/bloodGroup';
 
   updateBloodGroup(id: string, postData: any) {
     return this.http.put(`${this.otherUrl}/${id}`, postData, { responseType: 'text' });
